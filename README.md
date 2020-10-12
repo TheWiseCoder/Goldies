@@ -1,0 +1,3 @@
+This collection of small modules meet demands that have been materialising as I progress in my professional chores as a Prolog developer. Ever so often I generalise a short snippet of a solution to a specific problem into a stand-alone predicate that might been of further use.
+
+The code has been fully tested with SICStus 4.6.0 and SWI-Prolog 8.2.1, under Windows 10 Enterpise and Ubuntu 20.04 operating systems. It might perform equally well in other releases, but this has not been tested.
