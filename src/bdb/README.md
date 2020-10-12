@@ -22,10 +22,10 @@ Depending on your Prolog platform, the environment variable *SICSTUS_BDB_DIR* or
 
 Using the available predicates is straigh forward:
 
-- `bdb_base(+DataSet)` - make sure the given dataset's base path for Berkeley DB exists
-- `bdb_erase(+DataSet)` - erase the complete dataset from storage
-- `bdb_erase(+TagSet, +DataSet)` - erase the tagset within the given dataset from storage
-- `bdb_retrieve(+TagSet, +DataSet, -Data)` - retrieve the given tagset from storage
-- `bdb_store(+TagSet, +DataSet, +Data)` - persist the given tagset
+- `bdb_base(+DataSet)` - make sure the given dataset's base path for Berkeley DB exists  
+- `bdb_erase(+DataSet)` - erase the complete dataset from storage  
+- `bdb_erase(+TagSet, +DataSet)` - erase the tagset within the given dataset from storage  
+- `bdb_retrieve(+TagSet, +DataSet, -Data)` - retrieve the given tagset from storage  
+- `bdb_store(+TagSet, +DataSet, +Data)` - persist the given tagset  
 
-Additionally, you may peruse the documentation and code on the source code files. 
+Additionally, you may peruse the documentation and code on the source code files.   
