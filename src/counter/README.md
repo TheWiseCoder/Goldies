@@ -19,11 +19,11 @@ A straight-forward usage of counters is in `repeat/0` loops:
 `counter_create(loop),`  
 `% repeat loop *Count* times`  
 `repeat,`  
-    `% retrieve *Value* from counter`  
-    `counter_value(loop, Value),`  
-	`. . . (do something with *Value*)`  
-	`% increment loop, fail until it reaches *Count*`  
-	`\* counter_inc(loop, Count),`  
+    `% retrieve *Value* from counter`  
+    `counter_value(loop, Value),`  
+    `. . . (do something with *Value*)`  
+    `% increment loop, fail until it reaches *Count*`  
+`    \* counter_inc(loop, Count),`  
 `!,`  
 `counter_destroy(loop),`  
 `. . .`  
