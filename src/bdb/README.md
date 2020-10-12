@@ -9,14 +9,14 @@ Depending on your Prolog platform, the environment variable *SICSTUS_BDB_DIR* or
 - `c:/Users/my_user/bdb/data_set_1/tag_set_a/admin.db`
 - `c:/Users/my_user/bdb/data_set_1/tag_set_a/index.db`
 - `c:/Users/my_user/bdb/data_set_1/tag_set_a/terms.db`
-`. . .`
+- `. . .`
 - `c:/Users/my_user/bdb/data_set_N/tag_set_n/admin.db`
 - `c:/Users/my_user/bdb/data_set_N/tag_set_n/index.db`
 - `c:/Users/my_user/bdb/data_set_N/tag_set_n/terms.db`
 
 **SWI-Prolog**
 - `c:/Users/my_user/bdb/data_set_1/tag_set_a.bdb`
-`. . .`
+- `. . .`
 - `c:/Users/my_user/bdb/data_set_1/tag_set_n.bdb`
 
 Using the available predicates is straigh forward:
