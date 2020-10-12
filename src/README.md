@@ -22,7 +22,7 @@ Unify *Index* with the 0-based position of *Value* within *SortedList*, fail oth
 Invoke a goal a given number of times, with the specified number of parameters, returning a list of results.
 
 Usage:  
-`repeat__goal(:Goal, +N, *Params*, -Results)`  
+`repeat__goal(:Goal, +N, Params, -Results)`  
 *Params* are up to 6 parameters <+Pi,...,+Pj>  
 *Results* a list with the invocation results, in the proper order  
 
