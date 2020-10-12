@@ -13,15 +13,18 @@ To summmarize the algorithm:
 - 6- if Am > T, set r to m - 1 an go to step 3;
 - 7- now, Am = T, the search is done, and m is the desired index.
 
-Usage: `bin_search(+SortedList, +Value, -Index)` - unify *Index* with the 0-based position of *Value* within *SortedList*, fail otherwise; unpredictable if *SortedList* is not ascendingly sorted.
+Usage:
+`bin_search(+SortedList, +Value, -Index)`
+Unify *Index* with the 0-based position of *Value* within *SortedList*, fail otherwise; unpredictable if *SortedList* is not ascendingly sorted.
 
 **REPEAT-GOAL**
 
 Invoke a goal a given number of times, with the specified number of parameters, returning a list of results.
 
-Usage: repeat__goal(:Goal, +N, <params>, -Results)
-       *<params>* are up to 6 parameters <+Pi,...,+Pj>
-	   *Results* a list with the invocation results, in the proper order
+Usage:
+`repeat__goal(:Goal, +N, *Params*, -Results)`
+*Params* are up to 6 parameters <+Pi,...,+Pj>
+*Results* a list with the invocation results, in the proper order
 
 **BDB**
 
