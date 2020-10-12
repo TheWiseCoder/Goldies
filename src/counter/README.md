@@ -15,7 +15,7 @@ Counters are identified by simple atoms. These are the available predicates:
 
 A straight-forward usage of counters is in `repeat/0` loops:
 
-`% create counter loop with value 0`  
+`% create counter loop with initial value 0`  
 `counter_create(loop),`  
 `% repeat loop Count times`  
 `repeat,`  

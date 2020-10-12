@@ -24,7 +24,7 @@ Invoke a goal a given number of times, with the specified number of parameters, 
 Usage:  
 `repeat__goal(:Goal, +N, Params, -Results)`  
 *Params* are up to 6 parameters <+Pi,...,+Pj>  
-*Results* is a list with the invocation results, in the proper order  
+*Results* is a list with the invocation results in the proper order  
 
 **BDB**
 

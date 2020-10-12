@@ -5,8 +5,8 @@ These are predicates providing a portability layer for the SWI-Prolog platform, 
 - `guids(+N, -Guids)` - unify *Guids* with *N* new GUIDs
 
 2. `datime/6` record (see notes in source code file)
-- `datime(-Datime)` - Unifies *Datime* with the current date and time as a datime/6 record
-- `datime(+When, -Datime)` - convert a UNIX timestamp When, to a datime/6 record
+- `datime(-Datime)` - Unifies *Datime* with the current date and time as a `datime/6` record
+- `datime(+When, -Datime)` - convert a UNIX timestamp When, to a `datime/6` record
 - `now(-When)` - unify Now with the current datetime as a UNIX timestamp (integer)
 
 3. file folder handling
