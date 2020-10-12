@@ -15,17 +15,17 @@ Counters are identified by simple atoms. These are the available predicates:
 
 A straight-forward usage of counters is in `repeat/0` loops:
 
-`% create couter *loop* with value 0`
-`counter_create(loop),`
-`% repeat loop *Count* times`
-`repeat,`
-    `% retrieve *Value* from counter`
-    `counter_value(loop, Value),`
-	`. . . (do something with *Value*)`
-	`% increment loop, fail until it reaches *Count*`
-	`\* counter_inc(loop, Count),`
-`!,`
-`counter_destroy(loop),`
-`. . .`
+`% create couter *loop* with value 0`  
+`counter_create(loop),`  
+`% repeat loop *Count* times`  
+`repeat,`  
+    `% retrieve *Value* from counter`  
+    `counter_value(loop, Value),`  
+	`. . . (do something with *Value*)`  
+	`% increment loop, fail until it reaches *Count*`  
+	`\* counter_inc(loop, Count),`  
+`!,`  
+`counter_destroy(loop),`  
+`. . .`  
 
 Additionally, you may peruse the documentation and code on the source code files.
