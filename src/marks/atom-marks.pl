@@ -12,6 +12,7 @@
 *                    +Atom4, +Atom5, +Atom6, -Atom123456)
 *       atom_concat_number(+Atom, +Number, -AtomNumber)
 *       atom_contained(+AtomContainer, +AtomContained)
+*       atom_int(?Atom, ?Int, +Len)
 *       atom_number(?Atom, ?Number)
 *       atom_prefix(+AtomPrefixed, +AtomPrefix)
         atom_sort(+Atom, -AtomSorted)
@@ -46,6 +47,7 @@
         atom_concat6/7,
         atom_concat_number/3,
         atom_contained/2,
+        atom_int/3,
         atom_number/2,
         atom_prefix/2,
         atom_sort/2,
@@ -99,6 +101,15 @@ atom_prefix(AtomPrefixed, AtomPrefix) :-
 atom_suffix(AtomSuffixed, AtomSuffix) :-
     % fail point
     sub_atom(AtomSuffixed, _, _, 0, AtomSuffix).
+
+% unify an integer with an atom of given length,
+% left-truncating or left-padding the latter with zeros, if necessary
+% atom_int(?Atom, ?Int, +Len)
+atom_int(Atom, Int, Len) :-
+
+    atom_number(Anum, Int),
+    atom_concat('0000000000', Anum, Apad),
+    sub_atom(Apad, _, Len, 0, Atom).
 
 % convert between atom and number
 % atom_number(?Atom, ?Number)
