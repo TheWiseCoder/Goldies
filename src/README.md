@@ -33,7 +33,10 @@ A simple, minimalistic approach to implementing persistence for Prolog data, by 
 **COUNTER**  
 
 An implementation of a global, stack-independent, simple counter, intended for use with integer values. Please, refer to the README in the corresponding folder.  
-	   
+
+**CSV**  
+
+An attempt to define a standard interface for '.csv' file operations, to be used in different Prolog environments. 
 
 
 
