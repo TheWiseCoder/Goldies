@@ -16,7 +16,7 @@
 *       5- if Am < T, set l to m + 1 an go to step 3;
 *       6- if Am > T, set r to m - 1 an go to step 3;
 *       7- now, Am = T, the search is done, and m is the desired index.
-
+*
 * PUBLIC PREDICATES :
 *       bin_search(+Target, +Values, +Index)
 *

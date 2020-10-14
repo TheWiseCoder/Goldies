@@ -191,4 +191,4 @@ storage_path(TagSet, DataSet, DsPath) :-
     format_to_codes('~a~a.dbd', [BaseDir,TagSet], Codes),
     atom_codes(DsPath, Codes).
 
-:- endif.                                     % ------------------------------
+:- endif.                                       % ------------------------------
