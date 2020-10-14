@@ -1,4 +1,4 @@
-bELOW ARE short descriptions of the features available. Please, refer to the README in the corresponding folder.  
+Below are short descriptions of the features available. Please, refer to the README in the corresponding folder.  
 
 **BIN-SEARCH**  
 
