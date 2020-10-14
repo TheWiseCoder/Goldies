@@ -1,4 +1,4 @@
-These are the features available:  
+bELOW ARE short descriptions of the features available. Please, refer to the README in the corresponding folder.  
 
 **BIN-SEARCH**  
 
@@ -28,15 +28,17 @@ Usage:
 
 **BDB**  
 
-A simple, minimalistic approach to implementing persistence for Prolog data, by means of the Berkeley DB utility package. Please, refer to the README in the corresponding folder.  
+A simple, minimalistic approach to implementing persistence for Prolog data, by means of the Berkeley DB utility package.  
 
 **COUNTER**  
 
-An implementation of a global, stack-independent, simple counter, intended for use with integer values. Please, refer to the README in the corresponding folder.  
+An implementation of a global, stack-independent, simple counter, intended for use with integer values.  
 
 **CSV**  
 
-An attempt to define a standard interface for '.csv' file operations, to be used in different Prolog environments. 
+An attempt to define a standard interface for '.csv' file operations, to be used in different Prolog environments.  
 
+**MARKS**  
 
+Collections of small utilities, dealing with various subjects. 
 
