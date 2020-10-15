@@ -1,5 +1,5 @@
 /*******************************************************************************
-* FILENAME / MODULE : swi-marks.pl / swi_marks
+* FILENAME / MODULE : port_layer.pl / port_layer
 *
 * DESCRIPTION :
 *       These are predicates providing a portability layer for the SWI-Prolog
@@ -33,9 +33,7 @@
 *
 *******************************************************************************/
 
-:- if(current_prolog_flag(dialect, swi)).       % SWI-Prolog -------------------
-
-:- module(swi_marks,
+:- module(port_layer,
     [
         current_directory/1,
         current_directory/2,
@@ -61,7 +59,7 @@
         uuid/2
     ]).
 
-:- use_module('../repeat-goal',
+:- use_module('../common/repeat-goal',
     [
         repeat_goal/3
     ]).
@@ -175,5 +173,3 @@ guids(N, Guids) :-
 % Seed      an arbitrary integer value
 setrand(Seed) :-
     set_random(seed(Seed)).
-
-:- endif.                                       % ------------------------------

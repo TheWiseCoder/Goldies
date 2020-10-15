@@ -1,5 +1,5 @@
 /*******************************************************************************
-* FILENAME / MODULE : sicstus-marks.pl / sicstus_marks
+* FILENAME / MODULE : port_layer.pl / port_layer
 *
 * DESCRIPTION :
 *       These are predicates providing a portability layer for the SICStus
@@ -31,9 +31,7 @@
 *
 *******************************************************************************/
 
-:- if(current_prolog_flag(dialect, sicstus)).   % SICStus ----------------------
-
-:- module(sicstus_marks,
+:- module(port_layer,
     [
         flag/3,
         getenv/2,
@@ -69,7 +67,7 @@
         environ/2
     ]).
 
-:- use_module('../repeat-goal',
+:- use_module('../common/repeat-goal',
     [
         repeat_goal/3
     ]).
@@ -137,7 +135,6 @@ set_flag(Key, Value) :-
 % Set   the unsorted list
 randseq(K, N, Set) :-
 
-    !,
     % fail point
     randset(K, N, Ints),
     random_permutation(Ints, Set).
@@ -149,7 +146,6 @@ randseq(K, N, Set) :-
 % Set   the sorted list
 randset(K, N, Set) :-
 
-    !,
     % fail point
     K =< N,
     P is float(K) / float(N),
@@ -224,5 +220,3 @@ guid_(Val, Hex) :-
 % Value     corresponding value
 getenv(Name, Value) :-
     environ(Name, Value).
-
-:- endif.                                       % ------------------------------

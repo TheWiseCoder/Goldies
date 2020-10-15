@@ -1,10 +1,10 @@
 /*******************************************************************************
-* FILENAME / MODULE : swi-csv.pl / swi_csv
+* FILENAME / MODULE : csv_wrapper.pl / csv_wrapper
 *
 * DESCRIPTION :
 *       This is an attempt to define a standard interface for csv file
 *       operations, to be used in different Prolog environments. This module
-*       implements this standard for SWI-Prolog.
+*       implements this standard for the SWI-Prolog platform.
 *
 * PUBLIC PREDICATES :
 *       csv_input_record(+Stream, +Record)
@@ -30,9 +30,7 @@
 *
 *******************************************************************************/
 
-:- if(current_prolog_flag(dialect, swi)).       % SWI-Prolog -------------------
-
-:- module(swi_csv,
+:- module(csv_wrapper,
     [
         csv_input_record/2,
         csv_input_record/3,
@@ -143,5 +141,3 @@ is_col_name(Field) :-
     atom(Field),
     atom_length(Field, Len),
     Len =< 32.
-
-:- endif.                                       % ------------------------------

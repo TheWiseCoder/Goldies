@@ -1,11 +1,14 @@
 /*******************************************************************************
-* FILENAME / MODULE : sicstus-bdb.pl / sicstus_bdb
+* FILENAME / MODULE : bdb_wrapper.pl / bdb_wrapper
 *
 * DESCRIPTION :
 *       This module provides a simple, minimalistic approach to implementing
-*       persistence for Prolog data, by means of the Berkeley DB utility
-*       package. Berkeley DB is an open-source software library intended to
-*       provide a high-performance embedded database for key/value data.
+*       persistence for Prolog data on the SICStus platform, by means of the
+*       Berkeley DB utility package. Berkeley DB is an open-source software
+*       library intended to provide a high-performance embedded database for
+*       key/value data. Please, refer to the SICStus 4.6 User Manual (from
+*       page 401) for detailed instructions on how to use Berkeley DB.
+*
 *       Being an embedded database implies that the library provides access
 *       to files containing one or more database tables. These tables are
 *       always binary, mapping keys to values. The SICStus Prolog interface
@@ -21,12 +24,7 @@
 *       by default. The Linux db-util package is fully compatible with
 *       the database structure created by SICStus Prolog through Berkeley DB.
 *       For the db-util manpages, please refer to 
-*       https://manpages.debian.org/jessie/db-util/index.html
-*
-*       The repositories for SICStus and SWI-Prolog should not be mixed,
-*       as they use different schemes for Prolog data persistence. Please,
-*       refer to the SICStus 4.6 User Manual (from page 401) for detailed
-*       instructions on how to use Berkeley DB in a SICStus Prolog context.
+*       https://manpages.debian.org/jessie/db-util/index.html .
 *
 * PUBLIC PREDICATES :
 *       bdb_base(+DataSet)
@@ -48,9 +46,7 @@
 *
 *******************************************************************************/
 
-:- if(current_prolog_flag(dialect, sicstus)).   % SICStus ----------------------
-
-:- module(sicstus_bdb,
+:- module(bdb_wrapper,
     [
         bdb_base/1,
         bdb_erase/1,
@@ -225,5 +221,3 @@ storage_dir(DataSet, BaseDir) :-
         format_to_codes('~a/~a/', [BdbDir,DataSet], Codes)
     ),
     atom_codes(BaseDir, Codes).
-
-:- endif.                                       % ------------------------------

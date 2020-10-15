@@ -29,4 +29,4 @@ A straight-forward usage of counters is in `repeat/0` loops:
 `counter_destroy(loop),`  
 `. . .`  
 
-Additionally, you may peruse the documentation and code on the source code files.  
+Additionally, you may peruse the documentation and code on the source code file.  
