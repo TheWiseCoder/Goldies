@@ -1,5 +1,5 @@
 /*******************************************************************************
-* FILENAME / MODULE : atom-marks.pl / atom_marks
+* FILENAME / MODULE : atom_marks.pl / atom_marks
 *
 * DESCRIPTION :
 *       Atom handling utilities.

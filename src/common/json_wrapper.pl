@@ -1,9 +1,9 @@
 /*******************************************************************************
-* FILENAME / MODULE : json-marks.pl / json_marks
+* FILENAME / MODULE : json_wrapper.pl / json_wrapper
 *
 * DESCRIPTION :
-*       Utilities for handling JSON-encoded data. The representation of JSON
-*       values in the SICStus and SWI-Prolog platforms is as follows:
+*       Utilities for handling JSON-encoded data. The representations of JSON
+*       values in the SICStus and SWI-Prolog platforms are as follows:
 *
 *       Number  a JSON number is represented as the corresponding Prolog number;
 *               as a floating point number when the JSON number has an exponent
@@ -53,7 +53,7 @@
 *
 *******************************************************************************/
 
-:- module(json_marks,
+:- module(json_wrapper,
     [
         json_add/3,
         json_atom/2,
@@ -110,7 +110,7 @@
         with_output_to_codes/4
     ]).
 
-:- use_module('atom-marks',
+:- use_module('atom_marks',
     [
         atoms_codes/2
     ]).

@@ -1,5 +1,5 @@
 /*******************************************************************************
-* FILENAME / MODULE : bin-search.pl / bin_search
+* FILENAME / MODULE : bin_search.pl / bin_search
 *
 * DESCRIPTION :
 *       This is an implementation of the classic binary search on sorted lists
