@@ -59,7 +59,7 @@
         uuid/2
     ]).
 
-:- use_module('../common/repeat-goal',
+:- use_module('../common/repeat_goal',
     [
         repeat_goal/3
     ]).
