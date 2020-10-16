@@ -104,7 +104,7 @@
         reverse/2
     ]).
 
-:- use_module('../../Goldies/src/swi/port_lists',
+:- use_module('../swi/port_lists',
     [
         sublist/3,
         sublist/5
