@@ -1,0 +1,24 @@
+Small utilities handling lists. The available predicates are listed below. Make sure to complement these brief descriptions with the documentation in the source code file.
+
+- `append3(+List1, +List2, +List3, -List123)` - join together 3 lists by appension  
+- `append4(+List1, +List2, +List3, +List4, -List1234)` - join together 4 lists by appension  
+- `append5(+List1, +List2, +List3, +List4, +List5, -List12345)` - join together 5 lists by appension  
+- `convlist_first(:Goal, List, Element)` - similar to convlist/3, but only the first element for which `call(Goal, Element, _)` succeeds is returned; fail if no element succeeds  
+- `list_common(+List1, +List2, -ListCommon)` - Unify *ListCommon* with the elements common to *List1* and *List2*, in the order they are found in *List1*  
+- `list_compacts(+List, -ListsCompact)` -  unify a list of integers with a list of lists, each one of them containing a range of values found in the original list  
+- `list_count_same(+List, +Pos, -Count)` - count occurrences of the same element contiguously from a given 0-based position within *List*  
+- `list_fill(+Count, +Item, -List)` - unify *List* with a list containing *Count* instances of *Item*  
+- `list_minus_list(+ListSearch, +ListElements, -ListResult)` - remove from *ListSearch* all occurrences of elements in *ListElements*, and unify the result with *ListResult*  
+- `list_replace0(+Pos0, +List, +Element, -ListNew)` - replace the element at 0-based *Pos0* with *Element*  
+- `list_replace1(+Pos1, +List, +Element, -ListNew)` - replace the element at 1-based *Pos1* with *Element*  
+- `list_same(+List)` - assert whether all elements in *List* are the same  
+- `list_same(+List, ?Before, ?Length, ?After)` - assert whether all elements in sublist of *List* defined by *Before*, *Length*, and *After*, are the same  
+- `list_same0(+List, +Pos0, +Count)` - assert whether the *Count* elements in *List*, starting at 0-based *Pos0*, are the same  
+- `list_same1(+List, +Pos1, +Count)` - - assert whether the *Count* elements in *List*, starting at 1-based *Pos1*, are the same  
+- `list_split(+List, +Sep, -Lists)` - split *List* into various lists, based on separator *Sep*, and unify *Lists* with the result  
+- `list_values(+Count, +Start, +Offset, -Values)` - unify *Values* with a list with *Count* calculated values as elements  
+- `lists_common(+List1, +List1)` - assert whether *List1* and *List2* have at least one element in common  
+- `lists_consolidate(+ListsRefs, +ListElems, -ListsResults)` - consolidate a list of lists *ListsRefs* with *ListElems*, and unify the result with *ListResults*  
+- `lists_find(+Lists, +Element, -Pos1)` - unify *Pos1* with the 1-based position of the first list containing *Element*, in a list of lists *Lists*  
+- `lists_flatten(+Lists, -List)` - recursively flatten a list of lists *Lists*, keeping the original order of the elements, and all repeating values, and unify *List* with the result  
+- `lists_start_with(+Lists, +Sublist, -List)` - find the first list starting with *Sublist*, in a list of lists ^Lists*, and unify *List* with the result  
