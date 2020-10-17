@@ -79,7 +79,7 @@ date_weekday_(Year, Month, Day, Dow) :-
 
 :- elif(current_prolog_flag(dialect, swi)).     % SWI-Prolog -------------------
 
-:- use_module('../Goldies/src/swi/port_layer',
+:- use_module('../swi/port_layer',
     [
         datime/1,
         datime/2
