@@ -16,7 +16,7 @@
 * NOTES :
 *       None yet.
 *
-*       Copyright Instituto Modal 2020.  All rights reserved.
+*       Copyright TheWiseCoder 2020.  All rights reserved.
 *
 * REVISION HISTORY :
 *
@@ -186,8 +186,8 @@ append_make(N, Suffix, [_|List]) :-
     append_make(M, Suffix, List).
 
 %-------------------------------------------------------------------------------
-% morph a list of key-value pairs into multiples lists of key-value pairs,
-%   each list sharing the same key. For example:
+% Unify Clumps with a list of lists of key-value pairs obtained from Pairs,
+% each list sharing the same key. For example:
 %   keyclumps([a-2,a-3,b-1,b-2,c-4], Clumps) yields
 %   C = [[a-2,a-3],[b-1,b-2],[c-4]]
 

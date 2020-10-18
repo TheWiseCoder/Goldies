@@ -2,7 +2,7 @@ These are predicates providing a portability layer on SICStus-style lists handli
 
 - `subseq0(+List, +Subseq)` - *true* when *Subseq* is a subsequence of *List*  
 - `subseq1(+List, +Subseq)` - *true* when *Subseq* is a proper subsequence of *List*  
-- `keyclumps(+Pairs, -Clumps)` - 
+- `keyclumps(+Pairs, -Clumps)` - unify *Clumps* with a list of lists of key-value pairs obtained from *Pairs*, each list sharing the same key
   
 These are implementations of SICStus' `sublist/3`, `sublist/4`, `sublist/5`: 
   
