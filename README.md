@@ -1,3 +1,23 @@
-This collection of small modules meet demands that have been materialising as I progress in my professional chores as a Prolog developer. Ever so often I generalise a short snippet of a solution to a specific problem into a stand-alone predicate that might been of further use.
+## 1. GOLDIES
 
-The code has been fully tested with SICStus 4.6.0 and SWI-Prolog 8.2.1, under Windows 10 Enterpise and Ubuntu 20.04 operating systems. It might perform equally well in other releases, but this has not been tested.
+A mix of general-purpose and specialized utilities to facilitate developing on the Prolog platform. They are organized in modules and distributed in folders, as follows:
+
+### 1.1. src/common
+
+Collections of utilities, coded for both SICStus and SWI-Prolog.
+
+### 1.2. ssrc/treams
+
+Collections of stream-related utilities, coded for both SICStus and SWI-Prolog.
+
+### 1.3. ssrc/icstus
+
+Collections of utilities, coded for the SICStus platform.
+
+### 1.4. src/swi
+
+Collections of utilities, coded for the SWI-Prolog platform.
+
+## 2. DOCUMENTATION
+
+An extensive documentation for the collection can be found in the *doc* folder, accessible by browser directly from *index.html*. It was produced with the  help of SWI-Prolog's *PlDoc Source Documentation System*, which extracts and organizes the documentation added to the source code, integrated with other documents.

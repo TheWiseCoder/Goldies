@@ -72,7 +72,7 @@
         repeat_goal/3
     ]).
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------------
 
 % unify a list of key-value pairs with separate lists of keys and values
 % pairs_keys_values(?Pairs, ?Keys, ?Values)
@@ -86,7 +86,7 @@ pairs_keys_values(Pairs, Keys, Values) :-
 read_line_to_codes(Stream, Codes) :-
     read_line(Stream, Codes).
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------------
 % Flag operations in SWI-Prolog style.
 
 % True when Old is the current value of the flag Key, and the flag has been
@@ -125,7 +125,7 @@ get_flag(Key, Value) :-
 set_flag(Key, Value) :-
     bb_put(Key, Value).
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------------
 % generate a list of approximately K unique random integers in the range 1..N
 
 % Set is an unsorted list of approximately K unique random integers in 1..N
@@ -151,7 +151,7 @@ randset(K, N, Set) :-
     P is float(K) / float(N),
     random_numlist(P, 1, N, Set).
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------------
 % GUID generation
 
 % generate N GUIDs (UUID Version 4)
@@ -212,7 +212,7 @@ guid_(Val, Hex) :-
     atom_codes(A, Codes),
     sub_atom(A, _, 4, 0, Hex).
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------------
 
 % unify Value with the value of the environment variable Name
 % getenv(+Name, -Value)

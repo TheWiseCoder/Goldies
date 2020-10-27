@@ -1,58 +1,49 @@
-/*******************************************************************************
-* FILENAME / MODULE : port_lists.pl / port_lists
-*
-* DESCRIPTION :
-*       These are predicates providing a portability layer on SICStus-style
-*       lists handling for the SWI-Prolog platform.
-*
-* PUBLIC PREDICATES :
-*       keyclumps(+Pairs, -Clumps)
-*       sublist(+Whole, ?Part, ?Before)
-*       sublist(+Whole, ?Part, ?Before, ?Length)
-*       sublist(+Whole, ?Part, ?Before, ?Length, ?After)
-*       subseq0(+List, +Subseq)
-*       subseq1(+List, +Subseq)
-*
-* NOTES :
-*       None yet.
-*
-*       Copyright TheWiseCoder 2020.  All rights reserved.
-*
-* REVISION HISTORY :
-*
-* DATE        AUTHOR            REVISION
-* ----------  ----------------  ------------------------------------------------
-* 2020-08-08  GT Nunes          Module creation
-*
-*******************************************************************************/
-
 :- module(port_lists,
     [
-        keyclumps/2,
-        sublist/3,
-        sublist/4,
-        sublist/5,
-        subseq0/2,
-        subseq1/2
+        keyclumps/2,        % keyclumps(+Pairs, -Clumps)
+        sublist/3,          % sublist(+Whole, ?Part, ?Before)
+        sublist/4,          % sublist(+Whole, ?Part, ?Before, ?Length)
+        sublist/5,          % sublist(+Whole, ?Part, ?Before, ?Length, ?After)
+        subseq0/2,          % subseq0(+List, +Subseq)
+        subseq1/2           % subseq1(+List, +Subseq)
     ]).
 
-%-------------------------------------------------------------------------------
-% Implementation of SICStus' subseq/0, subseq/1
+/** <module> Portability layer for lists in SWI-Prolog
 
-% true when Subseq is a subsequence of List
-% subseq0(+List, +Subseq)
-% List      the reference list
-% Subseq    list for subsequence assertion
+These are predicates providing a portability layer on SICStus-style
+lists handling for the SWI-Prolog platform.
+
+@author GT Nunes
+@version 1.0
+@copyright (c) 2020 GT Nunes
+@license BSD-3-Clause License
+*/
+
+%-------------------------------------------------------------------------------------
+% 
+
+%! subseq0(+List:list, +Subseq:list) is nondet.
+%
+%  Implementation of SICStus' `subseq/0`.
+%
+%  True when Subseq is a subsequence of List.
+%
+%  @param List The reference list
+%  @param Subseq    list for subsequence assertion
 
 subseq0(List, List).
 
 subseq0(List, Subseq) :-
     subseq1(List, Subseq).
 
-% true when Subseq is a proper subsequence of List
-% subseq0(+List, +Subseq)
-% List      the reference list
-% Subseq    list for proper subsequence assertion
+%! subseq1(+List:list, +Subseq:list) is nondet.
+%
+%  Implementation of SICStus' `subseq/1`.
+%
+%  True when Subseq is a proper subsequence of List.
+%
+%  @param List   The reference list
+%  @param Subseq List for proper subsequence assertion
 
 subseq1([_Head|Tail], Subseq) :-
     subseq0(Tail, Subseq).
@@ -60,36 +51,61 @@ subseq1([_Head|Tail], Subseq) :-
 subseq1([Head|Tail], [Head|Subseq]) :-
     subseq1(Tail, Subseq).
 
-%-------------------------------------------------------------------------------
-% implementation of SICStus' sublist/3, sublist/4, sublist/5
-%
-% These relationships hold:
-%   Whole = Alpha || Part || Omega
-%   length(Alpha, Before)
-%   length(Part, Length)
-%   length(Omega, After)
+%-------------------------------------------------------------------------------------
 
-% sublist(+Whole, ?Part, ?Before)
-% Whole     the source list
-% Part      the result list
-% Before    length in Whole before Part
+%! sublist(+Whole:list, ?Part:list, ?Before:int) is nondet.
+%
+%  Implementation of SICStus' `sublist/3`.
+%
+%  True when these relationships hold:
+%  ~~~
+%  Whole = Alpha || Part
+%  length(Alpha, Before)
+%  ~~~
+%
+%  @param Whole  The source list
+%  @param Part   The result list
+%  @param Before Length of sublist Whole before Part
+
 sublist(Whole, Part, Before) :-
     sublist(Whole, Part, Before, _, _).
 
-% sublist(+Whole, ?Part, ?Before, ?Length)
-% Whole     the source list
-% Part      the result list
-% Before    length in Whole before Part
-% Length    length of Part
+%! sublist(+Whole:list, ?Part:list, ?Before:int, ?Length:int) is nondet.
+%
+%  Implementation of SICStus' `sublist/4`.
+%
+%  True when these relationships hold:
+%  ~~~
+%  Whole = Alpha || Part || Omega
+%  length(Alpha, Before)
+%  length(Part, Length)
+%  ~~~
+%
+%  @param Whole  The source list
+%  @param Part   The result list
+%  @param Before Length of sublist Whole before Part
+%  @param Length Length of Part
+
 sublist(Whole, Part, Before, Length) :-
     sublist(Whole, Part, Before, Length, _).
 
-% sublist(+Whole, ?Part, ?Before, ?Length, ?After)
-% Whole     the source list
-% Part      the result list
-% Before    length in Whole before Part
-% Length    length of Part
-% After     length in Whole after Part
+%! sublist(+Whole:list, ?Part:list, ?Before:int, ?Length:int, ?After:int) is nondet.
+%
+%  Implementation of SICStus' `sublist/5`.
+%
+%  True when these relationships hold:
+%  ~~~
+%  Whole = Alpha || Part || Omega
+%  length(Alpha, Before)
+%  length(Part, Length)
+%  length(Omega, After)
+%  ~~~
+%
+%  @param Whole  The source list
+%  @param Part   The result list
+%  @param Before Length of sublist Whole before Part
+%  @param Length Length of Part
+%  @param After  Length of sublist Whole after Part
 
 sublist(Whole, Part, Before, Length, After) :-
 
@@ -185,15 +201,25 @@ append_make(N, Suffix, [_|List]) :-
     M is N - 1,
     append_make(M, Suffix, List).
 
-%-------------------------------------------------------------------------------
-% Unify Clumps with a list of lists of key-value pairs obtained from Pairs,
-% each list sharing the same key. For example:
-%   keyclumps([a-2,a-3,b-1,b-2,c-4], Clumps) yields
-%   C = [[a-2,a-3],[b-1,b-2],[c-4]]
+%-------------------------------------------------------------------------------------
 
-% keyclumps(+Pairs, -Clumps)
-% Pairs     the list key-value pairs
-% Clumps    the list of clumped lists
+%! keyclumps(+Pairs:list, -Clumps:list) is det.
+%
+%  Implementation of SICStus' `keyclumps/2`.
+%
+%  Unify Clumps with a list of lists of key-value pairs obtained from Pairs,
+%  each list ascendingly ordered and sharing the same key.
+%
+%  For example:
+%  ~~~
+%    keyclumps([a-3,a-2,b-1,b-2,c-4], Clumps)
+%  yields
+%    C = [[a-2,a-3],[b-1,b-2],[c-4]]
+%  ~~~
+%
+%  @param Pairs  List of key-value pairs
+%  @param Clumps list of clumped lists
+
 keyclumps(Pairs, Clumps):-
 
     group_pairs_by_key(Pairs, Groups),

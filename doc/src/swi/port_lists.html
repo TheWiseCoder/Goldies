@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>port_lists.pl -- Portability layer for lists in SWI-Prolog</title>
+
+<link rel="stylesheet" type="text/css" href="../../pldoc.css">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+</head>
+<body>
+
+
+<h1 class="file"><span style="float:right"></span>port_lists.pl -- Portability layer for lists in SWI-Prolog</h1>
+
+<p>
+These are predicates providing a portability layer on SICStus-style
+lists handling for the SWI-Prolog platform.</p>
+
+<dl class="tags">
+<dt class="keyword-author">author</dt><dd class="keyword-author">- GT Nunes</dd>
+<dt class="keyword-version">version</dt><dd class="keyword-version">- 1.0</dd>
+<dt class="keyword-copyright">copyright</dt><dd class="keyword-copyright">- (c) 2020 GT Nunes</dd>
+<dt class="keyword-license">license</dt><dd class="keyword-license">- BSD-3-Clause License</dd>
+</dl>
+
+<dl>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="subseq0/2"><b class="pred">subseq0</b><var class="arglist">(+List:list, +Subseq:list)</var></a> is <b class="det">nondet</b></dt><dd class="defbody">Implementation of SICStus' <code>subseq/0</code>.
+
+<p>
+True when <var>Subseq</var> is a subsequence of <var>List</var>.</p>
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>List</var></td><td class="argdescr">- The reference list</td></tr>
+<tr><td><var>Subseq</var></td><td class="argdescr">- list for subsequence assertion</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="subseq1/2"><b class="pred">subseq1</b><var class="arglist">(+List:list, +Subseq:list)</var></a> is <b class="det">nondet</b></dt><dd class="defbody">Implementation of SICStus' <code>subseq/1</code>.
+
+<p>
+True when <var>Subseq</var> is a proper subsequence of <var>List</var>.</p>
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>List</var></td><td class="argdescr">- The reference list</td></tr>
+<tr><td><var>Subseq</var></td><td class="argdescr">- <var>List</var> for proper subsequence assertion</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="sublist/3"><b class="pred">sublist</b><var class="arglist">(+Whole:list, ?Part:list, ?Before:int)</var></a> is <b class="det">nondet</b></dt><dd class="defbody">Implementation of SICStus' <code>sublist/3</code>.
+
+<p>
+True when these relationships hold:</p>
+
+<pre class="code" ext="">
+Whole = Alpha || Part
+length(Alpha, Before)</pre>
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Whole</var></td><td class="argdescr">- The source list</td></tr>
+<tr><td><var>Part</var></td><td class="argdescr">- The result list</td></tr>
+<tr><td><var>Before</var></td><td class="argdescr">- Length of sublist <var>Whole</var> before <var>Part</var></td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="sublist/4"><b class="pred">sublist</b><var class="arglist">(+Whole:list, ?Part:list, ?Before:int, ?Length:int)</var></a> is <b class="det">nondet</b></dt><dd class="defbody">Implementation of SICStus' <code>sublist/4</code>.
+
+<p>
+True when these relationships hold:</p>
+
+<pre class="code" ext="">
+Whole = Alpha || Part || Omega
+length(Alpha, Before)
+length(Part, Length)</pre>
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Whole</var></td><td class="argdescr">- The source list</td></tr>
+<tr><td><var>Part</var></td><td class="argdescr">- The result list</td></tr>
+<tr><td><var>Before</var></td><td class="argdescr">- <var>Length</var> of sublist <var>Whole</var> before <var>Part</var></td></tr>
+<tr><td><var>Length</var></td><td class="argdescr">- <var>Length</var> of <var>Part</var></td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="sublist/5"><b class="pred">sublist</b><var class="arglist">(+Whole:list, ?Part:list, ?Before:int, ?Length:int, ?After:int)</var></a> is <b class="det">nondet</b></dt><dd class="defbody">Implementation of SICStus' <code>sublist/5</code>.
+
+<p>
+True when these relationships hold:</p>
+
+<pre class="code" ext="">
+Whole = Alpha || Part || Omega
+length(Alpha, Before)
+length(Part, Length)
+length(Omega, After)</pre>
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Whole</var></td><td class="argdescr">- The source list</td></tr>
+<tr><td><var>Part</var></td><td class="argdescr">- The result list</td></tr>
+<tr><td><var>Before</var></td><td class="argdescr">- <var>Length</var> of sublist <var>Whole</var> before <var>Part</var></td></tr>
+<tr><td><var>Length</var></td><td class="argdescr">- <var>Length</var> of <var>Part</var></td></tr>
+<tr><td><var>After</var></td><td class="argdescr">- <var>Length</var> of sublist <var>Whole</var> after <var>Part</var></td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="keyclumps/2"><b class="pred">keyclumps</b><var class="arglist">(+Pairs:list, -Clumps:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Implementation of SICStus' <code>keyclumps/2</code>.
+
+<p>
+Unify <var>Clumps</var> with a list of lists of key-value pairs obtained from <var>Pairs</var>,
+each list ascendingly ordered and sharing the same key.</p>
+
+<p>
+For example:</p>
+
+<pre class="code" ext="">
+  keyclumps([a-3,a-2,b-1,b-2,c-4], Clumps)
+yields
+  C = [[a-2,a-3],[b-1,b-2],[c-4]]</pre>
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Pairs</var></td><td class="argdescr">- List of key-value pairs</td></tr>
+<tr><td><var>Clumps</var></td><td class="argdescr">- list of clumped lists</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+</dl>
+
+</body>
+</html>

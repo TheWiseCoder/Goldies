@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>swi</title>
+
+<link rel="stylesheet" type="text/css" href="../../pldoc.css">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+</head>
+<body>
+
+
+<h1 class="dir">swi</h1>
+
+<h2 class="wiki plfiles">Prolog files</h2>
+
+<table class="summary">
+<tr><th colspan="3" class="file"><span style="float:left"><a href="bdb_wrapper.html">bdb_wrapper.pl</a></span>&nbsp; -- Persistence using Berkeley DB<span style="float:right"></span></th></tr>
+<tr class="public"><td><a href="bdb_wrapper.html#bdb_base/1">bdb_base/1</a></td><td class="summary">Make sure the given DataSet's base path for Berkeley DB exists.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="bdb_wrapper.html#bdb_erase/1">bdb_erase/1</a></td><td class="summary">Remove all the data associated with DataSet from external storage.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="bdb_wrapper.html#bdb_erase/2">bdb_erase/2</a></td><td class="summary">Erase the data associated with the TagSet within DataSet from external storage.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="bdb_wrapper.html#bdb_retrieve/3">bdb_retrieve/3</a></td><td class="summary">Retrieve Data from external storage.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="bdb_wrapper.html#bdb_store/3">bdb_store/3</a></td><td class="summary">Persist Data to external storage.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr><th colspan="3" class="file"><span style="float:left"><a href="csv_wrapper.html">csv_wrapper.pl</a></span>&nbsp; -- An Interface for CSV file operations<span style="float:right"></span></th></tr>
+<tr class="public"><td><a href="csv_wrapper.html#csv_input_record/2">csv_input_record/2</a></td><td class="summary">Retrieve the next CSV record from Stream.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="csv_wrapper.html#csv_input_record/3">csv_input_record/3</a></td><td class="summary">Retrieve the next CSV record from Stream.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="csv_wrapper.html#csv_input_records/2">csv_input_records/2</a></td><td class="summary">Retrieve all CSV records from Stream.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="csv_wrapper.html#csv_input_records/3">csv_input_records/3</a></td><td class="summary">Retrieve all CSV records from Stream.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="csv_wrapper.html#csv_is_header/1">csv_is_header/1</a></td><td class="summary">Assert whether all fields in Record may be column names.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="csv_wrapper.html#csv_output_record/2">csv_output_record/2</a></td><td class="summary">Write the given CSV record to Stream.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="csv_wrapper.html#csv_output_record/3">csv_output_record/3</a></td><td class="summary">Write the given CSV record to Stream.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="csv_wrapper.html#csv_output_records/2">csv_output_records/2</a></td><td class="summary">Write the given CSV records to Stream.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="csv_wrapper.html#csv_output_records/3">csv_output_records/3</a></td><td class="summary">Write the given CSV records to Stream.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr><th colspan="3" class="file"><span style="float:left"><a href="port_layer.html">port_layer.pl</a></span>&nbsp; -- Portability layer for SWI-Prolog<span style="float:right"></span></th></tr>
+<tr class="public"><td><a href="port_layer.html#current_directory/1">current_directory/1</a></td><td class="summary">Unify CurrDir with the current working directory.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="port_layer.html#current_directory/2">current_directory/2</a></td><td class="summary">Unify OldDir with current working directory and change it to NewDir.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="port_layer.html#datime/1">datime/1</a></td><td class="summary">Unify Datime with the current datetime as a <code>datime/6</code> term.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="port_layer.html#datime/2">datime/2</a></td><td class="summary">Unify Datime with the datetime given by the UNIX timestamp When, as a <code>datime/6</code> term.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="port_layer.html#delete_directory/2">delete_directory/2</a></td><td class="summary">Recursively delete directory Dir, according to Options.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="port_layer.html#directory_exists/1">directory_exists/1</a></td><td class="summary">True if directory Dir exist, fail otherwise.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="port_layer.html#file_exists/1">file_exists/1</a></td><td class="summary">True if file FilePath exists, fail otherwise.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="port_layer.html#guid/1">guid/1</a></td><td class="summary">Generate a GUID.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="port_layer.html#guids/2">guids/2</a></td><td class="summary">Generate N GUIDs.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="port_layer.html#make_directory/1">make_directory/1</a></td><td class="summary">Create the specified directory.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="port_layer.html#now/1">now/1</a></td><td class="summary">Unify Now with the current datetime as a UNIX timestamp.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="port_layer.html#setrand/1">setrand/1</a></td><td class="summary">Seed the random number generator SICStus style (with an integer).</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr><th colspan="3" class="file"><span style="float:left"><a href="port_lists.html">port_lists.pl</a></span>&nbsp; -- Portability layer for lists in SWI-Prolog<span style="float:right"></span></th></tr>
+<tr class="public"><td><a href="port_lists.html#keyclumps/2">keyclumps/2</a></td><td class="summary">Implementation of SICStus' <code>keyclumps/2</code>.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="port_lists.html#sublist/3">sublist/3</a></td><td class="summary">Implementation of SICStus' <code>sublist/3</code>.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="port_lists.html#sublist/4">sublist/4</a></td><td class="summary">Implementation of SICStus' <code>sublist/4</code>.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="port_lists.html#sublist/5">sublist/5</a></td><td class="summary">Implementation of SICStus' <code>sublist/5</code>.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="port_lists.html#subseq0/2">subseq0/2</a></td><td class="summary">Implementation of SICStus' <code>subseq/0</code>.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="port_lists.html#subseq1/2">subseq1/2</a></td><td class="summary">Implementation of SICStus' <code>subseq/1</code>.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr><th colspan="3" class="file"><span style="float:left"><a href="simple_counter.html">simple_counter.pl</a></span>&nbsp; -- A global, stack-independent, simple counter<span style="float:right"></span></th></tr>
+<tr class="public"><td><a href="simple_counter.html#counter_add/2">counter_add/2</a></td><td class="summary">Sum Add to counter Key.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="simple_counter.html#counter_add/3">counter_add/3</a></td><td class="summary">Sum Add to counter Key, and unify Value with its final value.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="simple_counter.html#counter_create/1">counter_create/1</a></td><td class="summary">Create counter Key, with 0 as its initial value.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="simple_counter.html#counter_create/2">counter_create/2</a></td><td class="summary">Create counter Key, with Value as its initial value.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="simple_counter.html#counter_dec/1">counter_dec/1</a></td><td class="summary">Decrement counter Key.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="simple_counter.html#counter_dec/2">counter_dec/2</a></td><td class="summary">Decrement counter Key, and unify Value with its final value.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="simple_counter.html#counter_destroy/1">counter_destroy/1</a></td><td class="summary">Destroy counter Key.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="simple_counter.html#counter_inc/1">counter_inc/1</a></td><td class="summary">Increment counter Key.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="simple_counter.html#counter_inc/2">counter_inc/2</a></td><td class="summary">Increment counter Key, and unify Value with its final value.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+<tr class="public"><td><a href="simple_counter.html#counter_value/2">counter_value/2</a></td><td class="summary">Unify Value with the current value of counter Key.</td><td align="right"><span style="white-space: nowrap"></span></td></tr>
+</table>
+
+</body>
+</html>

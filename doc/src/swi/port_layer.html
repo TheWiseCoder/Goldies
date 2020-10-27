@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>port_layer.pl -- Portability layer for SWI-Prolog</title>
+
+<link rel="stylesheet" type="text/css" href="../../pldoc.css">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+</head>
+<body>
+
+
+<h1 class="file"><span style="float:right"></span>port_layer.pl -- Portability layer for SWI-Prolog</h1>
+
+<p>
+These are predicates providing a portability layer for the SWI-Prolog platform,
+by implementing some unique, or convenient, SICStus Prolog features.</p>
+
+<dl class="tags">
+<dt class="keyword-author">author</dt><dd class="keyword-author">- GT Nunes</dd>
+<dt class="keyword-version">version</dt><dd class="keyword-version">- 1.0</dd>
+<dt class="keyword-copyright">copyright</dt><dd class="keyword-copyright">- (c) 2020 GT Nunes</dd>
+<dt class="keyword-license">license</dt><dd class="keyword-license">- BSD-3-Clause License</dd>
+</dl>
+
+<dl>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="datime/1"><b class="pred">datime</b><var class="arglist">(-Datime:term)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Datime</var> with the current datetime as a <code>datime/6</code> term.
+
+<p>
+<code>datime/6</code> term have the form <code>datime(Year,Month,Day,Hour,Min,Sec).</code>
+All fields are integers.</p></dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="datime/2"><b class="pred">datime</b><var class="arglist">(+When:int, -Datime:term)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Datime</var> with the datetime given by the UNIX timestamp <var>When</var>,
+as a <code>datime/6</code> term.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>When</var></td><td class="argdescr">- Date and time as a UNIX timestamp</td></tr>
+<tr><td><var>Datime</var></td><td class="argdescr">- Date and time as a <code>datime/6</code> term</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="now/1"><b class="pred">now</b><var class="arglist">(-Now:int)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Now</var> with the current datetime as a UNIX timestamp.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Now</var></td><td class="argdescr">- The current datetime as a UNIX timestamp</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="current_directory/1"><b class="pred">current_directory</b><var class="arglist">(?CurrDir:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>CurrDir</var> with the current working directory
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>CurrDir</var></td><td class="argdescr">- The current working directory</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="current_directory/2"><b class="pred">current_directory</b><var class="arglist">(-OldDir:atom, +NewDir:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>OldDir</var> with current working directory and change it to <var>NewDir</var>.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>OldDir</var></td><td class="argdescr">- The old current working directory</td></tr>
+<tr><td><var>NewDir</var></td><td class="argdescr">- The new current working directory</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="delete_directory/2"><b class="pred">delete_directory</b><var class="arglist">(-Dir:atom, +Options:list)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Recursively delete directory <var>Dir</var>, according to <var>Options</var>.
+
+<p>
+<var>Options</var> are:</p>
+
+<pre class="code" ext="">
+[if_nonempty(delete)] - delete directory even if not empty
+[if_nonempty(error)]  - delete directory if empty, throw error otherwise
+[if_nonempty(fail)]   - delete directory if empty, fail otherwise
+[if_nonempty(ignore)] - delete directory if empty, ignore otherwise</pre>
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Dir</var></td><td class="argdescr">- The directory to delete</td></tr>
+<tr><td><var>Options</var></td><td class="argdescr">- The options directing the delete operation</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="directory_exists/1"><b class="pred">directory_exists</b><var class="arglist">(+Dir:atom)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">True if directory <var>Dir</var> exist, fail otherwise.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Dir</var></td><td class="argdescr">- Directory to assert</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="make_directory/1"><b class="pred">make_directory</b><var class="arglist">(+Path:atom)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Create the specified directory. Fail if operation is not successful.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Path</var></td><td class="argdescr">- The directory to create</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="file_exists/1"><b class="pred">file_exists</b><var class="arglist">(+FilePath:atom)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">True if file <var>FilePath</var> exists, fail otherwise.
+00
+@param <var>FilePath</var> File to assert</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="guid/1"><b class="pred">guid</b><var class="arglist">(-Guid:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Generate a GUID. GUIDs are UUIDs Version 4.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Guid</var></td><td class="argdescr">- The newly-generated GUID</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="guids/2"><b class="pred">guids</b><var class="arglist">(+N:int, -Guids:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Generate <var>N</var> GUIDs. GUIDs are UUIDs Version 4.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>N</var></td><td class="argdescr">- Number of GUIDs to generate</td></tr>
+<tr><td><var>Guids</var></td><td class="argdescr">- List of newly-generated GUIDs</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="setrand/1"><b class="pred">setrand</b><var class="arglist">(+Seed:int)</var></a> is <b class="det">det</b></dt><dd class="defbody"><var>Seed</var> the random number generator SICStus style (with an integer).
+@param <var>Seed</var> An arbitrary integer</dd>
+</dl>
+
+</body>
+</html>

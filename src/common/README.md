@@ -1,1 +1,0 @@
-Collections of small utilities, dealing with various subjects. For instructions, please refer to the individual *.md* files in this folder.

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>repeat_goal.pl -- Repeat invocation of goal</title>
+
+<link rel="stylesheet" type="text/css" href="../../pldoc.css">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+</head>
+<body>
+
+
+<h1 class="file"><span style="float:right"></span>repeat_goal.pl -- Repeat invocation of goal</h1>
+
+<p>
+Repeat invocation of goal a given number of times, with varying number of parameters.</p>
+
+<dl class="tags">
+<dt class="keyword-author">author</dt><dd class="keyword-author">- GT Nunes</dd>
+<dt class="keyword-version">version</dt><dd class="keyword-version">- 1.0</dd>
+<dt class="keyword-copyright">copyright</dt><dd class="keyword-copyright">- (c) 2020 GT Nunes</dd>
+<dt class="keyword-license">license</dt><dd class="keyword-license">- BSD-3-Clause License</dd>
+</dl>
+
+<dl>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="repeat_goal/3"><b class="pred">repeat_goal</b><var class="arglist">(:Goal:pred, +N:int, -Result:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Result</var> with a list of results in the proper order, from invoking
+<var>Goal</var> <var>N</var> times.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Goal</var></td><td class="argdescr">- The predicate to invoke</td></tr>
+<tr><td><var>N</var></td><td class="argdescr">- Number of invocations</td></tr>
+<tr><td><var>Result</var></td><td class="argdescr">- List of results from the invocations</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="repeat_goal/4"><b class="pred">repeat_goal</b><var class="arglist">(:Goal:pred, +P:data, +N:int, -Result:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Result</var> with a list of results in the proper order, from invoking
+<var>Goal</var> <var>N</var> times.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Goal</var></td><td class="argdescr">- The predicate to invoke</td></tr>
+<tr><td><var>N</var></td><td class="argdescr">- Number of invocations</td></tr>
+<tr><td><var>P</var></td><td class="argdescr">- Parameter for the invocation</td></tr>
+<tr><td><var>Result</var></td><td class="argdescr">- List of results from the invocations</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="repeat_goal/5"><b class="pred">repeat_goal</b><var class="arglist">(:Goal:pred, +P1:data, +P2:data, +N:int, -Result:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Result</var> with a list of results in the proper order, from invoking
+<var>Goal</var> <var>N</var> times.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Goal</var></td><td class="argdescr">- The predicate to invoke</td></tr>
+<tr><td><var>N</var></td><td class="argdescr">- Number of invocations</td></tr>
+<tr><td><var>P1</var></td><td class="argdescr">- 1st parameter for the invocation</td></tr>
+<tr><td><var>P2</var></td><td class="argdescr">- 2nd parameter for the invocation</td></tr>
+<tr><td><var>Result</var></td><td class="argdescr">- List of results from the invocations</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="repeat_goal/6"><b class="pred">repeat_goal</b><var class="arglist">(:Goal:pred, +P1:data, +P2:data, +P3:data, +N:int, -Result:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Result</var> with a list of results in the proper order, from invoking
+<var>Goal</var> <var>N</var> times.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Goal</var></td><td class="argdescr">- The predicate to invoke</td></tr>
+<tr><td><var>N</var></td><td class="argdescr">- Number of invocations</td></tr>
+<tr><td><var>P1</var></td><td class="argdescr">- 1st parameter for the invocation</td></tr>
+<tr><td><var>P2</var></td><td class="argdescr">- 2nd parameter for the invocation</td></tr>
+<tr><td><var>P3</var></td><td class="argdescr">- 3rd parameter for the invocation</td></tr>
+<tr><td><var>Result</var></td><td class="argdescr">- List of results from the invocations</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="repeat_goal/7"><b class="pred">repeat_goal</b><var class="arglist">(:Goal:pred, +P1:data, +P2:data, +P3:data, +P4:data, +N:int, -Result:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Result</var> with a list of results in the proper order, from invoking
+<var>Goal</var> <var>N</var> times.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Goal</var></td><td class="argdescr">- The predicate to invoke</td></tr>
+<tr><td><var>N</var></td><td class="argdescr">- Number of invocations</td></tr>
+<tr><td><var>P1</var></td><td class="argdescr">- 1st parameter for the invocation</td></tr>
+<tr><td><var>P2</var></td><td class="argdescr">- 2nd parameter for the invocation</td></tr>
+<tr><td><var>P3</var></td><td class="argdescr">- 3rd parameter for the invocation</td></tr>
+<tr><td><var>P4</var></td><td class="argdescr">- 4th parameter for the invocation</td></tr>
+<tr><td><var>Result</var></td><td class="argdescr">- List of results from the invocations</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="repeat_goal/8"><b class="pred">repeat_goal</b><var class="arglist">(:Goal:pred, +P1:data, +P2:data, +P3:data, +P4:data, P5:data, +N:int, -Result:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Result</var> with a list of results in the proper order, from invoking
+<var>Goal</var> <var>N</var> times.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Goal</var></td><td class="argdescr">- The predicate to invoke</td></tr>
+<tr><td><var>N</var></td><td class="argdescr">- Number of invocations</td></tr>
+<tr><td><var>P1</var></td><td class="argdescr">- 1st parameter for the invocation</td></tr>
+<tr><td><var>P2</var></td><td class="argdescr">- 2nd parameter for the invocation</td></tr>
+<tr><td><var>P3</var></td><td class="argdescr">- 3rd parameter for the invocation</td></tr>
+<tr><td><var>P4</var></td><td class="argdescr">- 4th parameter for the invocation</td></tr>
+<tr><td><var>P5</var></td><td class="argdescr">- 5th parameter for the invocation</td></tr>
+<tr><td><var>Result</var></td><td class="argdescr">- List of results from the invocations</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="repeat_goal/9"><b class="pred">repeat_goal</b><var class="arglist">(:Goal:pred, +P1:data, +P2:data, +P3:data, +P4:data, P5:data, +P6:data, +N:int, -Result:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Result</var> with a list of results in the proper order, from invoking
+<var>Goal</var> <var>N</var> times.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Goal</var></td><td class="argdescr">- The predicate to invoke</td></tr>
+<tr><td><var>N</var></td><td class="argdescr">- Number of invocations</td></tr>
+<tr><td><var>P1</var></td><td class="argdescr">- 1st parameter for the invocation</td></tr>
+<tr><td><var>P2</var></td><td class="argdescr">- 2nd parameter for the invocation</td></tr>
+<tr><td><var>P3</var></td><td class="argdescr">- 3rd parameter for the invocation</td></tr>
+<tr><td><var>P4</var></td><td class="argdescr">- 4th parameter for the invocation</td></tr>
+<tr><td><var>P5</var></td><td class="argdescr">- 5th parameter for the invocation</td></tr>
+<tr><td><var>P6</var></td><td class="argdescr">- 6th parameter for the invocation</td></tr>
+<tr><td><var>Result</var></td><td class="argdescr">- List of results from the invocations</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+</dl>
+
+</body>
+</html>

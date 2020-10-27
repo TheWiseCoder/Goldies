@@ -1,45 +1,35 @@
-/*******************************************************************************
-* FILENAME / MODULE : stream_bytes.pl / stream_bytes
-*
-* DESCRIPTION :
-*       Read a list of bytes from a given stream. The invoker must
-*       provide the number of bytes to read, or -1 to read up to the
-*       end of the stream.
-*
-* PUBLIC PREDICATES :
-*       stream_bytes(+Stream, +Count, -Bytes)
-*
-* NOTES :
-*       None yet.
-*
-*       Copyright TheWiseCoder 2020.  All rights reserved.
-*
-* REVISION HISTORY :
-*
-* DATE        AUTHOR            REVISION
-* ----------  ----------------  ------------------------------------------------
-* 2020-07-12  GT Nunes          Module creation
-*
-*******************************************************************************/
-
 :- module(stream_bytes,
     [
-        stream_bytes/3
+        stream_bytes/3          % stream_bytes(+Stream, +Count, -Bytes)
     ]).
+
+/** <module> Read a list of bytes from a given stream
+ 
+The invoker must provide the number of bytes to read,
+or `-1` to read to the end of the stream.
+
+@author GT Nunes
+@version 1.0
+@copyright (c) 2020 GT Nunes
+@license BSD-3-Clause License
+*/
+
+%-------------------------------------------------------------------------------------
 
 :- use_module(library(lists),
     [
         reverse/2
     ]).
 
-%-------------------------------------------------------------------------------
-% read up to Count bytes from Stream, or to the end of the stream
-% for Count equals to -1
+%-------------------------------------------------------------------------------------
 
-% stream_bytes(+Stream, +Count, -Bytes)
-% Stream    the input stream
-% Count     the number of bytes to read
-% Bytes     the list of bytes read from the stream
+%! stream_bytes(+Stream:ref, +Count:int, -Bytes:list) is det.
+%
+%  Read up to Count bytes from Stream. For Count = -1, read to the end of the stream.
+%
+%  @param Stream The input stream
+%  @param Count  Number of bytes to read
+%  @param Bytes  List of bytes read from the stream
 
 % (done)
 stream_bytes(_Stream, 0, Bytes) :-
@@ -51,12 +41,6 @@ stream_bytes(Stream, Count, Bytes) :-
     get_byte(Stream, Count, Byte, CountNew),
     stream_bytes_(Stream, CountNew, Byte, [], BytesFinal),
     reverse(BytesFinal, Bytes).
-
-% stream_bytes_(+Stream, +BytesProgress, -BytesFinal)
-% Stream        the input stream
-% Count         the number of bytes to read
-% BytesProgress working list of bytes read
-% BytesFinal    final list of bytes read
 
 % (done, number of bytes obtained)
 stream_bytes_(_Stream, 0, Byte, BytesProgress, BytesFinal) :-
@@ -72,14 +56,17 @@ stream_bytes_(Stream, Count, Byte, BytesProgress, BytesFinal) :-
     stream_bytes_(Stream, CountNext, ByteNext,
                   [Byte|BytesProgress], BytesFinal).
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------------
 
-% read the next byte from the stream
-% get_byte(+Stream, +Count, -Byte, -CountNew)
-% Stream        the input stream
-% Count         the number of bytes to read
-% Byte          the byte read from the stream
-% CountNew      the remaining number of bytes to read
+%! get_byte(+Stream:ref, +Count:int, -Byte:int, -CountNew:int) is det.
+%
+%  Read the next byte from Stream.
+%
+%  @param Stream   The input stream
+%  @param Count    Number of bytes to read
+%  @param Byte     Byte read from the stream
+%  @param CountNew The remaining number of bytes to read
+
 get_byte(Stream, Count, Byte, CountNew) :-
 
     get_byte(Stream, Byte),

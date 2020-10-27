@@ -1,35 +1,24 @@
-/*******************************************************************************
-* FILENAME / MODULE : stream_lines.pl / stream_lines
-*
-* DESCRIPTION :
-*       Read lines as char lists from a given stream, from the current
-*       stream position up to, and until, one of two conditions is met:
-*       1. the end of the stream is reached, or
-*       2. the line read from the stream contains the provided EOS
-*
-* PUBLIC PREDICATES :
-*       stream_lines(+Stream, +EOS, -Lines)
-*
-* NOTES :
-*       None yet.
-*
-*       Copyright TheWiseCoder 2020.  All rights reserved.
-*
-* REVISION HISTORY :
-*
-* DATE        AUTHOR            REVISION
-* ----------  ----------------  ------------------------------------------------
-* 2020-07-20  GT Nunes          Module creation
-* 2020-08-09  GT Nunes          Added conditional compilation for SICStus/SWI
-*
-*******************************************************************************/
-
 :- module(stream_lines,
     [
         stream_lines/3
     ]).
 
-:- if(current_prolog_flag(dialect, sicstus)).   % SICStus ----------------------
+/** <module> Read lines as char lists from a given stream
+
+Read from the current stream position up to, and until,
+one of two conditions is met:<br/>
+1- the end of the stream is reached, or<br/>
+2- the line read from the stream contains the provided EOS.
+
+@author GT Nunes
+@version 1.0
+@copyright (c) 2020 GT Nunes
+@license BSD-3-Clause License
+*/
+
+%-------------------------------------------------------------------------------------
+
+:- if(current_prolog_flag(dialect, sicstus)).   % SICStus ----------------------------
 
 :- use_module(library(lists),
     [
@@ -43,7 +32,7 @@
         read_line_to_codes/2
     ]).
 
-:- elif(current_prolog_flag(dialect, swi)).     % SWI-Prolog -------------------
+:- elif(current_prolog_flag(dialect, swi)).     % SWI-Prolog -------------------------
 
 :- use_module(library(lists),
     [
@@ -61,31 +50,25 @@
         sublist/4
     ]).
     
-:- endif.                                       % ------------------------------
+:- endif.                                       % ------------------------------------
 
 :- use_module('../common/atom_marks',
     [
         atoms_codes/2
     ]).
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------------
 
-% (start)
-% stream_lines(+Stream, +EOS, -Lines)
-% Stream        input stream
-% EOS           list of codes signifying end of stream (empty, if n/a)
-% Lines         list of lines read from stream
+%! stream_lines(+Stream:ref, +EOS:list, -Lines:list) is det.
+%
+%  @param Stream The input stream
+%  @param EOS    List of codes signifying end of stream (empty, if n/a)
+%  @param Lines  List of lines read from stream
+
 stream_lines(Stream, EOS, Lines) :-
 
     read_line_to_codes(Stream, LineCodes),
     stream_lines_(Stream, EOS, LineCodes, [], Lines).
-
-% stream_lines_(+Stream, +Line, +LinesProgress, -LinesFinal)
-% Stream        input stream handle
-% EOS           list of codes signifying end of stream
-% LineCodes     current line read
-% LinesProgress working list of lines read
-% LinesFinal    final list of lines read
 
 % (done)
 stream_lines_(_Stream, _EOS, end_of_file, LinesProgress, LinesFinal) :-

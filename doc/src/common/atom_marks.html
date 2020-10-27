@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>atom_marks.pl -- Atom handling utilities</title>
+
+<link rel="stylesheet" type="text/css" href="../../pldoc.css">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+</head>
+<body>
+
+
+<h1 class="file"><span style="float:right"></span>atom_marks.pl -- Atom handling utilities</h1>
+
+<dl class="tags">
+<dt class="keyword-author">author</dt><dd class="keyword-author">- GT Nunes</dd>
+<dt class="keyword-version">version</dt><dd class="keyword-version">- 1.0</dd>
+<dt class="keyword-copyright">copyright</dt><dd class="keyword-copyright">- (c) 2020 GT Nunes</dd>
+<dt class="keyword-license">license</dt><dd class="keyword-license">- BSD-3-Clause License</dd>
+</dl>
+
+<dl>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atom_contained/2"><b class="pred">atom_contained</b><var class="arglist">(+AtomContainer:atom, +AtomContained:atom)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">True if <var>AtomContainer</var> contains <var>AtomContained</var>.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>AtomContainer</var></td><td class="argdescr">- Container atom</td></tr>
+<tr><td><var>AtomContained</var></td><td class="argdescr">- Contained atom</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atom_prefix/2"><b class="pred">atom_prefix</b><var class="arglist">(+AtomPrefixed:atom, +AtomPrefix:atom)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">True if <var>AtomPrefix</var> is a prefix of <var>AtomPrefixed</var>.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>AtomPrefixed</var></td><td class="argdescr">- The atom under inspection</td></tr>
+<tr><td><var>AtomPrefix</var></td><td class="argdescr">- The candidate leading atom</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atom_suffix/2"><b class="pred">atom_suffix</b><var class="arglist">(+AtomSuffixed:atom, +AtomSuffix:atom)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">True if <var>AtomSuffix</var> is a suffix of <var>AtomSuffixed</var>.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>AtomSuffixed</var></td><td class="argdescr">- the atom being inspected</td></tr>
+<tr><td><var>AtomSuffix</var></td><td class="argdescr">- the candidate leading atom</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atom_int/3"><b class="pred">atom_int</b><var class="arglist">(-Atom:atom, +Int:int, +Len:int)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Atom</var> with a representation of <var>Int</var> of length <var>Len</var>,
+left-truncating or left-padding the result with zeros, if necessary.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Atom</var></td><td class="argdescr">- The resulting integer representation</td></tr>
+<tr><td><var>Int</var></td><td class="argdescr">- The integer value to process</td></tr>
+<tr><td><var>Len</var></td><td class="argdescr">- The length of the result</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atom_number/2"><b class="pred">atom_number</b><var class="arglist">(?Atom:atom, ?Number:number)</var></a> is <b class="det">det</b></dt><dd class="defbody">Convert between atom and number, unifying <var>Atom</var> or <var>Number</var> with the result.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Atom</var></td><td class="argdescr">- The atom to convert</td></tr>
+<tr><td><var>Number</var></td><td class="argdescr">- The number to convert</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atom_sort/2"><b class="pred">atom_sort</b><var class="arglist">(+Atom:atom, -AtomResult:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Lexically sort <var>Atom</var>, unifying AtomSorted with the result.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Atom</var></td><td class="argdescr">- <var>Atom</var> to be sorted</td></tr>
+<tr><td><var>AtomResult</var></td><td class="argdescr">- The sorted atom</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atom_concat_number/3"><b class="pred">atom_concat_number</b><var class="arglist">(+Atom:atom, +Number:atom, -AtomResult:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>AtomResult</var> with the concatenation of <var>Atom</var> and <var>Number</var>.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Atom</var></td><td class="argdescr">- <var>Atom</var> to be concatenated</td></tr>
+<tr><td><var>Number</var></td><td class="argdescr">- <var>Number</var> to be concatenated</td></tr>
+<tr><td><var>AtomResult</var></td><td class="argdescr">- The result atom</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atom_concat3/4"><b class="pred">atom_concat3</b><var class="arglist">(+Atom1:atom, +Atom2:atom, +Atom3:atom, -Atom123:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Concatenate 3 atoms together.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>A1</var></td><td class="argdescr">- The head atom</td></tr>
+<tr><td><var>A2</var></td><td class="argdescr">- The middle atom</td></tr>
+<tr><td><var>A3</var></td><td class="argdescr">- The tail atom</td></tr>
+<tr><td><var>A123</var></td><td class="argdescr">- The result atom</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atom_concat4/5"><b class="pred">atom_concat4</b><var class="arglist">(+A1:atom, +A2:atom, +A3:atom, +A4:atom, -A1234:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Concatenate 4 atoms together.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>A1</var></td><td class="argdescr">- The head atom</td></tr>
+<tr><td><var>A2</var></td><td class="argdescr">- The 1st middle atom</td></tr>
+<tr><td><var>A3</var></td><td class="argdescr">- The 2nd middle atom</td></tr>
+<tr><td><var>A4</var></td><td class="argdescr">- The tail atom</td></tr>
+<tr><td><var>A1234</var></td><td class="argdescr">- The result atom</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atom_concat5/6"><b class="pred">atom_concat5</b><var class="arglist">(+A1:atom, +A2:atom, +A3:atom, +A4:atom, +A5:atom, -A12345:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Concatenate 5 atoms together.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>A1</var></td><td class="argdescr">- The head atom</td></tr>
+<tr><td><var>A2</var></td><td class="argdescr">- The 1st middle atom</td></tr>
+<tr><td><var>A3</var></td><td class="argdescr">- The 2nd middle atom</td></tr>
+<tr><td><var>A4</var></td><td class="argdescr">- The 3rd middle atom</td></tr>
+<tr><td><var>A5</var></td><td class="argdescr">- The tail atom</td></tr>
+<tr><td><var>A12345</var></td><td class="argdescr">- The result atom</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atom_concat6/7"><b class="pred">atom_concat6</b><var class="arglist">(+A1:atom, +A2:atom, +A3:atom, +A4:atom, +A5:atom, +A6:atom, -A123456:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Concatenate 6 atoms together.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>A1</var></td><td class="argdescr">- The head atom</td></tr>
+<tr><td><var>A2</var></td><td class="argdescr">- The 1st middle atom</td></tr>
+<tr><td><var>A3</var></td><td class="argdescr">- The 2nd middle atom</td></tr>
+<tr><td><var>A4</var></td><td class="argdescr">- The 3rd middle atom</td></tr>
+<tr><td><var>A4</var></td><td class="argdescr">- The 4th middle atom</td></tr>
+<tr><td><var>A6</var></td><td class="argdescr">- The tail atom</td></tr>
+<tr><td><var>A123456</var></td><td class="argdescr">- The result atom</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atoms_contained_all/2"><b class="pred">atoms_contained_all</b><var class="arglist">(+AtomContainer:atom, +AtomsList:list)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">True if <var>AtomContainer</var> contains all the atoms in <var>AtomsList</var>.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>AtomContainer</var></td><td class="argdescr">- Container atom</td></tr>
+<tr><td><var>AtomsList</var></td><td class="argdescr">- List of contained atoms</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atoms_contained_any/2"><b class="pred">atoms_contained_any</b><var class="arglist">(+AtomContainer:atom, +AtomsList:list)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">True if <var>AtomContainer</var> contains any of the atoms in <var>AtomsList</var>.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>AtomContainer</var></td><td class="argdescr">- Container atom</td></tr>
+<tr><td><var>AtomsList</var></td><td class="argdescr">- List of contained atoms</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atoms_chars/2"><b class="pred">atoms_chars</b><var class="arglist">(?Atoms:list, ?Chars:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify list of atoms with list of chars.
+
+<p>
+Please, note:
+a. as one single atom might yield more than one char, applying one
+operation followed by its reverse might not restore the original list<br>
+b. the operation, as well as its reverse, might yield the same list,
+as a list of chars is identical to a list of single-char atoms</p>
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Atoms</var></td><td class="argdescr">- List of atoms</td></tr>
+<tr><td><var>Chars</var></td><td class="argdescr">- List of chars</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atoms_codes/2"><b class="pred">atoms_codes</b><var class="arglist">(?Atoms:list, ?Codes:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify list of atoms with list of codes.
+
+<p>
+Please, note:</p>
+
+<ol>
+<li>as one single atom might yield more than one code, applying one
+operation followed by its reverse might not restore the original list&lt;br/&gt;</li>
+<li>the operation, as well as its reverse, can be applied to lists of chars,
+as a list of chars is identical to a list of single-char atoms</li>
+</ol>
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Atoms</var></td><td class="argdescr">- List of atoms</td></tr>
+<tr><td><var>Codes</var></td><td class="argdescr">- List of codes</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atoms_numbers/2"><b class="pred">atoms_numbers</b><var class="arglist">(?Atoms, ?Numbers)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify list of atoms with list of numbers they represent.
+
+<p>
+Note that the operation, as well as its reverse, can be applied to
+lists of chars, as a list of chars is identical to a list of single-char atoms
+(in that case, the range is [0,9])</p>
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Atoms</var></td><td class="argdescr">- List of atoms</td></tr>
+<tr><td><var>Numbers</var></td><td class="argdescr">- List of numbers</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="chars_lines/2"><b class="pred">chars_lines</b><var class="arglist">(?Chars:list, ?Lines:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify list of chars with lists of lines, each line itself a list of chars.
+
+<p>
+Both UNIX (LF or \n) and Windows (CRLF or \r\n) style line separators
+are considered. When building <var>Chars</var> from <var>Lines</var>, the OS-specific line
+terminator is used.</p>
+
+<p>
+HAZARD: lone CRs will be suppressed, without originating new lines.</p>
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Chars</var></td><td class="argdescr">- List of chars</td></tr>
+<tr><td><var>Lines</var></td><td class="argdescr">- List of lists of chars</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="codes_lines/2"><b class="pred">codes_lines</b><var class="arglist">(?Codes:list, ?Lines:list)</var></a></dt><dd class="defbody">Unify list of codes with lists of lines, each line itself a list of codes.
+
+<p>
+Both UNIX (LF or \n) and Windows (CRLF or \r\n) style line separators
+are considered. When building <var>Codes</var> from <var>Lines</var>, the OS-specific line
+terminator is used.</p>
+
+<p>
+HAZARD: lone CRs will be suppressed, without originating new lines.</p>
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Codes</var></td><td class="argdescr">- List of codes</td></tr>
+<tr><td><var>Lines</var></td><td class="argdescr">- List of lists of codes</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+</dl>
+
+</body>
+</html>

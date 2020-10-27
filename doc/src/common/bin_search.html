@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>bin_search.pl -- Binary search on sorted lists</title>
+
+<link rel="stylesheet" type="text/css" href="../../pldoc.css">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+</head>
+<body>
+
+
+<h1 class="file"><span style="float:right"></span>bin_search.pl -- Binary search on sorted lists</h1>
+
+<p>
+This is an implementation of the classic binary search on sorted lists
+(see <a href="https://en.wikipedia.org/wiki/Binary_search_algorithm">https://en.wikipedia.org/wiki/Binary_search_algorithm</a> ).</p>
+
+<p>
+To summmarize the algorithm:</p>
+
+<pre class="code" ext="">
+  1- take a list L of n elements with values A0, A1,...,An ordered such
+     that A0 &lt;= A1 &lt;= ... &lt;= An, and a target value T;
+     
+  2- set the indices l to 0 and r to n-1;
+  
+  3- if l &gt; r, terminate the search as unsuccessful;
+  
+  4- set the index m to the position of the middle element, so that it is
+     the floor (greatest integer less than or equal to) of (l + r) / 2;
+     
+  5- if Am &lt; T, set l to m + 1 an go to step 3;
+  
+  6- if Am &gt; T, set r to m - 1 an go to step 3;
+  
+  7- now, Am = T, the search is done, and m is the desired index.</pre>
+
+<dl class="tags">
+<dt class="keyword-author">author</dt><dd class="keyword-author">- GT Nunes</dd>
+<dt class="keyword-version">version</dt><dd class="keyword-version">- 1.0</dd>
+<dt class="keyword-copyright">copyright</dt><dd class="keyword-copyright">- (c) 2020 GT Nunes</dd>
+<dt class="keyword-license">license</dt><dd class="keyword-license">- BSD-3-Clause License</dd>
+</dl>
+
+<dl>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="bin_search/3"><b class="pred">bin_search</b><var class="arglist">(+Target:data, +Values:list, -Index:int)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Binary search on sorted lists.
+
+<p>
+Unify <var>Index</var> with the 0-based position of <var>Target</var> within <var>Values</var>, fail otherwise.</p>
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Target</var></td><td class="argdescr">- The value to search for</td></tr>
+<tr><td><var>Values</var></td><td class="argdescr">- The sorted list to be searched</td></tr>
+<tr><td><var>Index</var></td><td class="argdescr">- The 0-based index of <var>Target</var> within <var>Values</var>, on success</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+</dl>
+
+</body>
+</html>

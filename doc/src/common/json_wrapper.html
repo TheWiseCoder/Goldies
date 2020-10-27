@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>json_wrapper.pl -- Utilities for handling JSON-encoded data</title>
+
+<link rel="stylesheet" type="text/css" href="../../pldoc.css">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+</head>
+<body>
+
+
+<h1 class="file"><span style="float:right"></span>json_wrapper.pl -- Utilities for handling JSON-encoded data</h1>
+
+<p>
+The representations of JSON values in the SICStus and SWI-Prolog platforms
+are as follows:</p>
+
+<pre class="code" ext="">
+*|Number|* - A JSON number is represented as the corresponding Prolog number;
+             as a floating point number when the JSON number has an exponent
+             or a fractional part, otherwise as an integer.
+
+*|String|* - A JSON string is represented as the corresponding Prolog atom
+             (escaped surrogate pairs are combined into the corresponding
+              Unicode code point).
+
+*|Array|*  - A JSON array is represented as a list of the corresponding Prolog terms.
+
+*|Object|* - A JSON object is a sequence of name:value pairs, where each name
+             is a JSON string and each value is an arbitrary JSON value. It is
+             represented as a term `json(Members)` with `Members` being a list of
+             `Name=Value` pairs, where `Name` is a representation of the JSON
+             string name and `Value` is a representation of the JSON value.
+
+*|null|*   - Translated to the Prolog term `@(null)`.
+
+*|true|*   - Translated to the Prolog term `@(true)`.
+
+*|false|*  - Translated to the Prolog term `@(false)`.</pre>
+
+<dl class="tags">
+<dt class="keyword-author">author</dt><dd class="keyword-author">- GT Nunes</dd>
+<dt class="keyword-version">version</dt><dd class="keyword-version">- 1.0</dd>
+<dt class="keyword-copyright">copyright</dt><dd class="keyword-copyright">- (c) 2020 GT Nunes</dd>
+<dt class="keyword-license">license</dt><dd class="keyword-license">- BSD-3-Clause License</dd>
+</dl>
+
+<dl>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="json_input/2"><b class="pred">json_input</b><var class="arglist">(+Stream:ref, -Term:json)</var></a> is <b class="det">det</b></dt><dd class="defbody">Read next value from <var>Stream</var> into <var>Term</var>.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Stream</var></td><td class="argdescr">- The stream to read from</td></tr>
+<tr><td><var>Term</var></td><td class="argdescr">- The JSON term to unify with</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="json_input/3"><b class="pred">json_input</b><var class="arglist">(+Stream:ref, -Term:json, +Options:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Read next value from <var>Stream</var> into <var>Term</var>, according to <var>Options</var>.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Stream</var></td><td class="argdescr">- The stream to read from</td></tr>
+<tr><td><var>Term</var></td><td class="argdescr">- The JSON term to unify with</td></tr>
+<tr><td><var>Options</var></td><td class="argdescr">- List of options guiding the input process</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="json_output/2"><b class="pred">json_output</b><var class="arglist">(+Stream:ref, +Term:json)</var></a> is <b class="det">det</b></dt><dd class="defbody">Write <var>Term</var> to <var>Stream</var>.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Stream</var></td><td class="argdescr">- The stream to write to</td></tr>
+<tr><td><var>Term</var></td><td class="argdescr">- The JSON term to write to <var>Stream</var></td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="json_output/3"><b class="pred">json_output</b><var class="arglist">(+Stream:ref, +Term:json, +Options:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Write <var>Term</var> to <var>Stream</var>, according to <var>Options</var>.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Stream</var></td><td class="argdescr">- The stream to write to</td></tr>
+<tr><td><var>Term</var></td><td class="argdescr">- The JSON term to write to <var>Stream</var></td></tr>
+<tr><td><var>Options</var></td><td class="argdescr">- List of options guiding the output process</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="json_add/3"><b class="pred">json_add</b><var class="arglist">(+JsonTerm:term, +Items:list, -JsonResult:json)</var></a> is <b class="det">det</b></dt><dd class="defbody">Add <var>Items</var> to <var>JsonTerm</var>, and unify <var>JsonResult</var> with the result.
+<var>Items</var> can be a scalar value.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>JSonTerm</var></td><td class="argdescr">- The JSON term</td></tr>
+<tr><td><var>Items</var></td><td class="argdescr">- The item or list of items to add to</td></tr>
+<tr><td><var>JsonResult</var></td><td class="argdescr">- The resulting JSON term</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="json_merge/2"><b class="pred">json_merge</b><var class="arglist">(+JsonTerms:list, -JsonResult:json)</var></a> is <b class="det">det</b></dt><dd class="defbody">Merge a list of JSON terms into a single JSON term.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>JsonTerms</var></td><td class="argdescr">- The JSON terme to merge</td></tr>
+<tr><td><var>JsonResult</var></td><td class="argdescr">- The resulting JSON term</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="json_member/3"><b class="pred">json_member</b><var class="arglist">(+JsonTerm:json, +Name:atom, -Value:data)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Value</var> with the corresponding value for <var>Name</var> in <var>JsonTerm</var>.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>JsonTerm</var></td><td class="argdescr">- The JSON term</td></tr>
+<tr><td><var>Name</var></td><td class="argdescr">- The name of the target member</td></tr>
+<tr><td><var>Value</var></td><td class="argdescr">- The value associated with the targer member</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="json_members/3"><b class="pred">json_members</b><var class="arglist">(+JsonTerm:json, +Names:list, -Values:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Values</var> with the corresponding values for <var>Names</var> in <var>JsonTerm</var>.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>JsonTerm</var></td><td class="argdescr">- The JSON term</td></tr>
+<tr><td><var>Names</var></td><td class="argdescr">- The names of the target members</td></tr>
+<tr><td><var>Values</var></td><td class="argdescr">- The values associated with the targer members</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="json_atom/2"><b class="pred">json_atom</b><var class="arglist">(?JsonTerm:json, ?JsonAtom:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify a JSON term with an atom standing for the corresponding JSON
+string representation (see <a href="json_wrapper.html#json_codes/2">json_codes/2</a> and <a href="json_wrapper.html#json_codes/3">json_codes/3</a> below).
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>JsonTerm</var></td><td class="argdescr">- The JSON term</td></tr>
+<tr><td><var>JsonAtom</var></td><td class="argdescr">- The atom holding the JSON string representation</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="json_atom/3"><b class="pred">json_atom</b><var class="arglist">(?JsonTerm:json, ?JsonAtom:atom, +Options:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify a JSON term with an atom standing for the corresponding JSON
+string representation, according to <var>Options</var>
+(see <a href="json_wrapper.html#json_codes/2">json_codes/2</a> and <a href="json_wrapper.html#json_codes/3">json_codes/3</a> below).
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>JsonTerm</var></td><td class="argdescr">- The JSON term</td></tr>
+<tr><td><var>JsonAtom</var></td><td class="argdescr">- The atom holding the JSON string representation</td></tr>
+<tr><td><var>Options</var></td><td class="argdescr">- List of options for json_read/json_write</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="json_chars/2"><b class="pred">json_chars</b><var class="arglist">(?JsonTerm:json, ?JsonChars:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>JsonTerm</var> with a list of chars standing for the corresponding
+JSON string representation (see <a href="json_wrapper.html#json_codes/2">json_codes/2</a> and <a href="json_wrapper.html#json_codes/3">json_codes/3</a> below).
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>JsonTerm</var></td><td class="argdescr">- The JSON term</td></tr>
+<tr><td><var>JsonChars</var></td><td class="argdescr">- List of chars holding the JSON string representation</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="json_chars/3"><b class="pred">json_chars</b><var class="arglist">(?JsonTerm:json, ?JsonChars:list, +Options:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>JsonTerm</var> with a list of chars standing for the corresponding
+JSON string representation, according to <var>Options</var>
+(see <a href="json_wrapper.html#json_codes/2">json_codes/2</a> and <a href="json_wrapper.html#json_codes/3">json_codes/3</a> below).
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>JsonTerm</var></td><td class="argdescr">- The JSON term</td></tr>
+<tr><td><var>JsonChars</var></td><td class="argdescr">- The chars holding the JSON string representation</td></tr>
+<tr><td><var>Options</var></td><td class="argdescr">- List of options for json_read/json_write</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="json_codes/2"><b class="pred">json_codes</b><var class="arglist">(?JsonTerm:json, ?JsonCodes:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify a JSON term with a list of char codes standing for the corresponding
+JSON string representation.
+
+<p>
+This is acomplished either by writing the term as JSON, using <a class="extmanual" href="http://www.swi-prolog.org/pldoc/man?predicate=json_write/2">json_write/2</a> or
+<a class="extmanual" href="http://www.swi-prolog.org/pldoc/man?predicate=json_write/3">json_write/3</a>, or by reading the JSON codes, using <a class="extmanual" href="http://www.swi-prolog.org/pldoc/man?predicate=json_read/2">json_read/2</a> or <a class="extmanual" href="http://www.swi-prolog.org/pldoc/man?predicate=json_read/3">json_read/3</a>.
+Examples:</p>
+
+<p>
+<b>1a.</b></p>
+
+<pre class="code" ext="">
+  Atom = '{"x":1,"y":2}',
+  atom_codes(Atom, Codes),
+  json_codes(Term, Codes)
+yields
+  Term = json([x=1,y=2])  (SICStus)
+  Term = json([x=1, y=2]) (SWI-Prolog)</pre>
+
+<p>
+<b>1b.</b></p>
+
+<pre class="code" ext="">
+  Term = json([x=1,y=2]),
+  json_codes(Term, Codes),
+  atom_codes(Atom, Codes)
+yields
+  Atom = '{\n  "x":1,\n  "y":2\n}' (SICStus)
+  Atom = '{"x":1, "y":2}'          (SWI-Prolog)</pre>
+
+<p>
+<b>2a.</b></p>
+
+<pre class="code" ext="">
+  Atom = '{"C":["a","b","c"]}',
+  atom_codes(Atom, Codes),
+  json_codes(Term, Codes)
+yields
+  Term = json(['C'=[a,b,c]])   (SICStus)
+  Term = json(['C'=[a, b, c]]) (SWI-Prolog)</pre>
+
+<p>
+<b>2b.</b></p>
+
+<pre class="code" ext="">
+  List = [a,b,c],
+  Term = json(['C'=List),
+  json_codes(Term, Codes),
+  atom_codes(Atom, Codes)
+yields
+  Atom = '{\n  "C":["a", "b", "c"]\n}' (SICStus)
+  Atom = '{"C": ["a", "b", "c" ]}'     (SWI-Prolog)</pre>
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>JsonTerm</var></td><td class="argdescr">- The JSON term</td></tr>
+<tr><td><var>JsonCodes</var></td><td class="argdescr">- List of char codes holding the JSON string representation</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="json_codes/3"><b class="pred">json_codes</b><var class="arglist">(?JsonTerm:json, ?JsonCodes:list, +Options:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>JsonTerm</var> with a list of char codes standing for the corresponding
+JSON string representation, according to <var>Options</var> (see <a href="json_wrapper.html#json_codes/2">json_codes/2</a> above).
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>JsonTerm</var></td><td class="argdescr">- The JSON term</td></tr>
+<tr><td><var>JsonCodes</var></td><td class="argdescr">- List of char codes holding the JSON string representation</td></tr>
+<tr><td><var>Options</var></td><td class="argdescr">- List of options for json_read/json_write</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+</dl>
+
+</body>
+</html>

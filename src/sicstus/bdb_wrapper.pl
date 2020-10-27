@@ -81,7 +81,7 @@
         environ/2
     ]).
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------------
 
 % make sure the given dataset's base path for Berkeley DB exists
 % bdb_base(+DataSet)
@@ -190,7 +190,7 @@ bdb_erase(TagSet, DataSet) :-
     ( \+ directory_exists(BdbDir)
     ; catch(delete_directory(BdbDir, [if_nonempty(delete)]), _, fail) ).
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------------
 
 % bdb_fail(+SaveDir)
 % SaveDir   the saved working directory
@@ -202,7 +202,7 @@ bdb_fail(SaveDir) :-
     % fail the Berkeley DB action
     !, fail.
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------------
 
 % Unify BaseDir with the base directory for Berkeley DB persistence.
 

@@ -1,1 +1,0 @@
-Collections of small utilities, coded for the SWI-Prolog platform. For instructions, please refer to the individual *.md* files in this folder.

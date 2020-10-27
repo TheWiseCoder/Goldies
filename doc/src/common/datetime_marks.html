@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>datetime_marks.pl -- Date and time related utilities</title>
+
+<link rel="stylesheet" type="text/css" href="../../pldoc.css">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+</head>
+<body>
+
+
+<h1 class="file"><span style="float:right"></span>datetime_marks.pl -- Date and time related utilities</h1>
+
+<dl class="tags">
+<dt class="keyword-author">author</dt><dd class="keyword-author">- GT Nunes</dd>
+<dt class="keyword-version">version</dt><dd class="keyword-version">- 1.0</dd>
+<dt class="keyword-copyright">copyright</dt><dd class="keyword-copyright">- (c) 2020 GT Nunes</dd>
+<dt class="keyword-license">license</dt><dd class="keyword-license">- BSD-3-Clause License</dd>
+</dl>
+
+<dl>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="date_now/3"><b class="pred">date_now</b><var class="arglist">(-Year:int, -Month:int, -Day:int)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Year</var>, <var>Month</var>, and <var>Day</var> with the corresponding values for today.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Year</var></td><td class="argdescr">- The current year</td></tr>
+<tr><td><var>Month</var></td><td class="argdescr">- The current month</td></tr>
+<tr><td><var>Day</var></td><td class="argdescr">- The day of the month today</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="datetime_now/6"><b class="pred">datetime_now</b><var class="arglist">(-Year:int, -Month:int, -Day:int, -Hour:int, -Min:int, -Sec:int)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Year</var>, <var>Month</var>, <var>Day</var>, <var>Hour</var>, <var>Min</var>, and <var>Sec</var> with the corresponding values for now.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Year</var></td><td class="argdescr">- The current year</td></tr>
+<tr><td><var>Month</var></td><td class="argdescr">- The current month</td></tr>
+<tr><td><var>Day</var></td><td class="argdescr">- The day of the month today</td></tr>
+<tr><td><var>Hour</var></td><td class="argdescr">- The hour of day now</td></tr>
+<tr><td><var>Min</var></td><td class="argdescr">- The minute within the hour now</td></tr>
+<tr><td><var>Sec</var></td><td class="argdescr">- The second within the minute now</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="time_now/3"><b class="pred">time_now</b><var class="arglist">(-Hour:int, -Min:int, -Sec:int)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Hour</var>, <var>Min</var>, and <var>Sec</var> with the corresponding values for now.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Hour</var></td><td class="argdescr">- The hour of day now</td></tr>
+<tr><td><var>Min</var></td><td class="argdescr">- The minute within the hour now</td></tr>
+<tr><td><var>Sec</var></td><td class="argdescr">- The second within the minute now</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="date_display/2"><b class="pred">date_display</b><var class="arglist">(+When:int, -Display:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Display</var> with today's or <var>When</var>'s date as YYYY-MM-DD.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>When</var></td><td class="argdescr">- UNIX-style timestamp</td></tr>
+<tr><td><var>Display</var></td><td class="argdescr">- Atom holding the date as YYYY-MM-DD</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="date_display/4"><b class="pred">date_display</b><var class="arglist">(+Year:int, +Month:int, +Day:int, -Display)</var></a></dt><dd class="defbody">Unify <var>Display</var> with the given date as YYYY-MM-DD.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Year</var></td><td class="argdescr">- The reference year</td></tr>
+<tr><td><var>Month</var></td><td class="argdescr">- The reference month</td></tr>
+<tr><td><var>Day</var></td><td class="argdescr">- The reference day</td></tr>
+<tr><td><var>Display</var></td><td class="argdescr">- Atom holding the date as YYYY-MM-DD</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="datetime_display/2"><b class="pred">datetime_display</b><var class="arglist">(+When:int, -Display:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Display</var> with the date and time <code>now</code> or at <var>When</var>, as YYYY-MM-DD HH:MM:SS.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>When</var></td><td class="argdescr">- UNIX-style timestamp</td></tr>
+<tr><td><var>Display</var></td><td class="argdescr">- Atom holding the datetime as YYYY-MM-DD HH:MM:SS</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="datetime_display/7"><b class="pred">datetime_display</b><var class="arglist">(+Year:int, +Month:int, +Day:int, +Hour:int, +Min:int, +Sec:int, -Display:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Display</var> with the given date and time, as YYYY-MM-DD HH:MM:SS.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Year</var></td><td class="argdescr">- The reference year</td></tr>
+<tr><td><var>Month</var></td><td class="argdescr">- The reference month</td></tr>
+<tr><td><var>Day</var></td><td class="argdescr">- The reference day</td></tr>
+<tr><td><var>Hour</var></td><td class="argdescr">- The reference hour</td></tr>
+<tr><td><var>Min</var></td><td class="argdescr">- The reference minute</td></tr>
+<tr><td><var>Sec</var></td><td class="argdescr">- The reference second</td></tr>
+<tr><td><var>Display</var></td><td class="argdescr">- Atom holding the datetime as YYYY-MM-DD HH:MM:SS</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="time_display/2"><b class="pred">time_display</b><var class="arglist">(+When:int, -Display:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Display</var> with the time <code>now</code> or at <var>When</var>, as HH:MM:SS.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>now</var></td><td class="argdescr">- Current time indicator</td></tr>
+<tr><td><var>When</var></td><td class="argdescr">- UNIX-style timestamp</td></tr>
+<tr><td><var>Display</var></td><td class="argdescr">- Atom holding the time as HH:MM:SS</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="time_display/4"><b class="pred">time_display</b><var class="arglist">(+Hour:int, +Min:int, +Sec:int, -Display:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Display</var> with the given time as HH:MM:SS.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Hour</var></td><td class="argdescr">- The reference hour</td></tr>
+<tr><td><var>Min</var></td><td class="argdescr">- The reference minute</td></tr>
+<tr><td><var>Sec</var></td><td class="argdescr">- The reference second</td></tr>
+<tr><td><var>Display</var></td><td class="argdescr">- Atom holding the time as HH:MM:SS</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="datetime_ietf/2"><b class="pred">datetime_ietf</b><var class="arglist">(+Mjd:int, -DtIetf:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>DtIetf</var> with the IETF timestamp for <code>today</code>, <code>now</code> or at <var>Mjd</var>, as defined
+in RFC 2822 (example: Wed, 01 Jan 2020 08:05:03 GMT).
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Mjd</var></td><td class="argdescr">- Date in Modified Julian Date format</td></tr>
+<tr><td><var>DtIetf</var></td><td class="argdescr">- Atom holding the corresponding datetime in IETF format</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="datetime_ietf/7"><b class="pred">datetime_ietf</b><var class="arglist">(+Year:int, +Month:int, +Day:int, +Hour:int, +Min:int, +Sec:int, -DtIetf:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>DtIetf</var> with the IETF timestamp for the given date and time, as defined
+in RFC 2822 (example: Wed, 01 Jan 2020 08:05:03 GMT).
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Year</var></td><td class="argdescr">- The reference year</td></tr>
+<tr><td><var>Month</var></td><td class="argdescr">- The reference month</td></tr>
+<tr><td><var>Day</var></td><td class="argdescr">- The reference day</td></tr>
+<tr><td><var>Hour</var></td><td class="argdescr">- The reference hour</td></tr>
+<tr><td><var>Min</var></td><td class="argdescr">- The reference minute</td></tr>
+<tr><td><var>Sec</var></td><td class="argdescr">- The reference second</td></tr>
+<tr><td><var>DtIetf</var></td><td class="argdescr">- Atom holding the corresponding datetime in IETF format</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="date_weekday/2"><b class="pred">date_weekday</b><var class="arglist">(Mjd:int, -Dow:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Dow</var> with today's or <var>Mjd</var>'s short-hand 3-letter weekday name.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Mjd</var></td><td class="argdescr">- Date in Modified Julian Date format</td></tr>
+<tr><td><var>Dow</var></td><td class="argdescr">- Corresponding short-hand 3-letter weekday name</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="date_weekday/4"><b class="pred">date_weekday</b><var class="arglist">(+Year:int, +Month:int, +Day:int, -Dow:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Dow</var> with the given date's short-hand 3-letter weekday name.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Year</var></td><td class="argdescr">- The reference year</td></tr>
+<tr><td><var>Month</var></td><td class="argdescr">- The reference month</td></tr>
+<tr><td><var>Day</var></td><td class="argdescr">- The reference day</td></tr>
+<tr><td><var>Dow</var></td><td class="argdescr">- Corresponding short-hand 3-letter weekday name</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="date_gregorian/3"><b class="pred">date_gregorian</b><var class="arglist">(+Year:int, +Month:int, +Day:int)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">True if <var>Day</var>, <var>Month</var>, and <var>Year</var> constitute a valid date in the Gregorian calendar.
+
+<p>
+Note that all the code herein does is to constrain the relationships between
+the values of <var>Day</var>, <var>Month</var>, and <var>Year</var>. As an example, this would iterate on all
+leap years of the 20th century:<br>
+<code>date_gregorian(Y, M, 29)</code>, Y #&gt;= 1900 #/\ Y #&lt; 2000, <code>indomain(Y)</code></p>
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Year</var></td><td class="argdescr">- <var>Year</var> in the Gregorian calendar (4713 BC - 3267 AD)</td></tr>
+<tr><td><var>Month</var></td><td class="argdescr">- <var>Month</var> ordinal (1 - 12)</td></tr>
+<tr><td><var>Day</var></td><td class="argdescr">- <var>Day</var> ordinal (1 - 31)</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="month_ordinal/2"><b class="pred">month_ordinal</b><var class="arglist">(?Month:atom, ?Ord:int)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Month</var> or <var>Ord</var> with the short-hand 3-letter month name or the month's
+1-based ordinal, respectively.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Month</var></td><td class="argdescr">- The short-hand month name</td></tr>
+<tr><td><var>Ord</var></td><td class="argdescr">- The corresponding 1-based ordinal</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="weekday_ordinal/2"><b class="pred">weekday_ordinal</b><var class="arglist">(?Dow:atom, ?Ord:int)</var></a> is <b class="det">det</b></dt><dd class="defbody">
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Dow</var></td><td class="argdescr">- Short-hand 3-letter weekday name</td></tr>
+<tr><td><var>Ord</var></td><td class="argdescr">- The corresponding ISO ordinal number</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+</dl>
+
+</body>
+</html>

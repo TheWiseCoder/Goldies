@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>list_marks.pl -- Miscellaneous small list-related utilities</title>
+
+<link rel="stylesheet" type="text/css" href="../../pldoc.css">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+</head>
+<body>
+
+
+<h1 class="file"><span style="float:right"></span>list_marks.pl -- Miscellaneous small list-related utilities</h1>
+
+<dl class="tags">
+<dt class="keyword-author">author</dt><dd class="keyword-author">- GT Nunes</dd>
+<dt class="keyword-version">version</dt><dd class="keyword-version">- 1.0</dd>
+<dt class="keyword-copyright">copyright</dt><dd class="keyword-copyright">- (c) 2020 GT Nunes</dd>
+<dt class="keyword-license">license</dt><dd class="keyword-license">- BSD-3-Clause License</dd>
+</dl>
+
+<dl>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="append3/4"><b class="pred">append3</b><var class="arglist">(+L1:list, +L2:list, +L3:list, -L123:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Append 3 lists together.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>L1</var></td><td class="argdescr">- The head list</td></tr>
+<tr><td><var>L2</var></td><td class="argdescr">- The middle list</td></tr>
+<tr><td><var>L3</var></td><td class="argdescr">- The tail list</td></tr>
+<tr><td><var>L123</var></td><td class="argdescr">- The result list</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="append4/5"><b class="pred">append4</b><var class="arglist">(+L1:list, +L2:list, +L3:list, +L4:list, -L1234:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Append 4 lists together.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>L1</var></td><td class="argdescr">- The head list</td></tr>
+<tr><td><var>L2</var></td><td class="argdescr">- 1st middle list</td></tr>
+<tr><td><var>L3</var></td><td class="argdescr">- 2nd middle list</td></tr>
+<tr><td><var>L4</var></td><td class="argdescr">- The tail list</td></tr>
+<tr><td><var>L1234</var></td><td class="argdescr">- The result list</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="append5/6"><b class="pred">append5</b><var class="arglist">(+L1:list, +L2:list, +L3:list, +L4:list, L5:list, -L12345:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Append 5 lists together.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>L1</var></td><td class="argdescr">- The head list</td></tr>
+<tr><td><var>L2</var></td><td class="argdescr">- 1st middle list</td></tr>
+<tr><td><var>L3</var></td><td class="argdescr">- 2nd middle list</td></tr>
+<tr><td><var>L4</var></td><td class="argdescr">- 3nd middle list</td></tr>
+<tr><td><var>L5</var></td><td class="argdescr">- The tail list</td></tr>
+<tr><td><var>L12345</var></td><td class="argdescr">- The final list</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="convlist_first/3"><b class="pred">convlist_first</b><var class="arglist">(:Goal:pred, +List:list, -Element:data)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Unify <var>Element</var> with the first element in <var>List</var> that satisfies <var>Goal</var>.
+Similar to <a class="builtin" href="http://www.swi-prolog.org/pldoc/man?predicate=convlist/3">convlist/3</a>, but only the first element for which
+<code>call(Goal, Element, _)</code> succeeds is returned. Fail if no element succeeds.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Goal</var></td><td class="argdescr">- Predicate to be invoked with the elements of <var>List</var></td></tr>
+<tr><td><var>List</var></td><td class="argdescr">- <var>List</var> of parameters for <var>Goal</var> invocation</td></tr>
+<tr><td><var>Element</var></td><td class="argdescr">- The first element in <var>List</var> with which a <var>Goal</var> invocation succeeds</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="lists_find/3"><b class="pred">lists_find</b><var class="arglist">(+Lists:list, +Element:data, -Pos1:int)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Unify <var>Pos1</var> with the 1-based position of the first list in <var>Lists</var> containing <var>Element</var>.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Lists</var></td><td class="argdescr">- List of lists under inspection</td></tr>
+<tr><td><var>Element</var></td><td class="argdescr">- <var>Element</var> being sought</td></tr>
+<tr><td><var>Pos1</var></td><td class="argdescr">- 1-based position of the list containing the element</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="lists_start_with/3"><b class="pred">lists_start_with</b><var class="arglist">(+Lists, +Sublist, -List)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Unify <var>List</var> with the first list in <var>Lists</var> starting with <var>Sublist</var>.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Lists</var></td><td class="argdescr">- <var>List</var> of lists under inspection</td></tr>
+<tr><td><var>Sublist</var></td><td class="argdescr">- <var>Sublist</var> being sought</td></tr>
+<tr><td><var>List</var></td><td class="argdescr">- The list starting with the given elements</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="lists_consolidate/3"><b class="pred">lists_consolidate</b><var class="arglist">(+ListsRefs:list, +ListElems:list, -ListsResult:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Consolidate ListsResults with a list of lists based on the contents of
+<var>ListsRefs</var> and <var>ListElems</var>.
+
+<p>
+If a list within ListsRef contains the first element of <var>ListElems</var>, the elements
+of that list ListElem are appended to its head, otherwise that list is appended
+to the head of ListsRef. Examples:</p>
+
+<p>
+<b>1.</b></p>
+
+<pre class="code" ext="">
+  lists_consolidate([[1,d,b],[4,c,f]], [c,j,k], ListsResult)
+yields
+  ListsResult = [[1,d,b],[c,j,k,4,c,f]]</pre>
+
+<p>
+<b>2.</b></p>
+
+<pre class="code" ext="">
+  lists_consolidate([[1,d,b],[4,c,f]], [d,j,k], ListsResult)
+yields
+  ListsResult = [[d,j,k,1,d,b],[4,c,f]]</pre>
+
+<p>
+<b>3.</b></p>
+
+<pre class="code" ext="">
+  lists_consolidate([[1,d,b],[4,c,f]], [j,k,l], ListsResult)
+yields
+  ListsResult = [[j,k,l],[1,d,b],[4,c,f]]</pre>
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>ListsRefs</var></td><td class="argdescr">- The reference list of lists</td></tr>
+<tr><td><var>ListElems</var></td><td class="argdescr">- The list to be consolidated into the list of lists</td></tr>
+<tr><td><var>ListsResult</var></td><td class="argdescr">- The resulting list of lists</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_minus_list/3"><b class="pred">list_minus_list</b><var class="arglist">(+ListRef:list, +ListElems:list, -ListResult:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Remove from <var>ListRef</var> all occurrences of elements in <var>ListElems</var>.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>ListRef</var></td><td class="argdescr">- List to be inspected for elements removal</td></tr>
+<tr><td><var>ListElems</var></td><td class="argdescr">- List of elements to be removed</td></tr>
+<tr><td><var>ListResult</var></td><td class="argdescr">- The resulting purged list</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_replace0/4"><b class="pred">list_replace0</b><var class="arglist">(+Pos0:int, +List:list, +Element:data, -ListResult:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Replace the element at 0-based <var>Pos0</var> in <var>List</var> with <var>Element</var>.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Pos0</var></td><td class="argdescr">- the 0-based target position</td></tr>
+<tr><td><var>List</var></td><td class="argdescr">- the source list</td></tr>
+<tr><td><var>Element</var></td><td class="argdescr">- The replacing element</td></tr>
+<tr><td><var>ListResult</var></td><td class="argdescr">- The resulting list with <var>Element</var> at position <var>Pos0</var></td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_replace1/4"><b class="pred">list_replace1</b><var class="arglist">(+Pos0:int, +List:list, +Element:data, -ListResult:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Replace the element at 1-based Pos1 in <var>List</var> with <var>Element</var>.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Pos1</var></td><td class="argdescr">- the 1-based target position</td></tr>
+<tr><td><var>List</var></td><td class="argdescr">- the source list</td></tr>
+<tr><td><var>Element</var></td><td class="argdescr">- The replacing element</td></tr>
+<tr><td><var>ListResult</var></td><td class="argdescr">- The resulting list with <var>Element</var> at position Pos1</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_values/4"><b class="pred">list_values</b><var class="arglist">(+Count:int, +Start:number, +Offset:number, -Values:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Values</var> with a list with <var>Count</var> calculated values as elements
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Count</var></td><td class="argdescr">- Number of elements</td></tr>
+<tr><td><var>Start</var></td><td class="argdescr">- The start value</td></tr>
+<tr><td><var>Offset</var></td><td class="argdescr">- The offset</td></tr>
+<tr><td><var>Values</var></td><td class="argdescr">- List with the values produced</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="lists_flatten/2"><b class="pred">lists_flatten</b><var class="arglist">(+Lists:list, -List:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Recursively flatten a list of lists.
+
+<p>
+The original order of the elements is kept, and repeating values are not removed.
+Note that <a class="builtin" href="http://www.swi-prolog.org/pldoc/man?predicate=append/2">append/2</a> flattens only the first level within the list of lists.</p>
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Lists</var></td><td class="argdescr">- <var>List</var> of lists to flatten</td></tr>
+<tr><td><var>List</var></td><td class="argdescr">- Flattened list</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_fill/3"><b class="pred">list_fill</b><var class="arglist">(+Count:int, +Item:data, -List:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>List</var> with a list containing <var>Count</var> instances of <var>Item</var>.
+(Note that <var>Count</var> = 0 is acceptable).
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Count</var></td><td class="argdescr">- The number of instances</td></tr>
+<tr><td><var>Item</var></td><td class="argdescr">- The item to append to list</td></tr>
+<tr><td><var>List</var></td><td class="argdescr">- The resulting list</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_common/3"><b class="pred">list_common</b><var class="arglist">(+List1:list, List2:list, -ListCommon:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>ListCommon</var> with the elements common to <var>List1</var> and <var>List2</var>,
+in the order they are found in <var>List1</var>.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>List1</var></td><td class="argdescr">- The first list</td></tr>
+<tr><td><var>List2</var></td><td class="argdescr">- The second list</td></tr>
+<tr><td><var>ListCommon</var></td><td class="argdescr">- The resulting list</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_compacts/2"><b class="pred">list_compacts</b><var class="arglist">(+List:list, -ListsCompact:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify a list of integers with a list of lists, each one of them containing
+a range of values found in the original list.
+
+<p>
+The original list must have unique elements and be ascendingly sorted,
+otherwise the compactification will yield unpredictable results. Examples:</p>
+
+<p>
+<b>1.</b></p>
+
+<pre class="code" ext="">
+  list_compacts([1,3,4,6,7,8,10], ListsCompact)
+yields
+  ListsCompact = [[1,1],[3,4],[6,8],[10,10]]</pre>
+
+<p>
+<b>2.</b></p>
+
+<pre class="code" ext="">
+  list_compacts(List, [[1,1],[3,4],[6,8],[10,10]])
+yields
+  List = [1,3,4,6,7,8,10]</pre>
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>List</var></td><td class="argdescr">- The input list</td></tr>
+<tr><td><var>ListsCompact</var></td><td class="argdescr">- The resulting compactified list</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_split/3"><b class="pred">list_split</b><var class="arglist">(+List:list, +Sep:atom, -Lists:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Split a list into various lists, based on a given separator.
+If no separator exists, a list of lists with one element is returned.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>List</var></td><td class="argdescr">- The list under inspection</td></tr>
+<tr><td><var>Sep</var></td><td class="argdescr">- The separator</td></tr>
+<tr><td><var>Lists</var></td><td class="argdescr">- The resulting list of lists</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_count_same/3"><b class="pred">list_count_same</b><var class="arglist">(+List:list, +Pos:int, -Count:int)</var></a> is <b class="det">det</b></dt><dd class="defbody"><var>Count</var> occurrences of the same element contiguously from a given
+0-based position within a list.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>List</var></td><td class="argdescr">- The list under inspection</td></tr>
+<tr><td><var>Pos</var></td><td class="argdescr">- The 0-based position of the element to count</td></tr>
+<tr><td><var>Count</var></td><td class="argdescr">- Tthe number of cosecutive occurrences of the element</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_same/1"><b class="pred">list_same</b><var class="arglist">(+List:list)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Assert whether all elements in <var>List</var> are the same. Note that empty lists will fail.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>List</var></td><td class="argdescr">- <var>List</var> being inspected</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_same/4"><b class="pred">list_same</b><var class="arglist">(+List:list, ?Before:int, ?Length:int, ?After:int)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Assert whether all elements in specified sublist of <var>List</var> are the same.
+Note that empty lists will fail.</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_same0/3"><b class="pred">list_same0</b><var class="arglist">(+List:list, +Pos0:int, +Count:int)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Assert whether all elements in specified sublist of <var>List</var> are the same.
+Note that empty lists will fail.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>List</var></td><td class="argdescr">- <var>List</var> being inspected</td></tr>
+<tr><td><var>Pos0</var></td><td class="argdescr">- 0-based starting position</td></tr>
+<tr><td><var>Count</var></td><td class="argdescr">- Number of items to compare</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_same1/3"><b class="pred">list_same1</b><var class="arglist">(+List:list, +Pos1:int, +Count:int)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Assert whether all elements in specified sublist of <var>List</var> are the same.
+Note that empty lists will fail.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>List</var></td><td class="argdescr">- <var>List</var> being inspected</td></tr>
+<tr><td><var>Pos1</var></td><td class="argdescr">- 1-based starting position</td></tr>
+<tr><td><var>Count</var></td><td class="argdescr">- Number of items to compare</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="lists_common/2"><b class="pred">lists_common</b><var class="arglist">(+List1:list, +List2:list)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Assert whether the given lists have at least one element in common.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>List1</var></td><td class="argdescr">- first list to compare</td></tr>
+<tr><td><var>List2</var></td><td class="argdescr">- second list ot compare</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+</dl>
+
+</body>
+</html>

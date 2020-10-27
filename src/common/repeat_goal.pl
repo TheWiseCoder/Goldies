@@ -1,42 +1,25 @@
-/*******************************************************************************
-* FILENAME / MODULE : repeat-goal.pl / repeat_goal
-*
-* DESCRIPTION :
-*       Repeat invocation of goal a given number of times,
-*       with varying number of parameters.
-*
-* PUBLIC PREDICATES :
-*       repeat_goal(:Goal, N, -Results)
-*       repeat_goal(:Goal, N, +P, -Results)
-*       repeat_goal(:Goal, N, +P1, +P2, -Results)
-*       repeat_goal(:Goal, N, +P1, +P2, +P3, -Results)
-*       repeat_goal(:Goal, N, +P1, +P2, +P3, +P4, -Results)
-*       repeat_goal(:Goal, N, +P1, +P2, +P3, +P4, P5, -Results)
-*       repeat_goal(:Goal, N, +P1, +P2, +P3, +P4, P5, P6, -Results)
-*
-* NOTES :
-*       None yet.
-*
-*       Copyright TheWiseCoder 2020.  All rights reserved.
-*
-* REVISION HISTORY :
-*
-* DATE        AUTHOR            REVISION
-* ----------  ----------------  ------------------------------------------------
-* 2020-10-06  GT Nunes          Module creation
-*
-*******************************************************************************/
-
 :- module(repeat_goal,
     [
-        repeat_goal/3,
-        repeat_goal/4,
-        repeat_goal/5,
-        repeat_goal/6,
-        repeat_goal/7,
-        repeat_goal/8,
-        repeat_goal/9
+        repeat_goal/3, % repeat_goal(:Goal, +N, -Result)
+        repeat_goal/4, % repeat_goal(:Goal, +N, +P, -Result)
+        repeat_goal/5, % repeat_goal(:Goal, +N, +P1, +P2, -Result)
+        repeat_goal/6, % repeat_goal(:Goal, +N, +P1, +P2, +P3, -Result)
+        repeat_goal/7, % repeat_goal(:Goal, +N, +P1, +P2, +P3, +P4, -Result)
+        repeat_goal/8, % repeat_goal(:Goal, +N, +P1, +P2, +P3, +P4, +P5, -Result)
+        repeat_goal/9  % repeat_goal(:Goal, +N, +P1, +P2, +P3, +P4, +P5, +P6, -Result)
     ]).
+
+/** <module>  Repeat invocation of goal
+
+Repeat invocation of goal a given number of times, with varying number of parameters.
+
+@author GT Nunes
+@version 1.0
+@copyright (c) 2020 GT Nunes
+@license BSD-3-Clause License
+*/
+
+%-------------------------------------------------------------------------------------
 
 :- meta_predicate
     repeat_goal(1, +, -),
@@ -52,158 +35,227 @@
         reverse/2
     ]).
 
-% Unify Results with a list of results in the proper order, from invoking
-% Goal N times, with up to 6 parameters. Unify with an empty list if N is 0. 
-% repeat_goal(:Goal, +Params, +N, -Results)
-% Goal      predicate to invoke
-% Params    optionaL, up to 4 parameters (P1,..,P6)
-% N         number of times do invoke
-% Results   list of invocation results
+%-------------------------------------------------------------------------------------
 
-%-------------------------------------------------------------------------------
+%! repeat_goal(:Goal:pred, +N:int, -Result:list) is det.
+%
+%  Unify Result with a list of results in the proper order, from invoking
+%  Goal N times.
+%
+%  @param Goal    The predicate to invoke
+%  @param N       Number of invocations
+%  @param Result List of results from the invocations
 
-% (start)
-repeat_goal(Goal, N, Results) :-
+repeat_goal(Goal, N, Result) :-
 
     % fail point
     N >= 0,
-    repeat_goal_(Goal, N, [], Results).
+    repeat_goal_(Goal, N, [], Result).
 
 % (done)
-repeat_goal_(_Goal, 0, ResultsProgress, ResultsFinal) :-
-    reverse(ResultsProgress, ResultsFinal).
+repeat_goal_(_Goal, 0, ResultProgress, ResultFinal) :-
+    reverse(ResultProgress, ResultFinal).
 
 % (iterate)
-repeat_goal_(Goal, N, ResultsProgress, ResultsFinal) :-
+repeat_goal_(Goal, N, ResultProgress, ResultFinal) :-
 
     call(Goal, Result),
     Next is N - 1,
-    repeat_goal_(Goal, Next, [Result|ResultsProgress], ResultsFinal).
+    repeat_goal_(Goal, Next, [Result|ResultProgress], ResultFinal).
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------------
 
-% (start)
-repeat_goal(Goal, N, P, Results) :-
+%! repeat_goal(:Goal:pred, +P:data, +N:int, -Result:list) is det.
+%
+%  Unify Result with a list of results in the proper order, from invoking
+%  Goal N times.
+%
+%  @param Goal    The predicate to invoke
+%  @param N       Number of invocations
+%  @param P       Parameter for the invocation
+%  @param Result List of results from the invocations
+
+repeat_goal(Goal, N, P, Result) :-
 
     % fail point
     N >= 0,
-    repeat_goal_(Goal, N, P, [], Results).
+    repeat_goal_(Goal, N, P, [], Result).
 
 % (done)
-repeat_goal_(_Goal, 0, _P, ResultsProgress, ResultsFinal) :-
-    reverse(ResultsProgress, ResultsFinal).
+repeat_goal_(_Goal, 0, _P, ResultProgress, ResultFinal) :-
+    reverse(ResultProgress, ResultFinal).
 
 % (iterate)
-repeat_goal_(Goal, N, P, ResultsProgress, ResultsFinal) :-
+repeat_goal_(Goal, N, P, ResultProgress, ResultFinal) :-
 
     call(Goal, P, Result),
     Next is N - 1,
-    repeat_goal_(Goal, Next, P, [Result|ResultsProgress], ResultsFinal).
+    repeat_goal_(Goal, Next, P, [Result|ResultProgress], ResultFinal).
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------------
 
-% (start)
-repeat_goal(Goal, N, P1, P2, Results) :-
+%! repeat_goal(:Goal:pred, +P1:data, +P2:data, +N:int, -Result:list) is det.
+%
+%  Unify Result with a list of results in the proper order, from invoking
+%  Goal N times.
+%
+%  @param Goal    The predicate to invoke
+%  @param N       Number of invocations
+%  @param P1      1st parameter for the invocation
+%  @param P2      2nd parameter for the invocation
+%  @param Result List of results from the invocations
+
+repeat_goal(Goal, N, P1, P2, Result) :-
 
     % fail point
     N >= 0,
-    repeat_goal_(Goal, P1, P2, N, [], Results).
+    repeat_goal_(Goal, P1, P2, N, [], Result).
 
 % (done)
-repeat_goal_(_Goal, 0, _P1, _P2, ResultsProgress, ResultsFinal) :-
-    reverse(ResultsProgress, ResultsFinal).
+repeat_goal_(_Goal, 0, _P1, _P2, ResultProgress, ResultFinal) :-
+    reverse(ResultProgress, ResultFinal).
 
 % (iterate)
-repeat_goal_(Goal, N, P1, P2, ResultsProgress, ResultsFinal) :-
+repeat_goal_(Goal, N, P1, P2, ResultProgress, ResultFinal) :-
 
     call(Goal, P1, P2, Result),
     Next is N - 1,
-    repeat_goal_(Goal, Next, P1, P2, [Result|ResultsProgress], ResultsFinal).
+    repeat_goal_(Goal, Next, P1, P2, [Result|ResultProgress], ResultFinal).
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------------
 
-% (start)
-repeat_goal(Goal, N, P1, P2, P3, Results) :-
+%! repeat_goal(:Goal:pred, +P1:data, +P2:data, +P3:data, +N:int, -Result:list) is det.
+%
+%  Unify Result with a list of results in the proper order, from invoking
+%  Goal N times.
+%
+%  @param Goal    The predicate to invoke
+%  @param N       Number of invocations
+%  @param P1      1st parameter for the invocation
+%  @param P2      2nd parameter for the invocation
+%  @param P3      3rd parameter for the invocation
+%  @param Result List of results from the invocations
+
+repeat_goal(Goal, N, P1, P2, P3, Result) :-
 
     % fail point
     N >= 0,
-    repeat_goal_(Goal, N, P1, P2, P3, [], Results).
+    repeat_goal_(Goal, N, P1, P2, P3, [], Result).
 
 % (done)
-repeat_goal_(_Goal, 0, _P1, _P2, _P3, ResultsProgress, ResultsFinal) :-
-    reverse(ResultsProgress, ResultsFinal).
+repeat_goal_(_Goal, 0, _P1, _P2, _P3, ResultProgress, ResultFinal) :-
+    reverse(ResultProgress, ResultFinal).
 
 % (iterate)
-repeat_goal_(Goal, N, P1, P2, P3, ResultsProgress, ResultsFinal) :-
+repeat_goal_(Goal, N, P1, P2, P3, ResultProgress, ResultFinal) :-
 
     call(Goal, P1, P2, P3, Result),
     Next is N - 1,
     repeat_goal_(Goal, Next, P1, P2, P3,
-                 [Result|ResultsProgress], ResultsFinal).
+                 [Result|ResultProgress], ResultFinal).
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------------
 
-% (start)
-repeat_goal(Goal, N, P1, P2, P3, P4, Results) :-
+%! repeat_goal(:Goal:pred, +P1:data, +P2:data, +P3:data, +P4:data, +N:int, -Result:list) is det.
+%
+%  Unify Result with a list of results in the proper order, from invoking
+%  Goal N times.
+%
+%  @param Goal    The predicate to invoke
+%  @param N       Number of invocations
+%  @param P1      1st parameter for the invocation
+%  @param P2      2nd parameter for the invocation
+%  @param P3      3rd parameter for the invocation
+%  @param P4      4th parameter for the invocation
+%  @param Result List of results from the invocations
+
+repeat_goal(Goal, N, P1, P2, P3, P4, Result) :-
 
     % fail point
     N >= 0,
-    repeat_goal_(Goal, N, P1, P2, P3, P4, [], Results).
+    repeat_goal_(Goal, N, P1, P2, P3, P4, [], Result).
 
 % (done)
-repeat_goal_(_Goal, 0, _P1, _P2, _P3, _P4, ResultsProgress, ResultsFinal) :-
-    reverse(ResultsProgress, ResultsFinal).
+repeat_goal_(_Goal, 0, _P1, _P2, _P3, _P4, ResultProgress, ResultFinal) :-
+    reverse(ResultProgress, ResultFinal).
 
 % (iterate)
 repeat_goal_(Goal, N, P1, P2, P3, P4,
-             ResultsProgress, ResultsFinal) :-
+             ResultProgress, ResultFinal) :-
 
     call(Goal, P1, P2, P3, P4, Result),
     Next is N - 1,
     repeat_goal_(Goal, Next, P1, P2, P3, P4,
-                 [Result|ResultsProgress], ResultsFinal).
+                 [Result|ResultProgress], ResultFinal).
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------------
 
-% (start)
-repeat_goal(Goal, N, P1, P2, P3, P4, P5, Results) :-
+%! repeat_goal(:Goal:pred, +P1:data, +P2:data, +P3:data, +P4:data, P5:data, +N:int, -Result:list) is det.
+%
+%  Unify Result with a list of results in the proper order, from invoking
+%  Goal N times.
+%
+%  @param Goal    The predicate to invoke
+%  @param N       Number of invocations
+%  @param P1      1st parameter for the invocation
+%  @param P2      2nd parameter for the invocation
+%  @param P3      3rd parameter for the invocation
+%  @param P4      4th parameter for the invocation
+%  @param P5      5th parameter for the invocation
+%  @param Result List of results from the invocations
+
+repeat_goal(Goal, N, P1, P2, P3, P4, P5, Result) :-
 
     % fail point
     N >= 0,
-    repeat_goal_(Goal, N, P1, P2, P3, P4, P5, [], Results).
+    repeat_goal_(Goal, N, P1, P2, P3, P4, P5, [], Result).
 
 % (done)
 repeat_goal_(_Goal, 0, _P1, _P2, _P3, _P4, _P5,
-             ResultsProgress, ResultsFinal) :-
-    reverse(ResultsProgress, ResultsFinal).
+             ResultProgress, ResultFinal) :-
+    reverse(ResultProgress, ResultFinal).
 
 % (iterate)
 repeat_goal_(Goal, N, P1, P2, P3, P4, P5,
-             ResultsProgress, ResultsFinal) :-
+             ResultProgress, ResultFinal) :-
 
     call(Goal, P1, P2, P3, P4, P5, Result),
     Next is N - 1,
     repeat_goal_(Goal, Next, P1, P2, P3, P4, P5,
-                 [Result|ResultsProgress], ResultsFinal).
+                 [Result|ResultProgress], ResultFinal).
 
-%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------------
 
-% (start)
-repeat_goal(Goal, N, P1, P2, P3, P4, P5, P6, Results) :-
+%! repeat_goal(:Goal:pred, +P1:data, +P2:data, +P3:data, +P4:data, P5:data, +P6:data, +N:int, -Result:list) is det.
+%
+%  Unify Result with a list of results in the proper order, from invoking
+%  Goal N times.
+%
+%  @param Goal    The predicate to invoke
+%  @param N       Number of invocations
+%  @param P1      1st parameter for the invocation
+%  @param P2      2nd parameter for the invocation
+%  @param P3      3rd parameter for the invocation
+%  @param P4      4th parameter for the invocation
+%  @param P5      5th parameter for the invocation
+%  @param P6      6th parameter for the invocation
+%  @param Result List of results from the invocations
+
+repeat_goal(Goal, N, P1, P2, P3, P4, P5, P6, Result) :-
 
     % fail point
     N >= 0,
-    repeat_goal_(Goal, N, P1, P2, P3, P4, P6, P5, [], Results).
+    repeat_goal_(Goal, N, P1, P2, P3, P4, P6, P5, [], Result).
 
 % (done)
 repeat_goal_(_Goal, 0, _P1, _P2, _P3, _P4, _P5, _P6,
-             ResultsProgress, ResultsFinal) :-
-    reverse(ResultsProgress, ResultsFinal).
+             ResultProgress, ResultFinal) :-
+    reverse(ResultProgress, ResultFinal).
 
 % (iterate)
-repeat_goal_(Goal, N, P1, P2, P3, P4, P5, P6, ResultsProgress, ResultsFinal) :-
+repeat_goal_(Goal, N, P1, P2, P3, P4, P5, P6, ResultProgress, ResultFinal) :-
 
     call(Goal, P1, P2, P3, P4, P5, P6, Result),
     Next is N - 1,
     repeat_goal_(Goal, Next, P1, P2, P3, P4, P5, P6,
-                 [Result|ResultsProgress], ResultsFinal).
+                 [Result|ResultProgress], ResultFinal).

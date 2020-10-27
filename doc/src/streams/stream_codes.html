@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>stream_codes.pl -- Read a list of codes from a given stream</title>
+
+<link rel="stylesheet" type="text/css" href="../../pldoc.css">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+</head>
+<body>
+
+
+<h1 class="file"><span style="float:right"></span>stream_codes.pl -- Read a list of codes from a given stream</h1>
+
+<p>
+The invoker must provide the number of codes to read,
+or -1 to read to the end of the stream.</p>
+
+<dl class="tags">
+<dt class="keyword-author">author</dt><dd class="keyword-author">- GT Nunes</dd>
+<dt class="keyword-version">version</dt><dd class="keyword-version">- 1.0</dd>
+<dt class="keyword-copyright">copyright</dt><dd class="keyword-copyright">- (c) 2020 GT Nunes</dd>
+<dt class="keyword-license">license</dt><dd class="keyword-license">- BSD-3-Clause License</dd>
+</dl>
+
+<dl>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="stream_codes/3"><b class="pred">stream_codes</b><var class="arglist">(+Stream:ref, +Count:int, -Codes:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Read up to <var>Count</var> codes from <var>Stream</var>. For <var>Count</var> = -1, read to the end of the stream.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Stream</var></td><td class="argdescr">- The input stream</td></tr>
+<tr><td><var>Count</var></td><td class="argdescr">- Number of chars to read</td></tr>
+<tr><td><var>Codes</var></td><td class="argdescr">- List of codes read from the stream</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+</dl>
+
+</body>
+</html>
