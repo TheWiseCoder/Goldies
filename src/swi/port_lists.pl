@@ -59,6 +59,8 @@ subseq1([Head|Tail], [Head|Subseq]) :-
 %
 %  True when these relationships hold:
 %  ~~~
+%  Whole is a proper list
+%  Part is a list
 %  Whole = Alpha || Part
 %  length(Alpha, Before)
 %  ~~~
@@ -76,6 +78,8 @@ sublist(Whole, Part, Before) :-
 %
 %  True when these relationships hold:
 %  ~~~
+%  Whole is a proper list
+%  Part is a list
 %  Whole = Alpha || Part || Omega
 %  length(Alpha, Before)
 %  length(Part, Length)
@@ -95,6 +99,8 @@ sublist(Whole, Part, Before, Length) :-
 %
 %  True when these relationships hold:
 %  ~~~
+%  Whole is a proper list
+%  Part is a list
 %  Whole = Alpha || Part || Omega
 %  length(Alpha, Before)
 %  length(Part, Length)
