@@ -6,11 +6,11 @@ A mix of general-purpose and specialized utilities to facilitate developing on t
 
 Collections of utilities, coded for both SICStus and SWI-Prolog.
 
-### 1.2. ssrc/treams
+### 1.2. src/streams
 
 Collections of stream-related utilities, coded for both SICStus and SWI-Prolog.
 
-### 1.3. ssrc/icstus
+### 1.3. src/sicstus
 
 Collections of utilities, coded for the SICStus platform.
 
