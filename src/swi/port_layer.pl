@@ -1,17 +1,17 @@
 :- module(port_layer,
     [
-        current_directory/1,        % current_directory(?CurrDir)
-        current_directory/2,        % current_directory(-OldDir, +NewDir)
-        datime/1,                   % datime(-Datime)
-        datime/2,                   % datime(+When, -Datime)
-        delete_directory/2,         % delete_directory(+Dir, +Options)
-        directory_exists/1,         % directory_exists(+Dir)
-        file_exists/1,              % file_exists(+FilePath)
-        guid/1,                     % guid(-Guid)
-        guids/2,                    % guids(+N, -Guids)
-        make_directory/1,           % make_directory(+Path)
-        now/1,                      % now(-When)
-        setrand/1                   % setrand(+Seed)
+        current_directory/1,
+        current_directory/2,
+        datime/1,
+        datime/2,
+        delete_directory/2,
+        directory_exists/1,
+        file_exists/1,
+        guid/1,
+        guids/2,
+        make_directory/1,
+        now/1,
+        setrand/1
     ]).
 
 /** <module> Portability layer for SWI-Prolog
@@ -93,7 +93,7 @@ now(Now) :-
 
 %! current_directory(?CurrDir:atom) is det.
 %
-%  Unify CurrDir with the current working directory
+%  Unify CurrDir with the current working directory.
 %
 %  @param CurrDir The current working directory
 
@@ -115,7 +115,6 @@ current_directory(OldDir, NewDir) :-
 %! delete_directory(-Dir:atom, +Options:list) is semidet.
 %
 %  Recursively delete directory Dir, according to Options.
-%
 %  Options are:
 %  ~~~
 %  [if_nonempty(delete)] - delete directory even if not empty
@@ -163,7 +162,7 @@ make_directory(Path) :-
 %! file_exists(+FilePath:atom) is semidet.
 %
 %  True if file FilePath exists, fail otherwise.
-%00
+%
 %  @param FilePath File to assert
 
 file_exists(FilePath) :-
@@ -182,7 +181,7 @@ guid(Guid) :-
 
 %! guids(+N:int, -Guids:list) is det.
 %
-%  Generate N GUIDs. GUIDs are UUIDs Version 4.
+%  Generate N distinct GUIDs. GUIDs are UUIDs Version 4.
 %
 %  @param N     Number of GUIDs to generate
 %  @param Guids List of newly-generated GUIDs
@@ -195,6 +194,7 @@ guids(N, Guids) :-
 %! setrand(+Seed:int) is det.
 %
 %  Seed the random number generator SICStus style (with an integer).
+%
 %  @param Seed An arbitrary integer
 %
 setrand(Seed) :-

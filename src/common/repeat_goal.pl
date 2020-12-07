@@ -1,12 +1,12 @@
 :- module(repeat_goal,
     [
-        repeat_goal/3, % repeat_goal(:Goal, +N, -Result)
-        repeat_goal/4, % repeat_goal(:Goal, +N, +P, -Result)
-        repeat_goal/5, % repeat_goal(:Goal, +N, +P1, +P2, -Result)
-        repeat_goal/6, % repeat_goal(:Goal, +N, +P1, +P2, +P3, -Result)
-        repeat_goal/7, % repeat_goal(:Goal, +N, +P1, +P2, +P3, +P4, -Result)
-        repeat_goal/8, % repeat_goal(:Goal, +N, +P1, +P2, +P3, +P4, +P5, -Result)
-        repeat_goal/9  % repeat_goal(:Goal, +N, +P1, +P2, +P3, +P4, +P5, +P6, -Result)
+        repeat_goal/3,
+        repeat_goal/4,
+        repeat_goal/5,
+        repeat_goal/6,
+        repeat_goal/7,
+        repeat_goal/8,
+        repeat_goal/9
     ]).
 
 /** <module>  Repeat invocation of goal
@@ -37,13 +37,13 @@ Repeat invocation of goal a given number of times, with varying number of parame
 
 %-------------------------------------------------------------------------------------
 
-%! repeat_goal(:Goal:pred, +N:int, -Result:list) is det.
+%! repeat_goal(:Goal:pred, +N:int, -Result:list) is semidet.
 %
 %  Unify Result with a list of results in the proper order, from invoking
 %  Goal N times.
 %
-%  @param Goal    The predicate to invoke
-%  @param N       Number of invocations
+%  @param Goal   The predicate to invoke
+%  @param N      Number of invocations
 %  @param Result List of results from the invocations
 
 repeat_goal(Goal, N, Result) :-
@@ -65,14 +65,14 @@ repeat_goal_(Goal, N, ResultProgress, ResultFinal) :-
 
 %-------------------------------------------------------------------------------------
 
-%! repeat_goal(:Goal:pred, +P:data, +N:int, -Result:list) is det.
+%! repeat_goal(:Goal:pred, +P:data, +N:int, -Result:list) is semidet.
 %
 %  Unify Result with a list of results in the proper order, from invoking
 %  Goal N times.
 %
-%  @param Goal    The predicate to invoke
-%  @param N       Number of invocations
-%  @param P       Parameter for the invocation
+%  @param Goal   The predicate to invoke
+%  @param N      Number of invocations
+%  @param P      Parameter for the invocation
 %  @param Result List of results from the invocations
 
 repeat_goal(Goal, N, P, Result) :-
@@ -94,15 +94,15 @@ repeat_goal_(Goal, N, P, ResultProgress, ResultFinal) :-
 
 %-------------------------------------------------------------------------------------
 
-%! repeat_goal(:Goal:pred, +P1:data, +P2:data, +N:int, -Result:list) is det.
+%! repeat_goal(:Goal:pred, +P1:data, +P2:data, +N:int, -Result:list) is semidet.
 %
 %  Unify Result with a list of results in the proper order, from invoking
 %  Goal N times.
 %
-%  @param Goal    The predicate to invoke
-%  @param N       Number of invocations
-%  @param P1      1st parameter for the invocation
-%  @param P2      2nd parameter for the invocation
+%  @param Goal   The predicate to invoke
+%  @param N      Number of invocations
+%  @param P1     1st parameter for the invocation
+%  @param P2     2nd parameter for the invocation
 %  @param Result List of results from the invocations
 
 repeat_goal(Goal, N, P1, P2, Result) :-
@@ -124,16 +124,16 @@ repeat_goal_(Goal, N, P1, P2, ResultProgress, ResultFinal) :-
 
 %-------------------------------------------------------------------------------------
 
-%! repeat_goal(:Goal:pred, +P1:data, +P2:data, +P3:data, +N:int, -Result:list) is det.
+%! repeat_goal(:Goal:pred, +P1:data, +P2:data, +P3:data, +N:int, -Result:list) is semidet.
 %
 %  Unify Result with a list of results in the proper order, from invoking
 %  Goal N times.
 %
-%  @param Goal    The predicate to invoke
-%  @param N       Number of invocations
-%  @param P1      1st parameter for the invocation
-%  @param P2      2nd parameter for the invocation
-%  @param P3      3rd parameter for the invocation
+%  @param Goal   The predicate to invoke
+%  @param N      Number of invocations
+%  @param P1     1st parameter for the invocation
+%  @param P2     2nd parameter for the invocation
+%  @param P3     3rd parameter for the invocation
 %  @param Result List of results from the invocations
 
 repeat_goal(Goal, N, P1, P2, P3, Result) :-
@@ -156,17 +156,17 @@ repeat_goal_(Goal, N, P1, P2, P3, ResultProgress, ResultFinal) :-
 
 %-------------------------------------------------------------------------------------
 
-%! repeat_goal(:Goal:pred, +P1:data, +P2:data, +P3:data, +P4:data, +N:int, -Result:list) is det.
+%! repeat_goal(:Goal:pred, +P1:data, +P2:data, +P3:data, +P4:data, +N:int, -Result:list) is semidet.
 %
 %  Unify Result with a list of results in the proper order, from invoking
 %  Goal N times.
 %
-%  @param Goal    The predicate to invoke
-%  @param N       Number of invocations
-%  @param P1      1st parameter for the invocation
-%  @param P2      2nd parameter for the invocation
-%  @param P3      3rd parameter for the invocation
-%  @param P4      4th parameter for the invocation
+%  @param Goal   The predicate to invoke
+%  @param N      Number of invocations
+%  @param P1     1st parameter for the invocation
+%  @param P2     2nd parameter for the invocation
+%  @param P3     3rd parameter for the invocation
+%  @param P4     4th parameter for the invocation
 %  @param Result List of results from the invocations
 
 repeat_goal(Goal, N, P1, P2, P3, P4, Result) :-
@@ -190,18 +190,18 @@ repeat_goal_(Goal, N, P1, P2, P3, P4,
 
 %-------------------------------------------------------------------------------------
 
-%! repeat_goal(:Goal:pred, +P1:data, +P2:data, +P3:data, +P4:data, P5:data, +N:int, -Result:list) is det.
+%! repeat_goal(:Goal:pred, +P1:data, +P2:data, +P3:data, +P4:data, P5:data, +N:int, -Result:list) is semidet.
 %
 %  Unify Result with a list of results in the proper order, from invoking
 %  Goal N times.
 %
-%  @param Goal    The predicate to invoke
-%  @param N       Number of invocations
-%  @param P1      1st parameter for the invocation
-%  @param P2      2nd parameter for the invocation
-%  @param P3      3rd parameter for the invocation
-%  @param P4      4th parameter for the invocation
-%  @param P5      5th parameter for the invocation
+%  @param Goal   The predicate to invoke
+%  @param N      Number of invocations
+%  @param P1     1st parameter for the invocation
+%  @param P2     2nd parameter for the invocation
+%  @param P3     3rd parameter for the invocation
+%  @param P4     4th parameter for the invocation
+%  @param P5     5th parameter for the invocation
 %  @param Result List of results from the invocations
 
 repeat_goal(Goal, N, P1, P2, P3, P4, P5, Result) :-
@@ -226,19 +226,19 @@ repeat_goal_(Goal, N, P1, P2, P3, P4, P5,
 
 %-------------------------------------------------------------------------------------
 
-%! repeat_goal(:Goal:pred, +P1:data, +P2:data, +P3:data, +P4:data, P5:data, +P6:data, +N:int, -Result:list) is det.
+%! repeat_goal(:Goal:pred, +P1:data, +P2:data, +P3:data, +P4:data, P5:data, +P6:data, +N:int, -Result:list) is semidet.
 %
 %  Unify Result with a list of results in the proper order, from invoking
 %  Goal N times.
 %
-%  @param Goal    The predicate to invoke
-%  @param N       Number of invocations
-%  @param P1      1st parameter for the invocation
-%  @param P2      2nd parameter for the invocation
-%  @param P3      3rd parameter for the invocation
-%  @param P4      4th parameter for the invocation
-%  @param P5      5th parameter for the invocation
-%  @param P6      6th parameter for the invocation
+%  @param Goal   The predicate to invoke
+%  @param N      Number of invocations
+%  @param P1     1st parameter for the invocation
+%  @param P2     2nd parameter for the invocation
+%  @param P3     3rd parameter for the invocation
+%  @param P4     4th parameter for the invocation
+%  @param P5     5th parameter for the invocation
+%  @param P6     6th parameter for the invocation
 %  @param Result List of results from the invocations
 
 repeat_goal(Goal, N, P1, P2, P3, P4, P5, P6, Result) :-

@@ -1,19 +1,19 @@
 :- module(json_wrapper,
     [
-        json_add/3,         % json_add(?JsonTerm, +Item(s), -JsonResult)
-        json_atom/2,        % json_atom(?JsonTerm, ?JsonAtom)
-        json_atom/3,        % json_atom(?JsonTerm, ?JsonAtom, +Options)
-        json_chars/2,       % json_chars(?JsonTerm, ?JsonChars)
-        json_chars/3,       % json_chars(?JsonTerm, ?JsonChars, +Options)
-        json_codes/2,       % json_codes(?JsonTerm, ?JsonCodes)
-        json_codes/3,       % json_codes(?JsonTerm, ?JsonCodes, +Options)
-        json_input/2,       % json_input(+Stream, -Term)
-        json_input/3,       % json_input(+Stream, -Term, +Options)
-        json_member/3,      % json_member(+JsonTerm, +Name, -Value)
-        json_members/3,     % json_members(+JsonTerm, +Names, -Values)
-        json_merge/2,       % json_merge(+JsonTerms, -JsonResult)
-        json_output/2,      % json_output(+Stream, +Term)
-        json_output/3       % json_output(+Stream, +Term, +Options)
+        json_add/3,
+        json_atom/2,
+        json_atom/3,
+        json_chars/2,
+        json_chars/3,
+        json_codes/2,
+        json_codes/3,
+        json_input/2,
+        json_input/3,
+        json_member/3,
+        json_members/3,
+        json_merge/2,
+        json_output/2,
+        json_output/3
     ]).
 
 /** <module> Utilities for handling JSON-encoded data
@@ -242,10 +242,11 @@ json_members_(JsonTerm, [Name|Names], JsonProgress, JsonValues) :-
 
 %-------------------------------------------------------------------------------------
 
-%! json_atom(?JsonTerm:json, ?JsonAtom:atom) is det.
+%! json_atom(+JsonTerm:json, -JsonAtom:atom) is det.
+%! json_atom(-JsonTerm:json, +JsonAtom:atom) is det.
 %
 %  Unify a JSON term with an atom standing for the corresponding JSON
-%  string representation (see json_codes/2 and json_codes/3 below).
+%  string representation. See json_codes/2 and json_codes/3 below.
 %
 %  @param JsonTerm  The JSON term
 %  @param JsonAtom  The atom holding the JSON string representation
@@ -260,11 +261,12 @@ json_atom(JsonTerm, JsonAtom) :-
         json_codes(JsonTerm, JsonCodes)
     ).
 
-%! json_atom(?JsonTerm:json, ?JsonAtom:atom, +Options:list) is det.
+%! json_atom(+JsonTerm:json, -JsonAtom:atom, +Options:list) is det.
+%! json_atom(-JsonTerm:json, +JsonAtom:atom, +Options:list) is det.
 %
 %  Unify a JSON term with an atom standing for the corresponding JSON
-%  string representation, according to Options
-%  (see json_codes/2 and json_codes/3 below).
+%  string representation, according to Options.
+%  See json_codes/2 and json_codes/3 below.
 %
 %  @param JsonTerm  The JSON term
 %  @param JsonAtom  The atom holding the JSON string representation
@@ -282,10 +284,11 @@ json_atom(JsonTerm, JsonAtom, Options) :-
 
 %-------------------------------------------------------------------------------------
 
-%! json_chars(?JsonTerm:json, ?JsonChars:list) is det.
+%! json_chars(+JsonTerm:json, -JsonChars:list) is det.
+%! json_chars(-JsonTerm:json, +JsonChars:list) is det.
 %
 %  Unify JsonTerm with a list of chars standing for the corresponding
-%  JSON string representation (see json_codes/2 and json_codes/3 below).
+%  JSON string representation. See json_codes/2 and json_codes/3 below.
 %
 %  @param JsonTerm  The JSON term
 %  @param JsonChars List of chars holding the JSON string representation
@@ -300,11 +303,12 @@ json_chars(JsonTerm, JsonChars) :-
         json_codes(JsonTerm, JsonCodes)
     ).
 
-%! json_chars(?JsonTerm:json, ?JsonChars:list, +Options:list) is det.
+%! json_chars(+JsonTerm:json, -JsonChars:list, +Options:list) is det.
+%! json_chars(-JsonTerm:json, +JsonChars:list, +Options:list) is det.
 %
 %  Unify JsonTerm with a list of chars standing for the corresponding
-%  JSON string representation, according to Options
-%  (see json_codes/2 and json_codes/3 below).
+%  JSON string representation, according to Options.
+%  See json_codes/2 and json_codes/3 below.
 %
 %  @param JsonTerm  The JSON term
 %  @param JsonChars The chars holding the JSON string representation
@@ -322,11 +326,11 @@ json_chars(JsonTerm, JsonChars, Options) :-
 
 %-------------------------------------------------------------------------------------
 
-%! json_codes(?JsonTerm:json, ?JsonCodes:list) is det.
+%! json_codes(+JsonTerm:json, -JsonCodes:list) is det.
+%! json_codes(-JsonTerm:json, +JsonCodes:list) is det.
 %
 %  Unify a JSON term with a list of char codes standing for the corresponding
 %  JSON string representation.
-%
 %  This is acomplished either by writing the term as JSON, using json_write/2 or
 %  json_write/3, or by reading the JSON codes, using json_read/2 or json_read/3.
 %  Examples:
@@ -382,10 +386,11 @@ json_codes(JsonTerm, JsonCodes) :-
         call_cleanup(json_read(Stream, JsonTerm), close(Stream, [force(true)]))
     ).
 
-%! json_codes(?JsonTerm:json, ?JsonCodes:list, +Options:list) is det.
+%! json_codes(+JsonTerm:json, -JsonCodes:list, +Options:list) is det.
+%! json_codes(-JsonTerm:json, +JsonCodes:list, +Options:list) is det.
 %
 %  Unify JsonTerm with a list of char codes standing for the corresponding
-%  JSON string representation, according to Options (see json_codes/2 above).
+%  JSON string representation, according to Options. See json_codes/2 above.
 %
 %  @param JsonTerm  The JSON term
 %  @param JsonCodes List of char codes holding the JSON string representation

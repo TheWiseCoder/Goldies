@@ -1,6 +1,6 @@
 :- module(stream_ints,
     [
-        stream_ints/2       % stream_ints(+Stream, -Ints)
+        stream_ints/2
     ]).
 
 /** <module> Read integers from a given stream

@@ -1,29 +1,21 @@
 :- module(datetime_marks,
     [
-        date_now/3,             % date_now(-Year, -Month, -Day)
-        date_display/2,         % date_display(today, -Display)
-                                % date_display(+When, -Display)
-        date_display/4,         % date_display(+Year, +Month, +Day, -Display)
-        date_gregorian/3,       % date_gregorian(+Year, +Month, +Day)
-        date_weekday/2,         % date_weekday(today, -Dow)
-                                % date_weekday(+Mjd, -Dow)
-        date_weekday/4,         % date_weekday(+Year, +Month, +Day, -Dow)
-        datetime_now/6,         % datetime_now(-Year, -Month, -Day, -Hour, -Min, -Sec)
-        datetime_display/2,     % datetime_display(now, -Display)
-                                % datetime_display(+When, -Display)
-        datetime_display/7,     % datetime_display(+Year, +Month,
-                                %                  +Day, +Hour, +Min, +Sec, -Display)
-        datetime_ietf/2,        % datetime_ietf(now, -DtIetf)
-                                % datetime_ietf(today, -DtIetf)
-                                % datetime_ietf(+Mjd, -DtIetf)
-        datetime_ietf/7,        % datetime_ietf(+Year, +Month, +Day,
-                                %               +Hour, +Min, +Sec, -DtIetf)
-        month_ordinal/2,        % month_ordinal(?Month, ?Ord)
-        time_now/3,             % time_now(-Hour, -Min, -Sec)
-        time_display/2,         % time_display(now, -Display)
-                                % time_display(+When, -Display)
-        time_display/4,         % time_display(+Hour, +Min, +Sec, -Display)
-        weekday_ordinal/2       % weekday_ordinal(?Dow, ?Ord)
+        date_now/3,
+        date_display/2,
+        date_display/4,
+        date_gregorian/3,
+        date_weekday/2,
+        date_weekday/4,
+        datetime_now/6,
+        datetime_display/2,
+        datetime_display/7,
+        datetime_ietf/2,
+        datetime_ietf/7,
+        month_ordinal/2,
+        time_now/3,
+        time_display/2,
+        time_display/4,
+        weekday_ordinal/2
     ]).
 
 /** <module>Date and time related utilities
@@ -296,7 +288,6 @@ datetime_ietf(Year, Month, Day, Hour, Min, Sec, DtIetf) :-
    atom_codes(DtIetf, Codes).
 
 %-------------------------------------------------------------------------------------
-% bind a gregorian date to its corresponding short-hand weekday name
 
 %! date_weekday(Mjd:int, -Dow:atom) is det.
 %
@@ -331,12 +322,14 @@ date_weekday(Year, Month, Day, Dow) :-
 
 %! date_gregorian(+Year:int, +Month:int, +Day:int) is semidet.
 %
-% True if Day, Month, and Year constitute a valid date in the Gregorian calendar.
+%  True if Day, Month, and Year constitute a valid date in the Gregorian calendar.
 %
-% Note that all the code herein does is to constrain the relationships between
-% the values of Day, Month, and Year. As an example, this would iterate on all
-% leap years of the 20th century:<br/>
-%    date_gregorian(Y, M, 29), Y #>= 1900 #/\ Y #< 2000, indomain(Y)
+%  Note that all the code herein does is to constrain the relationships between
+%  the values of Day, Month, and Year. As an example, this would iterate on all
+%  leap years of the 20th century:
+%  ~~~
+%  date_gregorian(Y, M, 29), Y #>= 1900 #/\ Y #< 2000, indomain(Y)
+%  ~~~
 %
 %  @param Year  Year in the Gregorian calendar (4713 BC - 3267 AD)
 %  @param Month Month ordinal (1 - 12)
@@ -363,7 +356,6 @@ date_gregorian(Year, Month, Day) :-
 %
 %  For a competent explanation of the Julian day concept, see
 %  https://en.wikipedia.org/wiki/Julian_day.
-%
 %  For an interesting approach to this subject (and the actual origin of this code),
 %  see Michael Hendricks's `julian.pl` (https://gist.github.com/mndrix/5173377).
 %
@@ -408,7 +400,8 @@ gregorian_mjd(Year, Month, Day, MJD) :-
 
 %-------------------------------------------------------------------------------------
 
-%! month_ordinal(?Month:atom, ?Ord:int) is det.
+%! month_ordinal(+Month:atom, -Ord:int) is det.
+%! month_ordinal(-Month:atom, +Ord:int) is det.
 %
 %  Unify Month or Ord with the short-hand 3-letter month name or the month's
 %  1-based ordinal, respectively.
@@ -443,9 +436,11 @@ month_ordinal(Month, 11) :- Month = 'Nov'.
 month_ordinal(Month, 12) :- Month = 'Dec'.
 
 %-------------------------------------------------------------------------------------
-% bind the short-hand weekday name with its ISO ordinal value
 
-%! weekday_ordinal(?Dow:atom, ?Ord:int) is det.
+%! weekday_ordinal(+Dow:atom, -Ord:int) is det.
+%! weekday_ordinal(-Dow:atom, +Ord:int) is det.
+%
+%  Bind the short-hand weekday name with its ISO ordinal value.
 %
 %  @param Dow Short-hand 3-letter weekday name
 %  @param Ord The corresponding ISO ordinal number

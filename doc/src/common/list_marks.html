@@ -103,7 +103,7 @@ Similar to <a class="builtin" href="http://www.swi-prolog.org/pldoc/man?predicat
 </dl>
 
 </dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="lists_start_with/3"><b class="pred">lists_start_with</b><var class="arglist">(+Lists, +Sublist, -List)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Unify <var>List</var> with the first list in <var>Lists</var> starting with <var>Sublist</var>.
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="lists_start_with/3"><b class="pred">lists_start_with</b><var class="arglist">(+Lists:list, +Sublist:list, -List:list)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Unify <var>List</var> with the first list in <var>Lists</var> starting with <var>Sublist</var>.
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>
@@ -119,12 +119,9 @@ Similar to <a class="builtin" href="http://www.swi-prolog.org/pldoc/man?predicat
 
 </dd>
 <dt class="pubdef"><span style="float:right">&nbsp;</span><a name="lists_consolidate/3"><b class="pred">lists_consolidate</b><var class="arglist">(+ListsRefs:list, +ListElems:list, -ListsResult:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Consolidate ListsResults with a list of lists based on the contents of
-<var>ListsRefs</var> and <var>ListElems</var>.
-
-<p>
-If a list within ListsRef contains the first element of <var>ListElems</var>, the elements
-of that list ListElem are appended to its head, otherwise that list is appended
-to the head of ListsRef. Examples:</p>
+<var>ListsRefs</var> and <var>ListElems</var>. If a list within ListsRef contains the first element
+of <var>ListElems</var>, the elements of that list ListElem are appended to its head,
+otherwise that list is appended to the head of ListsRef. Examples:
 
 <p>
 <b>1.</b></p>

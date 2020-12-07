@@ -1,15 +1,15 @@
 :- module(simple_counter,
     [
-        counter_add/2,          % counter_add(+Key:atom, +Add)
-        counter_add/3,          % counter_add(+Key:atom, +Add, ?Value)
-        counter_create/1,       % counter_create(+Key)
-        counter_create/2,       % counter_create(+Key:atom, +Value:int)
-        counter_destroy/1,      % counter_destroy(+Key)
-        counter_dec/1,          % counter_dec(+Key)
-        counter_dec/2,          % counter_dec(+Key:atom, ?Value)
-        counter_inc/1,          % counter_inc(+Key)
-        counter_inc/2,          % counter_inc(+Key:atom, ?Value)
-        counter_value/2         % counter_value(+Key:atom, ?Value)
+        counter_add/2,
+        counter_add/3,
+        counter_create/1,
+        counter_create/2,
+        counter_destroy/1,
+        counter_dec/1,
+        counter_dec/2,
+        counter_inc/1,
+        counter_inc/2,
+        counter_value/2
     ]).
 
 /** <module> A global, stack-independent, simple counter
@@ -20,7 +20,7 @@ However, for performance reasons this is not enforced anywhere in the code.
 Consequences of non-compliance with this rule are unpredictable.
 
 @author GT Nunes
-@version 1.0
+@version 1.1.1
 @copyright (c) 2020 GT Nunes
 @license BSD-3-Clause License
 */

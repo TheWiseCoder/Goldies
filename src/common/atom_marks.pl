@@ -1,23 +1,23 @@
 :- module(atom_marks,
     [
-        atom_concat3/4,         % atom_concat3(+A1, +A2, +A3, -A123)
-        atom_concat4/5,         % atom_concat4(+A1, +A2, +A3, +A4, -A1234)
-        atom_concat5/6,         % atom_concat5(+A1, +A2, +A3, +A4, +A5, -A12345)
-        atom_concat6/7,         % atom_concat6(+A1, +A2, +A3, +A4, +A5, +A6, -A123456)
-        atom_concat_number/3,   % atom_concat_number(+Atom, +Number, -AtomResult)
-        atom_contained/2,       % atom_contained(+AtomContainer, +AtomContained)
-        atom_int/3,             % atom_int(?Atom, ?Int, +Len)
-        atom_number/2,          % atom_number(?Atom, ?Number)
-        atom_prefix/2,          % atom_prefix(+AtomPrefixed, +AtomPrefix)
-        atom_sort/2,            % atom_sort(+Atom, -AtomResult)
-        atom_suffix/2,          % atom_suffix(+AtomSuffixed, +AtomSuffix)
-        atoms_chars/2,          % atoms_chars(?Atoms, ?Chars)
-        atoms_codes/2,          % atoms_codes(?Atoms, ?Codes)
-        atoms_numbers/2,        % atoms_numbers(?Atoms, ?Numbers)
-        atoms_contained_all/2,  % atoms_contained_all(+AtomsContainer, +AtomContained)
-        atoms_contained_any/2,  % atoms_contained_any(+AtomsContainer, +AtomContained)
-        chars_lines/2,          % chars_lines(?Chars, ?Lines)
-        codes_lines/2           % codes_lines(?Chars, ?Codes)
+        atom_concat3/4,
+        atom_concat4/5,
+        atom_concat5/6,
+        atom_concat6/7,
+        atom_concat_number/3,
+        atom_contained/2,
+        atom_int/3,
+        atom_number/2,
+        atom_prefix/2,
+        atom_sort/2,
+        atom_suffix/2,
+        atoms_chars/2,
+        atoms_codes/2,
+        atoms_numbers/2,
+        atoms_contained_all/2,
+        atoms_contained_any/2,
+        chars_lines/2,
+        codes_lines/2
     ]).
 
 /** <module> Atom handling utilities
@@ -95,7 +95,8 @@ atom_int(Atom, Int, Len) :-
     atom_concat('0000000000', Anum, Apad),
     sub_atom(Apad, _, Len, 0, Atom).
 
-%! atom_number(?Atom:atom, ?Number:number) is det.
+%! atom_number(+Atom:atom, -Number:number) is det.
+%! atom_number(-Atom:atom, +Number:number) is det.
 %
 %  Convert between atom and number, unifying Atom or Number with the result.
 %
@@ -242,15 +243,16 @@ atoms_contained_any(AtomContainer, [Atom|AtomsList]) :-
 
 %-------------------------------------------------------------------------------------
 
-%! atoms_chars(?Atoms:list, ?Chars:list) is det.
+%! atoms_chars(+Atoms:list, -Chars:list) is det.
+%! atoms_chars(-Atoms:list, +Chars:list) is det.
 %
-%  Unify list of atoms with list of chars.
-%
-%  Please, note:
-%    a. as one single atom might yield more than one char, applying one
-%       operation followed by its reverse might not restore the original list<br/>
-%    b. the operation, as well as its reverse, might yield the same list,
-%       as a list of chars is identical to a list of single-char atoms
+%  Unify list of atoms with list of chars. Please, note:
+%  ~~~
+%  1. as one single atom might yield more than one char, applying one
+%     operation followed by its reverse might not restore the original list;
+%  2. the operation, as well as its reverse, might yield the same list,
+%     as a list of chars is identical to a list of single-char atoms.
+%  ~~~
 %
 %  @param Atoms List of atoms
 %  @param Chars List of chars
@@ -274,15 +276,18 @@ atoms_chars_([Atom|Atoms], CharsProgress, CharsFinal) :-
 
 %-------------------------------------------------------------------------------------
 
-%! atoms_codes(?Atoms:list, ?Codes:list) is det.
+%! atoms_codes(+Atoms:list, -Codes:list) is det.
+%! atoms_codes(-Atoms:list, +Codes:list) is det.
 %
 %  Unify list of atoms with list of codes.
 %
 %  Please, note:
-%    1. as one single atom might yield more than one code, applying one
-%       operation followed by its reverse might not restore the original list<br/>
-%    2. the operation, as well as its reverse, can be applied to lists of chars,
-%       as a list of chars is identical to a list of single-char atoms
+%  ~~~
+%  1. as one single atom might yield more than one code, applying one
+%     operation followed by its reverse might not restore the original list;
+%  2. the operation, as well as its reverse, can be applied to lists of chars,
+%     as a list of chars is identical to a list of single-char atoms.
+%  ~~~
 %
 %  @param Atoms List of atoms
 %  @param Codes List of codes
@@ -316,10 +321,10 @@ codes_atoms_([Code|Codes], AtomsProgress, AtomsFinal) :-
 
 %-------------------------------------------------------------------------------------
 
-%! atoms_numbers(?Atoms, ?Numbers) is det.
+%! atoms_numbers(+Atoms, +Numbers) is det.
+%! atoms_numbers(-Atoms, +Numbers) is det.
 %
 %  Unify list of atoms with list of numbers they represent.
-%
 %  Note that the operation, as well as its reverse, can be applied to
 %  lists of chars, as a list of chars is identical to a list of single-char atoms
 %  (in that case, the range is [0,9])
@@ -355,14 +360,13 @@ numbers_atoms_([Number|Numbers], AtomsProgress, AtomsFinal) :-
 
 %-------------------------------------------------------------------------------------
 
-%! chars_lines(?Chars:list, ?Lines:list) is det.
+%! chars_lines(+Chars:list, -Lines:list) is det.
+%! chars_lines(-Chars:list, +Lines:list) is det.
 %
 %  Unify list of chars with lists of lines, each line itself a list of chars.
-%
 %  Both UNIX (LF or \n) and Windows (CRLF or \r\n) style line separators
 %  are considered. When building Chars from Lines, the OS-specific line
-%  terminator is used.
-%
+%  terminator is used.</br>
 %  HAZARD: lone CRs will be suppressed, without originating new lines.
 %
 %  @param Chars List of chars
@@ -413,14 +417,13 @@ lines_chars_([Line|Lines], Ls, CharsProgress, CharsFinal) :-
 
 %-------------------------------------------------------------------------------------
 
-%! codes_lines(?Codes:list, ?Lines:list)
+%! codes_lines(+Codes:list, -Lines:list) is det.
+%! codes_lines(-Codes:list, +Lines:list) is det.
 %
 %  Unify list of codes with lists of lines, each line itself a list of codes.
-%
 %  Both UNIX (LF or \n) and Windows (CRLF or \r\n) style line separators
 %  are considered. When building Codes from Lines, the OS-specific line
-%  terminator is used.
-%
+%  terminator is used.</br>
 %  HAZARD: lone CRs will be suppressed, without originating new lines.
 %
 %  @param Codes List of codes

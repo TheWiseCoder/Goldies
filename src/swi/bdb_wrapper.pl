@@ -1,10 +1,10 @@
 :- module(bdb_wrapper,
     [
-        bdb_base/1,         % bdb_base(+DataSet)
-        bdb_erase/1,        % bdb_erase(+DataSet)
-        bdb_erase/2,        % bdb_erase(+TagSet, +DataSet)
-        bdb_retrieve/3,     % bdb_retrieve(+TagSet, +DataSet, -Data)
-        bdb_store/3         % bdb_store(+TagSet, +DataSet, +Data)
+        bdb_base/1,
+        bdb_erase/1,
+        bdb_erase/2,
+        bdb_retrieve/3,
+        bdb_store/3
     ]).
 
 /** <module> Persistence using Berkeley DB
@@ -40,7 +40,7 @@ Please, refer to https://www.swi-prolog.org/pldoc/doc/_SWI_/library/bdb.pl
 for additional instructions on how to use Berkeley DB.
 
 @author GT Nunes
-@version 1.0
+@version 1.1.1
 @copyright (c) 2020 GT Nunes
 @license BSD-3-Clause License
 */

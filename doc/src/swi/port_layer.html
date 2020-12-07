@@ -57,7 +57,7 @@ as a <code>datime/6</code> term.
 </dl>
 
 </dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="current_directory/1"><b class="pred">current_directory</b><var class="arglist">(?CurrDir:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>CurrDir</var> with the current working directory
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="current_directory/1"><b class="pred">current_directory</b><var class="arglist">(?CurrDir:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>CurrDir</var> with the current working directory.
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>
@@ -85,9 +85,7 @@ as a <code>datime/6</code> term.
 
 </dd>
 <dt class="pubdef"><span style="float:right">&nbsp;</span><a name="delete_directory/2"><b class="pred">delete_directory</b><var class="arglist">(-Dir:atom, +Options:list)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Recursively delete directory <var>Dir</var>, according to <var>Options</var>.
-
-<p>
-<var>Options</var> are:</p>
+<var>Options</var> are:
 
 <pre class="code" ext="">
 [if_nonempty(delete)] - delete directory even if not empty
@@ -134,8 +132,18 @@ as a <code>datime/6</code> term.
 
 </dd>
 <dt class="pubdef"><span style="float:right">&nbsp;</span><a name="file_exists/1"><b class="pred">file_exists</b><var class="arglist">(+FilePath:atom)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">True if file <var>FilePath</var> exists, fail otherwise.
-00
-@param <var>FilePath</var> File to assert</dd>
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>FilePath</var></td><td class="argdescr">- File to assert</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
 <dt class="pubdef"><span style="float:right">&nbsp;</span><a name="guid/1"><b class="pred">guid</b><var class="arglist">(-Guid:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Generate a GUID. GUIDs are UUIDs Version 4.
 
 <dl class="tags">
@@ -149,7 +157,7 @@ as a <code>datime/6</code> term.
 </dl>
 
 </dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="guids/2"><b class="pred">guids</b><var class="arglist">(+N:int, -Guids:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Generate <var>N</var> GUIDs. GUIDs are UUIDs Version 4.
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="guids/2"><b class="pred">guids</b><var class="arglist">(+N:int, -Guids:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Generate <var>N</var> distinct GUIDs. GUIDs are UUIDs Version 4.
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>
@@ -164,7 +172,18 @@ as a <code>datime/6</code> term.
 
 </dd>
 <dt class="pubdef"><span style="float:right">&nbsp;</span><a name="setrand/1"><b class="pred">setrand</b><var class="arglist">(+Seed:int)</var></a> is <b class="det">det</b></dt><dd class="defbody"><var>Seed</var> the random number generator SICStus style (with an integer).
-@param <var>Seed</var> An arbitrary integer</dd>
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Seed</var></td><td class="argdescr">- An arbitrary integer</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
 </dl>
 
 </body>

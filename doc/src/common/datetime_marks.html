@@ -232,8 +232,10 @@ in RFC 2822 (example: Wed, 01 Jan 2020 08:05:03 GMT).
 <p>
 Note that all the code herein does is to constrain the relationships between
 the values of <var>Day</var>, <var>Month</var>, and <var>Year</var>. As an example, this would iterate on all
-leap years of the 20th century:<br>
-<code>date_gregorian(Y, M, 29)</code>, Y #&gt;= 1900 #/\ Y #&lt; 2000, <code>indomain(Y)</code></p>
+leap years of the 20th century:</p>
+
+<pre class="code" ext="">
+date_gregorian(Y, M, 29), Y #&gt;= 1900 #/\ Y #&lt; 2000, indomain(Y)</pre>
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>
@@ -248,7 +250,8 @@ leap years of the 20th century:<br>
 </dl>
 
 </dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="month_ordinal/2"><b class="pred">month_ordinal</b><var class="arglist">(?Month:atom, ?Ord:int)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Month</var> or <var>Ord</var> with the short-hand 3-letter month name or the month's
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="month_ordinal/2"><b class="pred">month_ordinal</b><var class="arglist">(+Month:atom, -Ord:int)</var></a> is <b class="det">det</b></dt>
+<dt class="pubdef"><b class="pred">month_ordinal</b><var class="arglist">(-Month:atom, +Ord:int)</var> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Month</var> or <var>Ord</var> with the short-hand 3-letter month name or the month's
 1-based ordinal, respectively.
 
 <dl class="tags">
@@ -263,7 +266,8 @@ leap years of the 20th century:<br>
 </dl>
 
 </dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="weekday_ordinal/2"><b class="pred">weekday_ordinal</b><var class="arglist">(?Dow:atom, ?Ord:int)</var></a> is <b class="det">det</b></dt><dd class="defbody">
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="weekday_ordinal/2"><b class="pred">weekday_ordinal</b><var class="arglist">(+Dow:atom, -Ord:int)</var></a> is <b class="det">det</b></dt>
+<dt class="pubdef"><b class="pred">weekday_ordinal</b><var class="arglist">(-Dow:atom, +Ord:int)</var> is <b class="det">det</b></dt><dd class="defbody">Bind the short-hand weekday name with its ISO ordinal value.
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>

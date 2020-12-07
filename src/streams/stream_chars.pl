@@ -1,6 +1,6 @@
 :- module(stream_chars,
     [
-        stream_chars/3      % stream_chars(+Stream, +Count, -Chars)
+        stream_chars/3
     ]).
 
 /** <module> Read a list of chars from a given stream

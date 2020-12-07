@@ -1,6 +1,6 @@
 :- module(stream_bytes,
     [
-        stream_bytes/3          % stream_bytes(+Stream, +Count, -Bytes)
+        stream_bytes/3
     ]).
 
 /** <module> Read a list of bytes from a given stream

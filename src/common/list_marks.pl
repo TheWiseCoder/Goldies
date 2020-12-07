@@ -1,27 +1,27 @@
 :- module(list_marks,
     [
-        append3/4,           % append3(+L1, +L2, +L3, -L123)
-        append4/5,           % append4(+L1, +L2, +L3, +L4, -L1234)
-        append5/6,           % append5(+L1, +L2, +L3, +L4, +L5, -L12345)
-        convlist_first/3,    % convlist_first(:Goal, +List, -Element)
-        list_common/3,       % list_common(+List1, +List2, -ListCommon)
-        list_compacts/2,     % list_compacts(+List, -ListsCompact)
-        list_count_same/3,   % list_count_same(+List, +Pos, -Count)
-        list_fill/3,         % list_fill(+Count, +Item, -List)
-        list_minus_list/3,   % list_minus_list(+ListRef, +ListElems, -ListResult)
-        list_replace0/4,     % list_replace0(+Pos0, +List, +Element, -ListResult)
-        list_replace1/4,     % list_replace1(+Pos1, +List, +Element, -ListResult)
-        list_same/1,         % list_same(+List)
-        list_same/4,         % list_same(+List, ?Before, ?Length, ?After)
-        list_same0/3,        % list_same0(+List, +Pos0, +Count)
-        list_same1/3,        % list_same1(+List, +Pos1, +Count)
-        list_split/3,        % list_split(+List, +Sep, -Lists)
-        list_values/4,       % list_values(+Count, +Start, +Offset, -Values)
-        lists_common/2,      % lists_common(+List1, +List2)
-        lists_consolidate/3, % lists_consolidate(+ListsRefs, +ListElems, -ListsResult)
-        lists_find/3,        % lists_find(+Lists, +Element, -Pos1)
-        lists_flatten/2,     % lists_flatten(+Lists, -List)
-        lists_start_with/3   % lists_start_with(+Lists, +Sublist, -List)
+        append3/4,
+        append4/5,
+        append5/6,
+        convlist_first/3,
+        list_common/3,
+        list_compacts/2,
+        list_count_same/3,
+        list_fill/3,
+        list_minus_list/3,
+        list_replace0/4,
+        list_replace1/4,
+        list_same/1,
+        list_same/4,
+        list_same0/3,
+        list_same1/3,
+        list_split/3,
+        list_values/4,
+        lists_common/2,
+        lists_consolidate/3,
+        lists_find/3,
+        lists_flatten/2,
+        lists_start_with/3
     ]).
 
 /** <module>  Miscellaneous small list-related utilities
@@ -184,7 +184,7 @@ lists_find_(Count, Lists, Element, Pos1) :-
 
 %-------------------------------------------------------------------------------------
 
-%! lists_start_with(+Lists, +Sublist, -List) is semidet.
+%! lists_start_with(+Lists:list, +Sublist:list, -List:list) is semidet.
 %
 %  Unify List with the first list in Lists starting with Sublist.
 %
@@ -212,11 +212,9 @@ lists_start_with([Head|Lists], Sublist, List) :-
 %! lists_consolidate(+ListsRefs:list, +ListElems:list, -ListsResult:list) is det.
 %
 %  Consolidate ListsResults with a list of lists based on the contents of
-%  ListsRefs and ListElems.
-%
-%  If a list within ListsRef contains the first element of ListElems, the elements
-%  of that list ListElem are appended to its head,  otherwise that list  is appended
-%  to the head of ListsRef. Examples:
+%  ListsRefs and ListElems. If a list within ListsRef contains the first element
+%  of ListElems, the elements of that list ListElem are appended to its head,
+%  otherwise that list  is appended to the head of ListsRef. Examples:
 %
 %  *|1.|*
 %  ~~~

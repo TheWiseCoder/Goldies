@@ -7,7 +7,6 @@
 
 This is an implementation of the classic binary search on sorted lists
 (see https://en.wikipedia.org/wiki/Binary_search_algorithm ).
-
 To summmarize the algorithm:
 ~~~
   1- take a list L of n elements with values A0, A1,...,An ordered such
@@ -68,16 +67,15 @@ bin_search(Target, Values, Index) :-
     % fail point
     bin_search_(Value, Target, First, Last, Mid, Values, Index).
 
-% bin_search_(+Value:data, +Target:data,
-%             +PosFirst:int, +PosLast:int, +PosMid:int, +Values:list) is semidet.
+%! bin_search_(+Value:data, +Target:data, +PosFirst:int, +PosLast:int, +PosMid:int, +Values:list) is semidet.
 %
-% @param Value    The current working value
-% @param Target   The value to search for
-% @param PosFirst The first position in the partition
-% @param PosLast  The last position in the partition
-% @param PosMid   The middle position in the partition
-% @param Values   The sorted list being searched
-% @param Index    The 0-based index of Target, on success
+%  @param Value    The current working value
+%  @param Target   The value to search for
+%  @param PosFirst The first position in the partition
+%  @param PosLast  The last position in the partition
+%  @param PosMid   The middle position in the partition
+%  @param Values   The sorted list being searched
+%  @param Index    The 0-based index of Target, on success
 
 % (success)
 bin_search_(Value, Value, _PosFirst, _PosLast, PosMid, _Values, Index) :-

@@ -78,7 +78,8 @@ left-truncating or left-padding the result with zeros, if necessary.
 </dl>
 
 </dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atom_number/2"><b class="pred">atom_number</b><var class="arglist">(?Atom:atom, ?Number:number)</var></a> is <b class="det">det</b></dt><dd class="defbody">Convert between atom and number, unifying <var>Atom</var> or <var>Number</var> with the result.
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atom_number/2"><b class="pred">atom_number</b><var class="arglist">(+Atom:atom, -Number:number)</var></a> is <b class="det">det</b></dt>
+<dt class="pubdef"><b class="pred">atom_number</b><var class="arglist">(-Atom:atom, +Number:number)</var> is <b class="det">det</b></dt><dd class="defbody">Convert between atom and number, unifying <var>Atom</var> or <var>Number</var> with the result.
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>
@@ -219,14 +220,14 @@ left-truncating or left-padding the result with zeros, if necessary.
 </dl>
 
 </dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atoms_chars/2"><b class="pred">atoms_chars</b><var class="arglist">(?Atoms:list, ?Chars:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify list of atoms with list of chars.
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atoms_chars/2"><b class="pred">atoms_chars</b><var class="arglist">(+Atoms:list, -Chars:list)</var></a> is <b class="det">det</b></dt>
+<dt class="pubdef"><b class="pred">atoms_chars</b><var class="arglist">(-Atoms:list, +Chars:list)</var> is <b class="det">det</b></dt><dd class="defbody">Unify list of atoms with list of chars. Please, note:
 
-<p>
-Please, note:
-a. as one single atom might yield more than one char, applying one
-operation followed by its reverse might not restore the original list<br>
-b. the operation, as well as its reverse, might yield the same list,
-as a list of chars is identical to a list of single-char atoms</p>
+<pre class="code" ext="">
+1. as one single atom might yield more than one char, applying one
+   operation followed by its reverse might not restore the original list;
+2. the operation, as well as its reverse, might yield the same list,
+   as a list of chars is identical to a list of single-char atoms.</pre>
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>
@@ -240,17 +241,17 @@ as a list of chars is identical to a list of single-char atoms</p>
 </dl>
 
 </dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atoms_codes/2"><b class="pred">atoms_codes</b><var class="arglist">(?Atoms:list, ?Codes:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify list of atoms with list of codes.
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atoms_codes/2"><b class="pred">atoms_codes</b><var class="arglist">(+Atoms:list, -Codes:list)</var></a> is <b class="det">det</b></dt>
+<dt class="pubdef"><b class="pred">atoms_codes</b><var class="arglist">(-Atoms:list, +Codes:list)</var> is <b class="det">det</b></dt><dd class="defbody">Unify list of atoms with list of codes.
 
 <p>
 Please, note:</p>
 
-<ol>
-<li>as one single atom might yield more than one code, applying one
-operation followed by its reverse might not restore the original list&lt;br/&gt;</li>
-<li>the operation, as well as its reverse, can be applied to lists of chars,
-as a list of chars is identical to a list of single-char atoms</li>
-</ol>
+<pre class="code" ext="">
+1. as one single atom might yield more than one code, applying one
+   operation followed by its reverse might not restore the original list;
+2. the operation, as well as its reverse, can be applied to lists of chars,
+   as a list of chars is identical to a list of single-char atoms.</pre>
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>
@@ -264,12 +265,11 @@ as a list of chars is identical to a list of single-char atoms</li>
 </dl>
 
 </dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atoms_numbers/2"><b class="pred">atoms_numbers</b><var class="arglist">(?Atoms, ?Numbers)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify list of atoms with list of numbers they represent.
-
-<p>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atoms_numbers/2"><b class="pred">atoms_numbers</b><var class="arglist">(+Atoms, +Numbers)</var></a> is <b class="det">det</b></dt>
+<dt class="pubdef"><b class="pred">atoms_numbers</b><var class="arglist">(-Atoms, +Numbers)</var> is <b class="det">det</b></dt><dd class="defbody">Unify list of atoms with list of numbers they represent.
 Note that the operation, as well as its reverse, can be applied to
 lists of chars, as a list of chars is identical to a list of single-char atoms
-(in that case, the range is [0,9])</p>
+(in that case, the range is [0,9])
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>
@@ -283,15 +283,12 @@ lists of chars, as a list of chars is identical to a list of single-char atoms
 </dl>
 
 </dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="chars_lines/2"><b class="pred">chars_lines</b><var class="arglist">(?Chars:list, ?Lines:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify list of chars with lists of lines, each line itself a list of chars.
-
-<p>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="chars_lines/2"><b class="pred">chars_lines</b><var class="arglist">(+Chars:list, -Lines:list)</var></a> is <b class="det">det</b></dt>
+<dt class="pubdef"><b class="pred">chars_lines</b><var class="arglist">(-Chars:list, +Lines:list)</var> is <b class="det">det</b></dt><dd class="defbody">Unify list of chars with lists of lines, each line itself a list of chars.
 Both UNIX (LF or \n) and Windows (CRLF or \r\n) style line separators
 are considered. When building <var>Chars</var> from <var>Lines</var>, the OS-specific line
-terminator is used.</p>
-
-<p>
-HAZARD: lone CRs will be suppressed, without originating new lines.</p>
+terminator is used.&lt;/br&gt;
+HAZARD: lone CRs will be suppressed, without originating new lines.
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>
@@ -305,15 +302,12 @@ HAZARD: lone CRs will be suppressed, without originating new lines.</p>
 </dl>
 
 </dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="codes_lines/2"><b class="pred">codes_lines</b><var class="arglist">(?Codes:list, ?Lines:list)</var></a></dt><dd class="defbody">Unify list of codes with lists of lines, each line itself a list of codes.
-
-<p>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="codes_lines/2"><b class="pred">codes_lines</b><var class="arglist">(+Codes:list, -Lines:list)</var></a> is <b class="det">det</b></dt>
+<dt class="pubdef"><b class="pred">codes_lines</b><var class="arglist">(-Codes:list, +Lines:list)</var> is <b class="det">det</b></dt><dd class="defbody">Unify list of codes with lists of lines, each line itself a list of codes.
 Both UNIX (LF or \n) and Windows (CRLF or \r\n) style line separators
 are considered. When building <var>Codes</var> from <var>Lines</var>, the OS-specific line
-terminator is used.</p>
-
-<p>
-HAZARD: lone CRs will be suppressed, without originating new lines.</p>
+terminator is used.&lt;/br&gt;
+HAZARD: lone CRs will be suppressed, without originating new lines.
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>

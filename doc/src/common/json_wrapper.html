@@ -165,8 +165,9 @@ are as follows:</p>
 </dl>
 
 </dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="json_atom/2"><b class="pred">json_atom</b><var class="arglist">(?JsonTerm:json, ?JsonAtom:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify a JSON term with an atom standing for the corresponding JSON
-string representation (see <a href="json_wrapper.html#json_codes/2">json_codes/2</a> and <a href="json_wrapper.html#json_codes/3">json_codes/3</a> below).
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="json_atom/2"><b class="pred">json_atom</b><var class="arglist">(+JsonTerm:json, -JsonAtom:atom)</var></a> is <b class="det">det</b></dt>
+<dt class="pubdef"><b class="pred">json_atom</b><var class="arglist">(-JsonTerm:json, +JsonAtom:atom)</var> is <b class="det">det</b></dt><dd class="defbody">Unify a JSON term with an atom standing for the corresponding JSON
+string representation. See <a href="json_wrapper.html#json_codes/2">json_codes/2</a> and <a href="json_wrapper.html#json_codes/3">json_codes/3</a> below.
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>
@@ -180,9 +181,10 @@ string representation (see <a href="json_wrapper.html#json_codes/2">json_codes/2
 </dl>
 
 </dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="json_atom/3"><b class="pred">json_atom</b><var class="arglist">(?JsonTerm:json, ?JsonAtom:atom, +Options:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify a JSON term with an atom standing for the corresponding JSON
-string representation, according to <var>Options</var>
-(see <a href="json_wrapper.html#json_codes/2">json_codes/2</a> and <a href="json_wrapper.html#json_codes/3">json_codes/3</a> below).
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="json_atom/3"><b class="pred">json_atom</b><var class="arglist">(+JsonTerm:json, -JsonAtom:atom, +Options:list)</var></a> is <b class="det">det</b></dt>
+<dt class="pubdef"><b class="pred">json_atom</b><var class="arglist">(-JsonTerm:json, +JsonAtom:atom, +Options:list)</var> is <b class="det">det</b></dt><dd class="defbody">Unify a JSON term with an atom standing for the corresponding JSON
+string representation, according to <var>Options</var>.
+See <a href="json_wrapper.html#json_codes/2">json_codes/2</a> and <a href="json_wrapper.html#json_codes/3">json_codes/3</a> below.
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>
@@ -197,8 +199,9 @@ string representation, according to <var>Options</var>
 </dl>
 
 </dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="json_chars/2"><b class="pred">json_chars</b><var class="arglist">(?JsonTerm:json, ?JsonChars:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>JsonTerm</var> with a list of chars standing for the corresponding
-JSON string representation (see <a href="json_wrapper.html#json_codes/2">json_codes/2</a> and <a href="json_wrapper.html#json_codes/3">json_codes/3</a> below).
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="json_chars/2"><b class="pred">json_chars</b><var class="arglist">(+JsonTerm:json, -JsonChars:list)</var></a> is <b class="det">det</b></dt>
+<dt class="pubdef"><b class="pred">json_chars</b><var class="arglist">(-JsonTerm:json, +JsonChars:list)</var> is <b class="det">det</b></dt><dd class="defbody">Unify <var>JsonTerm</var> with a list of chars standing for the corresponding
+JSON string representation. See <a href="json_wrapper.html#json_codes/2">json_codes/2</a> and <a href="json_wrapper.html#json_codes/3">json_codes/3</a> below.
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>
@@ -212,9 +215,10 @@ JSON string representation (see <a href="json_wrapper.html#json_codes/2">json_co
 </dl>
 
 </dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="json_chars/3"><b class="pred">json_chars</b><var class="arglist">(?JsonTerm:json, ?JsonChars:list, +Options:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>JsonTerm</var> with a list of chars standing for the corresponding
-JSON string representation, according to <var>Options</var>
-(see <a href="json_wrapper.html#json_codes/2">json_codes/2</a> and <a href="json_wrapper.html#json_codes/3">json_codes/3</a> below).
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="json_chars/3"><b class="pred">json_chars</b><var class="arglist">(+JsonTerm:json, -JsonChars:list, +Options:list)</var></a> is <b class="det">det</b></dt>
+<dt class="pubdef"><b class="pred">json_chars</b><var class="arglist">(-JsonTerm:json, +JsonChars:list, +Options:list)</var> is <b class="det">det</b></dt><dd class="defbody">Unify <var>JsonTerm</var> with a list of chars standing for the corresponding
+JSON string representation, according to <var>Options</var>.
+See <a href="json_wrapper.html#json_codes/2">json_codes/2</a> and <a href="json_wrapper.html#json_codes/3">json_codes/3</a> below.
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>
@@ -229,13 +233,12 @@ JSON string representation, according to <var>Options</var>
 </dl>
 
 </dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="json_codes/2"><b class="pred">json_codes</b><var class="arglist">(?JsonTerm:json, ?JsonCodes:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify a JSON term with a list of char codes standing for the corresponding
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="json_codes/2"><b class="pred">json_codes</b><var class="arglist">(+JsonTerm:json, -JsonCodes:list)</var></a> is <b class="det">det</b></dt>
+<dt class="pubdef"><b class="pred">json_codes</b><var class="arglist">(-JsonTerm:json, +JsonCodes:list)</var> is <b class="det">det</b></dt><dd class="defbody">Unify a JSON term with a list of char codes standing for the corresponding
 JSON string representation.
-
-<p>
 This is acomplished either by writing the term as JSON, using <a class="extmanual" href="http://www.swi-prolog.org/pldoc/man?predicate=json_write/2">json_write/2</a> or
 <a class="extmanual" href="http://www.swi-prolog.org/pldoc/man?predicate=json_write/3">json_write/3</a>, or by reading the JSON codes, using <a class="extmanual" href="http://www.swi-prolog.org/pldoc/man?predicate=json_read/2">json_read/2</a> or <a class="extmanual" href="http://www.swi-prolog.org/pldoc/man?predicate=json_read/3">json_read/3</a>.
-Examples:</p>
+Examples:
 
 <p>
 <b>1a.</b></p>
@@ -294,8 +297,9 @@ yields
 </dl>
 
 </dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="json_codes/3"><b class="pred">json_codes</b><var class="arglist">(?JsonTerm:json, ?JsonCodes:list, +Options:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>JsonTerm</var> with a list of char codes standing for the corresponding
-JSON string representation, according to <var>Options</var> (see <a href="json_wrapper.html#json_codes/2">json_codes/2</a> above).
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="json_codes/3"><b class="pred">json_codes</b><var class="arglist">(+JsonTerm:json, -JsonCodes:list, +Options:list)</var></a> is <b class="det">det</b></dt>
+<dt class="pubdef"><b class="pred">json_codes</b><var class="arglist">(-JsonTerm:json, +JsonCodes:list, +Options:list)</var> is <b class="det">det</b></dt><dd class="defbody">Unify <var>JsonTerm</var> with a list of char codes standing for the corresponding
+JSON string representation, according to <var>Options</var>. See <a href="json_wrapper.html#json_codes/2">json_codes/2</a> above.
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>

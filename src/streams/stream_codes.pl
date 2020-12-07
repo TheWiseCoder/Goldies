@@ -1,6 +1,6 @@
 :- module(stream_codes,
     [
-        stream_codes/3      % stream_codes(+Stream, +Count, -Codes)
+        stream_codes/3
     ]).
 
 /** <module> Read a list of codes from a given stream
