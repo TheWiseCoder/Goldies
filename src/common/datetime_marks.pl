@@ -30,7 +30,7 @@
 
 :- use_module(library(clpfd)).
 
-:- if(current_prolog_flag(dialect, sicstus)).   % SICStus ----------------------------
+:- if(current_prolog_flag(dialect, sicstus)).
 
 :- use_module(library(system),
     [
@@ -43,7 +43,7 @@ date_weekday_(Year, Month, Day, Dow) :-
     (MJD + 2) mod 7 #= Ord,
     weekday_ordinal(Dow, Ord).
 
-:- elif(current_prolog_flag(dialect, swi)).     % SWI-Prolog -------------------------
+:- elif(current_prolog_flag(dialect, swi)).
 
 :- use_module('../swi/port_layer',
     [
@@ -56,7 +56,7 @@ date_weekday_(Year, Month, Day, Dow) :-
     Ord is OrdSwi - 1,
     weekday_ordinal(Dow, Ord).
 
-:- endif.                                       % ------------------------------------
+:- endif.
 
 :- use_module(library(codesio),
     [

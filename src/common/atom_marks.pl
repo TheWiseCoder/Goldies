@@ -30,7 +30,7 @@
 
 %-------------------------------------------------------------------------------------
 
-:- if(current_prolog_flag(dialect, sicstus)).   % SICStus ----------------------------
+:- if(current_prolog_flag(dialect, sicstus)).
 
 :- use_module(library(lists),
     [
@@ -38,14 +38,14 @@
         reverse/2
     ]).
 
-:- elif(current_prolog_flag(dialect, swi)).     % SWI-Prolog -------------------------
+:- elif(current_prolog_flag(dialect, swi)).
 
 :- use_module(library(lists),
     [
         reverse/2
     ]).
 
-:- endif.                                       % ------------------------------------
+:- endif.
   
 %! atom_contained(+AtomContainer:atom, +AtomContained:atom) is semidet.
 %

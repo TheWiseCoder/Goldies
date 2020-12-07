@@ -52,7 +52,7 @@ are as follows:
 
 %-------------------------------------------------------------------------------------
 
-:- if(current_prolog_flag(dialect, sicstus)).   % SICStus ----------------------------
+:- if(current_prolog_flag(dialect, sicstus)).
 
 :- use_module(library(json),
     [
@@ -68,7 +68,7 @@ are as follows:
         reverse/2
     ]).
 
-:- elif(current_prolog_flag(dialect, swi)).     % SWI-Prolog -------------------------
+:- elif(current_prolog_flag(dialect, swi)).
 
 :- use_module(library(lists),
     [
@@ -83,7 +83,7 @@ are as follows:
         json_write/3
     ]).
 
-:- endif.                                       % ------------------------------------   
+:- endif.
 
 :- use_module(library(codesio),
     [
@@ -370,7 +370,7 @@ json_chars(JsonTerm, JsonChars, Options) :-
 %    atom_codes(Atom, Codes)
 %  yields
 %    Atom = '{\n  "C":["a", "b", "c"]\n}' (SICStus)
-%    Atom = '{"C": ["a", "b", "c" ]}'     (SWI-Prolog)
+%    Atom = '{"C": ["a", "b", "c"]}'      (SWI-Prolog)
 %  ~~~
 %
 %  @param JsonTerm  The JSON term

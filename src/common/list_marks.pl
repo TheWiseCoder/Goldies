@@ -36,7 +36,7 @@
 
 :- meta_predicate convlist_first(2, +, -).
 
-:- if(current_prolog_flag(dialect, sicstus)).   % SICStus ----------------------------
+:- if(current_prolog_flag(dialect, sicstus)).
 
 :- use_module(library(between),
     [
@@ -56,7 +56,7 @@
         sublist/5
     ]).
 
-:- elif(current_prolog_flag(dialect, swi)).     % SWI-Prolog -------------------------
+:- elif(current_prolog_flag(dialect, swi)).
 
 :- use_module(library(lists),
     [
@@ -75,7 +75,7 @@
         sublist/5
     ]).
 
-:- endif.                                       % ------------------------------------
+:- endif.
 
 %-------------------------------------------------------------------------------------
 % join together extra number of lists by appension

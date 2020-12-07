@@ -18,7 +18,7 @@ one of two conditions is met:<br/>
 
 %-------------------------------------------------------------------------------------
 
-:- if(current_prolog_flag(dialect, sicstus)).   % SICStus ----------------------------
+:- if(current_prolog_flag(dialect, sicstus)).
 
 :- use_module(library(lists),
     [
@@ -32,7 +32,7 @@ one of two conditions is met:<br/>
         read_line_to_codes/2
     ]).
 
-:- elif(current_prolog_flag(dialect, swi)).     % SWI-Prolog -------------------------
+:- elif(current_prolog_flag(dialect, swi)).
 
 :- use_module(library(lists),
     [
@@ -50,7 +50,7 @@ one of two conditions is met:<br/>
         sublist/4
     ]).
     
-:- endif.                                       % ------------------------------------
+:- endif.
 
 :- use_module('../common/atom_marks',
     [
