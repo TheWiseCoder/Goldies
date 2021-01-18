@@ -15,6 +15,22 @@ Read one integer per line, to the end of the stream.
 
 %-------------------------------------------------------------------------------------
 
+:- if(current_prolog_flag(dialect, sicstus)).
+
+:- use_module('../sicstus/port_layer',
+    [
+        read_line_to_codes/2
+    ]).
+
+:- elif(current_prolog_flag(dialect, swi)).
+
+:- use_module(library(readutil),
+    [
+        read_line_to_codes/2
+    ]).
+
+:- endif.
+
 :- use_module(library(lists),
     [
         reverse/2
@@ -35,7 +51,7 @@ stream_ints(Stream, Ints) :-
 % (iterate on file lines)
 stream_ints_1(Stream, IntsProgress, IntsFinal) :-
 
-    read_line(Stream, Line),
+    read_line_to_codes(Stream, Line),
     stream_ints_2(Stream, Line, IntsProgress, IntsFinal).
 
 % (done)
