@@ -111,8 +111,8 @@ file_base_name(FilePath, FileName) :-
     ),
     counter_destroy(FilePath).
 
-% Extract the directory name part from a path. Unify DirectoryName with the empty
-% atom ('') if FilePath is '' or '/', or if it does not contain '/'. Otherwise,
+% Extract the directory name part from a path. Unify DirectoryName with '.'
+% if FilePath is '' or '/', or if it does not contain '/'. Otherwise,
 % unify DirectoryName with the expected value. DirectoryName will not have a
 % trailing '/'. Note that this behaviour differs from SWI-Prolog's
 % file_directory_name/2.
@@ -130,7 +130,7 @@ file_directory_name(FilePath, DirectoryName) :-
     !,
     Pos is Before + 1,
     (Pos < 2 ->
-        DirectoryName = ''
+        DirectoryName = '.'
     ;
         sub_atom(FilePath, 0, Before, _, DirectoryName)
     ),
