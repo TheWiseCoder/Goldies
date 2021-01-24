@@ -7,6 +7,8 @@
 *       SWI-Prolog features.
 *
 * PUBLIC PREDICATES :
+*       file_base_name(+FilePath, -FileName)
+*       file_directory_name(+FilePath, -DirectoryName)
 *       flag(+Key, -Old, +New)
 *       getenv(+Name, -Value)
 *       get_flag(+Key, -Value)
@@ -33,6 +35,8 @@
 
 :- module(port_layer,
     [
+        file_base_name/2,
+        file_directory_name/2,
         flag/3,
         getenv/2,
         get_flag/2,
@@ -72,7 +76,65 @@
         repeat_goal/3
     ]).
 
+:- use_module('simple_counter',
+    [
+        counter_create/2,
+        counter_dec/2,
+        counter_destroy/1
+    ]).
+
 %-------------------------------------------------------------------------------------
+
+% Extract the file name part from a path. Unify FileName with the empty atom ('')
+% if FilePath is '', or if ends with '/'. Otherwise, unify FileName with the
+% expected value. Note that this behaviour differs from SWI-Prolog's
+% file_base_name/2.
+%
+% file_base_name(+FilePath, -FileName)
+file_base_name(FilePath, FileName) :-
+
+    atom_length(FilePath, Len),
+    counter_create(FilePath, Len),
+
+    repeat,
+        counter_dec(FilePath, Before),
+        (Before = -1 ; sub_atom(FilePath, Before, 1, _, '/')),
+
+    !,
+    Pos is Before + 1,
+    ( Pos = 0 ->
+        FileName = FilePath
+    ; Pos = Len ->
+        FileName = ''
+    ; otherwise ->
+        sub_atom(FilePath, Pos, _, 0, FileName)
+    ),
+    counter_destroy(FilePath).
+
+% Extract the directory name part from a path. Unify DirectoryName with the empty
+% atom ('') if FilePath is '' or '/', or if it does not contain '/'. Otherwise,
+% unify DirectoryName with the expected value. DirectoryName will not have a
+% trailing '/'. Note that this behaviour differs from SWI-Prolog's
+% file_directory_name/2.
+%
+% file_directory_name(+FilePath, -DirectoryName)
+file_directory_name(FilePath, DirectoryName) :-
+
+    atom_length(FilePath, Len),
+    counter_create(FilePath, Len),
+
+    repeat,
+        counter_dec(FilePath, Before),
+        (Before = -1 ; sub_atom(FilePath, Before, 1, _, '/')),
+
+    !,
+    Pos is Before + 1,
+    (Pos < 2 ->
+        DirectoryName = ''
+    ;
+        sub_atom(FilePath, 0, Before, _, DirectoryName)
+    ),
+    counter_destroy(FilePath).
 
 % unify a list of key-value pairs with separate lists of keys and values
 % pairs_keys_values(?Pairs, ?Keys, ?Values)

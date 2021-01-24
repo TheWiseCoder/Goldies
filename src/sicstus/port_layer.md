@@ -16,6 +16,8 @@ The available predicates are:
 - `randset(+K, +N, -Set)` - unify *Set* with a sorted list of approximately *K* unique random integers in the range 1..*N*  
 
 4. miscellaneous operations  
+- `file_base_name(+FilePath, -FileName)` - unify *FileName* with the file name part of *FilePath*  
+- `file_directory_name(+FilePath, -DirectoryName)` - unify *DirectoryName* with the directory name part of *FilePath*  
 - `getenv(+Name, -Value)` - unify *Value* with the value of the environment variable *Name*  
 - `pairs_keys_values(?Pairs, ?Keys, ?Values)` - unify a list of key-value pairs with separate lists of keys and values  
 - `read_line_to_codes(+Stream, -Codes)` - unify Codes with the line codes read from Stream  
