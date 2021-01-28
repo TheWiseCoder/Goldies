@@ -17,7 +17,8 @@
         atoms_contained_all/2,
         atoms_contained_any/2,
         chars_lines/2,
-        codes_lines/2
+        codes_lines/2,
+        sub_atom_between/5
     ]).
 
 /** <module> Atom handling utilities
@@ -357,6 +358,62 @@ numbers_atoms_([Number|Numbers], AtomsProgress, AtomsFinal) :-
     % single-code atom
     atom_codes(Atom, Number),
     numbers_atoms_(Numbers, [Atom|AtomsProgress], AtomsFinal).
+
+%-------------------------------------------------------------------------------------
+
+%! sub_atom_between(+Atom:atom, +AtomFrom:atom, +AtomTo:atom, -Subatom:atom, AtomAdjusted:atom) is semidet.
+%
+%  Unify Subatom with the contents of Atom found between AtomFrom and AtomTo,
+%  exclusive. Subsequently, unify AtomAdjusted with the remaining contents of Atom,
+%  after Subatom, AtomFrom and AtomTo are extracted.
+%  Fail if no such boundaries exist.
+%
+%  @param Atom         The input atom
+%  @param AtomFrom     The begin boundary
+%  @param AtomTo       The end boundary
+%  @param Subatom      The content between the boundaries
+%  @param AtomAdjusted The adjusted atom (input atom minus boundaries and content)
+
+sub_atom_between(Atom, AtomFrom, AtomTo, Subatom, AtomAdjusted) :-
+
+    % the following is the target structures:
+    %
+    % <                Atom                   >
+    % <Atom1><AtomFrom><        Atom2         >
+    %        ^         ^
+    %        |         |
+    %   FromBefore  FromAfter
+    %
+    % <        Atom2         >
+    % <Subatom><AtomTo><Atom3>
+    %          ^       ^
+    %          |       |
+    %      ToBefore ToAfter
+    %
+    % <AtomAdjusted>
+    % <Atom1><Atom3>
+
+    % fail point (locate AtomFrom withing Atom)
+    sub_atom(Atom, FromBefore, _, _, AtomFrom),
+
+    % extract the previous and remaining contents
+    sub_atom(Atom, 0, FromBefore, _, Atom1),
+    atom_length(AtomFrom, FromLength),
+    FromAfter is FromBefore + FromLength,
+    sub_atom(Atom, FromAfter, _, 0, Atom2),
+
+    !,
+    % fail point (locate AtomTo within Atom2)
+    sub_atom(Atom2, ToBefore, _, _, AtomTo),
+
+    % obtain Subatom
+    atom_length(AtomTo, ToLength),
+    sub_atom(Atom2, 0, ToBefore, _, Subatom),
+    ToAfter is ToBefore + ToLength,
+    sub_atom(Atom2, ToAfter, _, 0, Atom3),
+
+    % obtain AtomAdjusted
+    atom_concat(Atom1, Atom3, AtomAdjusted).
 
 %-------------------------------------------------------------------------------------
 

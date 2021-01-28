@@ -88,6 +88,26 @@ Similar to <a class="builtin" href="http://www.swi-prolog.org/pldoc/man?predicat
 </dl>
 
 </dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="sublist_between/5"><b class="pred">sublist_between</b><var class="arglist">(+List:list, +ListFrom:list, +ListTo:list, -Sublist:list, ListAdjusted:list)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Unify <var>Sublist</var> with the contents of <var>List</var> found between <var>ListFrom</var> and <var>ListTo</var>,
+exclusive. Subsequently, unify <var>ListAdjusted</var> with the remaining contents of <var>List</var>,
+after <var>Sublist</var>, <var>ListFrom</var> and <var>ListTo</var> are extracted.
+Fail if no such boundaries exist.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>List</var></td><td class="argdescr">- The input list</td></tr>
+<tr><td><var>ListFrom</var></td><td class="argdescr">- The begin boundary</td></tr>
+<tr><td><var>ListTo</var></td><td class="argdescr">- The end boundary</td></tr>
+<tr><td><var>Sublist</var></td><td class="argdescr">- The content between the boundaries</td></tr>
+<tr><td><var>ListAdjusted</var></td><td class="argdescr">- The adjusted list (input list minus boundaries and content)</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
 <dt class="pubdef"><span style="float:right">&nbsp;</span><a name="lists_find/3"><b class="pred">lists_find</b><var class="arglist">(+Lists:list, +Element:data, -Pos1:int)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Unify <var>Pos1</var> with the 1-based position of the first list in <var>Lists</var> containing <var>Element</var>.
 
 <dl class="tags">

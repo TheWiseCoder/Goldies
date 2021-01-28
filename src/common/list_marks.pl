@@ -21,7 +21,8 @@
         lists_consolidate/3,
         lists_find/3,
         lists_flatten/2,
-        lists_start_with/3
+        lists_start_with/3,
+        sublist_between/5
     ]).
 
 /** <module>  Miscellaneous small list-related utilities
@@ -53,6 +54,7 @@
         nth1/4,
         reverse/2,
         sublist/3,
+        sublist/4,
         sublist/5
     ]).
 
@@ -72,6 +74,7 @@
 :- use_module('../swi/port_lists',
     [
         sublist/3,
+        sublist/4,
         sublist/5
     ]).
 
@@ -150,9 +153,65 @@ convlist_first(Goal, [Head|List], Element) :-
 
 %-------------------------------------------------------------------------------------
 
+%! sublist_between(+List:list, +ListFrom:list, +ListTo:list, -Sublist:list, ListAdjusted:list) is semidet.
+%
+%  Unify Sublist with the contents of List found between ListFrom and ListTo,
+%  exclusive. Subsequently, unify ListAdjusted with the remaining contents of List,
+%  after Sublist, ListFrom and ListTo are extracted.
+%  Fail if no such boundaries exist.
+%
+%  @param List         The input list
+%  @param ListFrom     The begin boundary
+%  @param ListTo       The end boundary
+%  @param Sublist      The content between the boundaries
+%  @param ListAdjusted The adjusted list (input list minus boundaries and content)
+
+sublist_between(List, ListFrom, ListTo, Sublist, ListAdjusted) :-
+
+    % the following is the target structures:
+    %
+    % <                List                   >
+    % <List1><ListFrom><        List2         >
+    %        ^         ^
+    %        |         |
+    %   FromBefore  FromAfter
+    %
+    % <        List2         >
+    % <Sublist><ListTo><List3>
+    %          ^       ^
+    %          |       |
+    %      ToBefore ToAfter
+    %
+    % <ListAdjusted>
+    % <List1><List3>
+
+    % fail point (locate ListFrom withing List)
+    sublist(List, ListFrom, FromBefore),
+
+    % extract the previous and remaining
+    sublist(List, List1, 0, FromBefore),
+    length(ListFrom, FromLength),
+    FromAfter is FromBefore + FromLength,
+    sublist(List, List2, FromAfter, _, 0),
+
+    !,
+    % fail point (locate ListTo within List2)
+    sublist(List2, ListTo, ToBefore),
+
+    % obtain Sublist
+    length(ListTo, ToLength),
+    sublist(List2, Sublist, 0, ToBefore),
+    ToAfter is ToBefore + ToLength,
+    sublist(List2, List3, ToAfter, _, 0),
+
+    % obtain ListAdjusted
+    append(List1, List3, ListAdjusted).
+
+%-------------------------------------------------------------------------------------
+
 %! lists_find(+Lists:list, +Element:data, -Pos1:int) is semidet.
 %
-% Unify Pos1 with the 1-based position of the first list in Lists containing Element.
+%  Unify Pos1 with the 1-based position of the first list in Lists containing Element.
 %
 %  @param Lists   List of lists under inspection
 %  @param Element Element being sought
@@ -520,7 +579,7 @@ list_split(List, Sep, Lists) :-
 list_split_(List, Sep, ListsProgress, ListsFinal) :-
 
     (nth0(Pos, List, Sep) ->
-        sublist(List, ListPrev, 0, Pos, _),
+        sublist(List, ListPrev, 0, Pos),
         PosSeq is Pos + 1,
         sublist(List, ListPost, PosSeq, _, 0),
         list_split_(ListPost, Sep, [ListPrev|ListsProgress], ListsFinal)
@@ -619,7 +678,7 @@ list_same(List, Before, Length, After) :-
 
 list_same0(List, Pos0, Count) :-
 
-    sublist(List, Sublist, Pos0, Count, _),
+    sublist(List, Sublist, Pos0, Count),
     !,
     % fail point
     list_same(Sublist).
@@ -637,7 +696,7 @@ list_same0(List, Pos0, Count) :-
 list_same1(List, Pos1, Count) :-
 
     Pos is Pos1 - 1,
-    sublist(List, Sublist, Pos, Count, _),
+    sublist(List, Sublist, Pos, Count),
     !,
     % fail point
     list_same(Sublist).

@@ -24,20 +24,20 @@ by implementing some unique, or convenient, SICStus Prolog features.</p>
 </dl>
 
 <dl>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="datime/1"><b class="pred">datime</b><var class="arglist">(-Datime:term)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Datime</var> with the current datetime as a <code>datime/6</code> term.
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="datime/1"><b class="pred">datime</b><var class="arglist">(-Datime:term)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Datime</var> with the current datetime as a <a class="extmanual" href="http://www.swi-prolog.org/pldoc/man?predicate=datime/6">datime/6</a> term.
 
 <p>
-<code>datime/6</code> term have the form <code>datime(Year,Month,Day,Hour,Min,Sec).</code>
+<a class="extmanual" href="http://www.swi-prolog.org/pldoc/man?predicate=datime/6">datime/6</a> term have the form <code>datime(Year,Month,Day,Hour,Min,Sec).</code>
 All fields are integers.</p></dd>
 <dt class="pubdef"><span style="float:right">&nbsp;</span><a name="datime/2"><b class="pred">datime</b><var class="arglist">(+When:int, -Datime:term)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Datime</var> with the datetime given by the UNIX timestamp <var>When</var>,
-as a <code>datime/6</code> term.
+as a <a class="extmanual" href="http://www.swi-prolog.org/pldoc/man?predicate=datime/6">datime/6</a> term.
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>
 
 <table class="arglist">
 <tr><td><var>When</var></td><td class="argdescr">- Date and time as a UNIX timestamp</td></tr>
-<tr><td><var>Datime</var></td><td class="argdescr">- Date and time as a <code>datime/6</code> term</td></tr>
+<tr><td><var>Datime</var></td><td class="argdescr">- Date and time as a <a class="extmanual" href="http://www.swi-prolog.org/pldoc/man?predicate=datime/6">datime/6</a> term</td></tr>
 </table>
 
 </dd>

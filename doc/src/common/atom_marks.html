@@ -283,6 +283,26 @@ lists of chars, as a list of chars is identical to a list of single-char atoms
 </dl>
 
 </dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="sub_atom_between/5"><b class="pred">sub_atom_between</b><var class="arglist">(+Atom:atom, +AtomFrom:atom, +AtomTo:atom, -Subatom:atom, AtomAdjusted:atom)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Unify <var>Subatom</var> with the contents of <var>Atom</var> found between <var>AtomFrom</var> and <var>AtomTo</var>,
+exclusive. Subsequently, unify <var>AtomAdjusted</var> with the remaining contents of <var>Atom</var>,
+after <var>Subatom</var>, <var>AtomFrom</var> and <var>AtomTo</var> are extracted.
+Fail if no such boundaries exist.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Atom</var></td><td class="argdescr">- The input atom</td></tr>
+<tr><td><var>AtomFrom</var></td><td class="argdescr">- The begin boundary</td></tr>
+<tr><td><var>AtomTo</var></td><td class="argdescr">- The end boundary</td></tr>
+<tr><td><var>Subatom</var></td><td class="argdescr">- The content between the boundaries</td></tr>
+<tr><td><var>AtomAdjusted</var></td><td class="argdescr">- The adjusted atom (input atom minus boundaries and content)</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
 <dt class="pubdef"><span style="float:right">&nbsp;</span><a name="chars_lines/2"><b class="pred">chars_lines</b><var class="arglist">(+Chars:list, -Lines:list)</var></a> is <b class="det">det</b></dt>
 <dt class="pubdef"><b class="pred">chars_lines</b><var class="arglist">(-Chars:list, +Lines:list)</var> is <b class="det">det</b></dt><dd class="defbody">Unify list of chars with lists of lines, each line itself a list of chars.
 Both UNIX (LF or \n) and Windows (CRLF or \r\n) style line separators
