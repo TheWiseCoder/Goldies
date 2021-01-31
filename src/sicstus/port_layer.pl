@@ -18,6 +18,7 @@
 *       randseq(+K, +N, -Set)
 *       randset(+K, +N, -Set)
 *       read_line_to_codes(+Stream, -Codes)
+*       setenv(+Name, +Value)
 *       set_flag(+Key, +Value)
 *
 * NOTES :
@@ -46,6 +47,7 @@
         randseq/3,
         randset/3,
         read_line_to_codes/2,
+        setenv/2,
         set_flag/2
     ]).
 
@@ -281,4 +283,11 @@ guid_(Val, Hex) :-
 % Name      name of the environment variable
 % Value     corresponding value
 getenv(Name, Value) :-
+    environ(Name, Value).
+
+% set the environment variable Name to Value
+% setenv(+Name, +Value)
+% Name      name of the environment variable
+% Value     value to set
+setenv(Name, Value) :-
     environ(Name, Value).

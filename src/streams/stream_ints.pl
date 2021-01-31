@@ -3,12 +3,14 @@
         stream_ints/2
     ]).
 
-/** <module> Read integers from a given stream
+/** <module> Read/write a list of integers from/to a given stream
 
-Read one integer per line, to the end of the stream.
+ 
+Integers are read from the stream one per line, to the end of the stream,
+or written to the stream, one per line, to the end of the list.
 
 @author GT Nunes
-@version 1.0
+@version 1.1
 @copyright (c) 2020 GT Nunes
 @license BSD-3-Clause License
 */
@@ -36,38 +38,86 @@ Read one integer per line, to the end of the stream.
         reverse/2
     ]).
 
+:- use_module('stream_codes',
+    [
+        stream_codes/3
+    ]).
+
 %-------------------------------------------------------------------------------------
 
 %! stream_ints(+Stream:ref, -Ints:list) is det.
+%! stream_ints(+Stream:ref, +Ints:list) is det.
+%
+%  If Ints is grounded, write all ints in Ints to Stream.
+%  Otherwise, Read ints from Stream, up to the end of the stream.
+%
+%  @param Stream The input/output stream
+%  @param Ints   List of ints read from, or to write to, the stream
+
+stream_ints(Stream, Ints) :-
+
+    (var(Ints) ->
+        stream_read(Stream, Ints)
+    ;
+        stream_write(Stream, Ints)
+    ).
+
+%-------------------------------------------------------------------------------------
+
+%! stream_read(+Stream:ref, -Ints:list) is det.
 %
 %  Read integers from a Stream, one per line, to the end of the stream.
 %
 %  @param Stream Input stream
-%  @param Ints   List of ints read from stream
+%  @param Ints   List of ints read from the stream
 
-stream_ints(Stream, Ints) :-
-    stream_ints_1(Stream, [], Ints).
+stream_read(Stream, Ints) :-
+    stream_read_1(Stream, [], Ints).
 
 % (iterate on file lines)
-stream_ints_1(Stream, IntsProgress, IntsFinal) :-
+stream_read_1(Stream, IntsProgress, IntsFinal) :-
 
     read_line_to_codes(Stream, Line),
-    stream_ints_2(Stream, Line, IntsProgress, IntsFinal).
+    stream_read_2(Stream, Line, IntsProgress, IntsFinal).
 
 % (done)
-stream_ints_2(_Stream, end_of_file, IntsProgress, IntsFinal) :-
+stream_read_2(_Stream, end_of_file, IntsProgress, IntsFinal) :-
     reverse(IntsProgress, IntsFinal).
 
 % (skip empty line)
-stream_ints_2(Stream, [], IntsProgress, IntsFinal) :-
-    stream_ints_1(Stream, IntsProgress, IntsFinal).
+stream_read_2(Stream, [], IntsProgress, IntsFinal) :-
+    stream_read_1(Stream, IntsProgress, IntsFinal).
 
 % (skip commented line - ascii value for '%' is 37)
-stream_ints_2(Stream, [37|_Line], IntsProgress, IntsFinal) :-
-    stream_ints_1(Stream, IntsProgress, IntsFinal).
+stream_read_2(Stream, [37|_Line], IntsProgress, IntsFinal) :-
+    stream_read_1(Stream, IntsProgress, IntsFinal).
 
 % (keep the int)
-stream_ints_2(Stream, Line, IntsProgress, IntsFinal) :-
+stream_read_2(Stream, Line, IntsProgress, IntsFinal) :-
 
     number_codes(Int, Line),
-    stream_ints_1(Stream, [Int|IntsProgress], IntsFinal).
+    stream_read_1(Stream, [Int|IntsProgress], IntsFinal).
+
+%-------------------------------------------------------------------------------------
+
+%! stream_write(+Stream:ref, +Ints:list) is det.
+%
+%  Write all ints in Ints to Stream, one per line.
+%
+%  @param Stream The input stream
+%  @param Ints   List of ints to write to the stream
+
+% (done)
+stream_write(_Stream, []).
+
+% (start)
+stream_write(Stream, [Int|Ints]) :-
+
+    % write int to the stream
+    number_codes(Int, Codes),
+    stream_codes(Stream, -1, Codes),
+    put_char(Stream, '\n'),
+
+    % go for the next code
+    stream_write(Stream, Ints).
+

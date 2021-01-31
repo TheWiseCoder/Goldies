@@ -3,13 +3,15 @@
         stream_chars/3
     ]).
 
-/** <module> Read a list of chars from a given stream
-
-The invoker must provide the number of chars to read,
+/** <module> Read/write a list of chars from/to a given stream
+ 
+For reading from the stream, the invoker must provide the number of chars to read,
 or `-1` to read to the end of the stream.
+For writing to the stream, the invoker must provide the number of chars to write,
+or `-1` to write all chars in the list of chars given.
 
 @author GT Nunes
-@version 1.0
+@version 1.1
 @copyright (c) 2020 GT Nunes
 @license BSD-3-Clause License
 */
@@ -24,6 +26,28 @@ or `-1` to read to the end of the stream.
 %-------------------------------------------------------------------------------------
 
 %! stream_chars(+Stream:ref, +Count:int, -Chars:list) is det.
+%! stream_chars(+Stream:ref, +Count:int, +Chars:list) is det.
+%
+%  If Chars is grounded, write Count chars in Chars to Stream.
+%  For Count = -1, write all chars in Chars.
+%  Otherwise, Read up to Count chars from Stream.
+%  For Count = -1, read to the end of the stream.
+%
+%  @param Stream The input/output stream
+%  @param Count  Number of bytes to read or write
+%  @param Chars  List of chars read from, or to write to, the stream
+
+stream_chars(Stream, Count, Chars) :-
+
+    (var(Chars) ->
+        stream_read(Stream, Count, Chars)
+    ;
+        stream_write(Stream, Count, Chars)
+    ).
+
+%-------------------------------------------------------------------------------------
+
+%! stream_read(+Stream:ref, +Count:int, -Chars:list) is det.
 %
 %  Read up to Count chars from Stream. For Count = -1, read to the end of the stream.
 %
@@ -32,29 +56,29 @@ or `-1` to read to the end of the stream.
 %  @param Chars  List of chars read from the stream
 
 % (done)
-stream_chars(_Stream, 0, Chars) :-
+stream_read(_Stream, 0, Chars) :-
     Chars = [].
 
 % (start)
-stream_chars(Stream, Count, Chars) :-
+stream_read(Stream, Count, Chars) :-
 
     get_char(Stream, Count, Char, CountNext),
-    stream_chars_(Stream, CountNext, Char, [], CharsFinal),
+    stream_read_(Stream, CountNext, Char, [], CharsFinal),
     reverse(CharsFinal, Chars).
 
 % (done, number of chars obtained)
-stream_chars_(_Stream, 0, Char, CharsProgress, CharsFinal) :-
+stream_read_(_Stream, 0, Char, CharsProgress, CharsFinal) :-
     CharsFinal = [Char|CharsProgress].
 
 % (done, end of stream reached)
-stream_chars_(_Stream, _Count, end_of_file, CharsFinal, CharsFinal).
+stream_read_(_Stream, _Count, end_of_file, CharsFinal, CharsFinal).
 
 % (iterate)
-stream_chars_(Stream, Count, Char, CharsProgress, CharsFinal) :-
+stream_read_(Stream, Count, Char, CharsProgress, CharsFinal) :-
 
     get_char(Stream, Count, CharNext, CountNext),
-    stream_chars_(Stream, CountNext, CharNext,
-                  [Char|CharsProgress], CharsFinal).
+    stream_read_(Stream, CountNext, CharNext,
+                 [Char|CharsProgress], CharsFinal).
 
 %-------------------------------------------------------------------------------------
 
@@ -87,3 +111,30 @@ get_char(Stream, Count, Char, CountNew) :-
     CountNew is Count - 1.
 
 :- endif.
+
+%-------------------------------------------------------------------------------------
+
+%! stream_write(+Stream:ref, +Count:int, +Chars:list) is det.
+%
+%  Write up to Count bytes in Chars to Stream.
+%  For Count = -1, write all chars in Chars to Stream.
+%
+%  @param Stream The input stream
+%  @param Count  Number of bytes to read
+%  @param Chars  List of chars to write to the stream
+
+% (done)
+stream_write(_Stream, 0, _Chars).
+
+% (done)
+stream_write(_Stream, _Count, []).
+
+% (start)
+stream_write(Stream, Count, [Char|Chars]) :-
+
+    % write char to the stream
+    put_char(Stream, Char),
+
+    % go for the next char
+    CountNext is Count - 1,
+    stream_write(Stream, CountNext, Chars).

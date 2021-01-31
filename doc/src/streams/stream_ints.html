@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>stream_ints.pl -- Read integers from a given stream</title>
+<title>stream_ints.pl -- Read/write a list of integers from/to a given stream</title>
 
 <link rel="stylesheet" type="text/css" href="../../pldoc.css">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -10,27 +10,30 @@
 <body>
 
 
-<h1 class="file"><span style="float:right"></span>stream_ints.pl -- Read integers from a given stream</h1>
+<h1 class="file"><span style="float:right"></span>stream_ints.pl -- Read/write a list of integers from/to a given stream</h1>
 
 <p>
-Read one integer per line, to the end of the stream.</p>
+Integers are read from the stream one per line, to the end of the stream,
+or written to the stream, one per line, to the end of the list.</p>
 
 <dl class="tags">
 <dt class="keyword-author">author</dt><dd class="keyword-author">- GT Nunes</dd>
-<dt class="keyword-version">version</dt><dd class="keyword-version">- 1.0</dd>
+<dt class="keyword-version">version</dt><dd class="keyword-version">- 1.1</dd>
 <dt class="keyword-copyright">copyright</dt><dd class="keyword-copyright">- (c) 2020 GT Nunes</dd>
 <dt class="keyword-license">license</dt><dd class="keyword-license">- BSD-3-Clause License</dd>
 </dl>
 
 <dl>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="stream_ints/2"><b class="pred">stream_ints</b><var class="arglist">(+Stream:ref, -Ints:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Read integers from a <var>Stream</var>, one per line, to the end of the stream.
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="stream_ints/2"><b class="pred">stream_ints</b><var class="arglist">(+Stream:ref, -Ints:list)</var></a> is <b class="det">det</b></dt>
+<dt class="pubdef"><b class="pred">stream_ints</b><var class="arglist">(+Stream:ref, +Ints:list)</var> is <b class="det">det</b></dt><dd class="defbody">If <var>Ints</var> is grounded, write all ints in <var>Ints</var> to <var>Stream</var>.
+Otherwise, Read ints from <var>Stream</var>, up to the end of the stream.
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>
 
 <table class="arglist">
-<tr><td><var>Stream</var></td><td class="argdescr">- Input stream</td></tr>
-<tr><td><var>Ints</var></td><td class="argdescr">- List of ints read from stream</td></tr>
+<tr><td><var>Stream</var></td><td class="argdescr">- The input/output stream</td></tr>
+<tr><td><var>Ints</var></td><td class="argdescr">- List of ints read from, or to write to, the stream</td></tr>
 </table>
 
 </dd>
