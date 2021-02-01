@@ -137,7 +137,7 @@ stream_read(Stream, EOS, LineCodes, AtomsProgress, AtomsFinal) :-
 %  @param Atoms  List of atoms to write to the stream
 
 % (done)
-stream_write(_Stream, _EOS, end_of_file).
+stream_write(_Stream, _EOS, []).
 
 % (start)
 stream_write(Stream, EOS, [Atom|Atoms]) :-
@@ -145,7 +145,7 @@ stream_write(Stream, EOS, [Atom|Atoms]) :-
     % has EOS been found ?
     (Atom = EOS ->
         % yes, so signal end-of-stream
-        AtomsAdjusted = end_of_file
+        AtomsAdjusted = []
     ;
         % no, so write current line, followed by a new line
         atom_chars(Atom, Chars),

@@ -23,7 +23,9 @@ all lines in the list of lines given.
 
 :- use_module(library(lists),
     [
-        reverse/2
+        reverse/2,
+        sublist/3,
+        sublist/4
     ]).
 
 :- use_module('../sicstus/port_layer',
@@ -42,6 +44,12 @@ all lines in the list of lines given.
     [
         read_line_to_codes/2
     ]).
+
+:- use_module('../swi/port_lists',
+    [
+        sublist/3,
+        sublist/4
+    ]).
     
 :- endif.
 
@@ -49,12 +57,63 @@ all lines in the list of lines given.
     [
         atoms_codes/2
     ]).
-
+/*
 :- use_module('stream_chars',
     [
         stream_chars/3
     ]).
+*/
+%-------------------------------------------------------------------------------------
 
+%! stream_lines(+Stream:ref, -Lines:list) is det.
+%
+%  @param Stream The input stream
+%  @param Lines  List of lines read from stream
+
+stream_lines(Stream, Lines) :-
+
+    read_line_to_codes(Stream, LineCodes),
+    stream_lines_(Stream, [], LineCodes, [], Lines).
+
+%! stream_lines(+Stream:ref, +EOS:list, -Lines:list) is det.
+%
+%  @param Stream The input stream
+%  @param EOS    List of codes signifying end of stream (empty, if n/a)
+%  @param Lines  List of lines read from stream
+
+stream_lines(Stream, EOS, Lines) :-
+
+    read_line_to_codes(Stream, LineCodes),
+    stream_lines_(Stream, EOS, LineCodes, [], Lines).
+
+% (done)
+stream_lines_(_Stream, _EOS, end_of_file, LinesProgress, LinesFinal) :-
+    reverse(LinesProgress, LinesFinal).
+
+% (iterate, add line to lines list)
+stream_lines_(Stream, EOS, LineCodes, LinesProgress, LinesFinal) :-
+
+    ( LineCodes = EOS ->
+        stream_lines_(Stream, EOS, end_of_file,
+                      LinesProgress, LinesFinal)
+    ; (EOS \= [] , sublist(LineCodes, EOS, Pos)) ->
+        (Pos = 0 ->
+            stream_lines_(Stream, EOS, end_of_file,
+                          LinesProgress, LinesFinal)
+        ;
+            sublist(LineCodes, LastCodes, 0, Pos),
+            atoms_codes(LineChars, LastCodes),
+            stream_lines_(Stream, EOS, end_of_file,
+                          [LineChars|LinesProgress], LinesFinal)
+        )
+    ;
+        atoms_codes(LineChars, LineCodes),
+        read_line_to_codes(Stream, NewCodes),
+        stream_lines_(Stream, EOS, NewCodes,
+                      [LineChars|LinesProgress], LinesFinal)
+    ).
+
+/*
 %-------------------------------------------------------------------------------------
 
 %! stream_lines(+Stream:ref, -Lines:list) is det.
@@ -160,3 +219,4 @@ stream_write(Stream, EOS, [Line|Lines]) :-
 
     % go for the next line
     stream_write(Stream, EOS, LinesAdjusted).
+*/
