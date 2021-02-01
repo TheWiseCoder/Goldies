@@ -1,17 +1,18 @@
 :- module(stream_atoms,
     [
+        stream_atoms/2,
         stream_atoms/3
     ]).
 
 /** <module> Read/write a list of atoms from/to a given stream
 
-For reading from the stream, the invoker must provide a EOS (end-of-stream) marker,
+When reading from the stream, the invoker may provide a EOS (end-of-stream) marker,
 or end_of_file to read to the end of the stream.
-For writing to the stream, the invoker must provide a EOS, or  end_of_file to write
+When writing to the stream, the invoker may provide a EOS, or  end_of_file to write
 all atoms in the list of atoms given. 
 
 @author GT Nunes
-@version 1.1
+@version 1.2
 @copyright (c) 2020 GT Nunes
 @license BSD-3-Clause License
 */
@@ -51,11 +52,31 @@ all atoms in the list of atoms given.
 
 %-------------------------------------------------------------------------------------
 
+%! stream_atoms(+Stream:ref, -Atoms:list) is det.
+%! stream_atoms(+Stream:ref, +Atoms:list) is det.
+%
+%  If Atoms is grounded, write all atoms in Atoms to Stream.
+%  Otherwise, read from Stream up to the end of the stream.
+%
+%  @param Stream The input/output stream
+%  @param Atoms  List of atoms read from, or to write to, the stream
+
+stream_atoms(Stream, Atoms) :-
+
+    (var(Atoms) ->
+        read_line_to_codes(Stream, LineCodes),
+        stream_read(Stream, end_of_file, LineCodes, [], Atoms)
+    ;
+        stream_write(Stream, end_of_file, Atoms)
+    ).
+
+%-------------------------------------------------------------------------------------
+
 %! stream_atoms(+Stream:ref, +EOS:list, -Atoms:list) is det.
 %! stream_atoms(+Stream:ref, +EOS:list, +Atoms:list) is det.
 %
 %  If Atoms is grounded, write atoms to Stream until an EOS atom is found.
-%  For EOS = end_of_file, write all atoms in Atoms
+%  For EOS = end_of_file, write all atoms in Atoms.
 %  Otherwise, read from Stream until an EOS atom is found.
 %  For EOS = end_of_file, read to the end of the stream.
 %

@@ -10,7 +10,7 @@ Integers are read from the stream one per line, to the end of the stream,
 or written to the stream, one per line, to the end of the list.
 
 @author GT Nunes
-@version 1.1
+@version 1.2
 @copyright (c) 2020 GT Nunes
 @license BSD-3-Clause License
 */

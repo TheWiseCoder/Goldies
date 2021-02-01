@@ -1,17 +1,18 @@
 :- module(stream_codes,
     [
+        stream_codes/2,
         stream_codes/3
     ]).
 
 /** <module> Read/write a list of codes from/to a given stream
  
-For reading from the stream, the invoker must provide the number of codes to read,
+When reading from the stream, the invoker may provide the number of codes to read,
 or `-1` to read to the end of the stream.
-For writing to the stream, the invoker must provide the number of codes to write,
+When writing to the stream, the invoker may provide the number of codes to write,
 or `-1` to write all codes in the list of codes given.
 
 @author GT Nunes
-@version 1.1
+@version 1.2
 @copyright (c) 2020 GT Nunes
 @license BSD-3-Clause License
 */
@@ -22,6 +23,25 @@ or `-1` to write all codes in the list of codes given.
     [
         reverse/2
     ]).
+
+%-------------------------------------------------------------------------------------
+
+%! stream_codes(+Stream:ref, -Codes:list) is det.
+%! stream_codes(+Stream:ref, +Codes:list) is det.
+%
+%  If Codes is grounded, write all codes in Codes to Stream.
+%  Otherwise, read from Stream up to the end of the stream.
+%
+%  @param Stream The input/output stream
+%  @param Codes  List of codes read from, or to write to, the stream
+
+stream_codes(Stream, Codes) :-
+
+    (var(Codes) ->
+        stream_read(Stream, -1, Codes)
+    ;
+        stream_write(Stream, -1, Codes)
+    ).
 
 %-------------------------------------------------------------------------------------
 

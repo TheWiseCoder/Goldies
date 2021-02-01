@@ -1,19 +1,20 @@
 :- module(stream_bytes,
     [
+        stream_bytes/2,
         stream_bytes/3
     ]).
 
 /** <module> Read/write a list of bytes from/to a given stream
  
-For reading from the stream, the invoker must provide the number of bytes to read,
+When reading from the stream, the invoker may provide the number of bytes to read,
 or `-1` to read to the end of the stream.
-For writing to the stream, the invoker must provide the number of bytes to write,
+When writing to the stream, the invoker may provide the number of bytes to write,
 or `-1` to write all bytes in the list of bytes given.
 In both situations, make sure to open the stream with 'type(binary)' in the
 options list.
 
 @author GT Nunes
-@version 1.1
+@version 1.2
 @copyright (c) 2020 GT Nunes
 @license BSD-3-Clause License
 */
@@ -27,6 +28,25 @@ options list.
 
 %-------------------------------------------------------------------------------------
 
+%! stream_bytes(+Stream:ref, -Bytes:list) is det.
+%! stream_bytes(+Stream:ref, +Bytes:list) is det.
+%
+%  If Bytes is grounded, write all bytes in Bytes to Stream.
+%  Otherwise, read up from Stream up to the end of the stream.
+%
+%  @param Stream The input/output stream
+%  @param Bytes  List of bytes read from, or to write to, the stream
+
+stream_bytes(Stream, Bytes) :-
+
+    (var(Bytes) ->
+        stream_read(Stream, -1, Bytes)
+    ;
+        stream_write(Stream, -1, Bytes)
+    ).
+
+%-------------------------------------------------------------------------------------
+
 %! stream_bytes(+Stream:ref, +Count:int, -Bytes:list) is det.
 %! stream_bytes(+Stream:ref, +Count:int, +Bytes:list) is det.
 %
@@ -37,7 +57,7 @@ options list.
 %
 %  @param Stream The input/output stream
 %  @param Count  Number of bytes to read or write
-%  @param Bytes  List of bytes read from, or write to, the stream
+%  @param Bytes  List of bytes read from, or to write to, the stream
 
 stream_bytes(Stream, Count, Bytes) :-
 

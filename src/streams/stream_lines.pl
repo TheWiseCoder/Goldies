@@ -1,13 +1,14 @@
 :- module(stream_lines,
     [
+        stream_lines/2,
         stream_lines/3
     ]).
 
 /** <module> Read/write lines as lists of chars from/to a given stream
 
-For reading from the stream, the invoker must provide a EOS (end-of-stream) marker,
+When reading from the stream, the invoker may provide a EOS (end-of-stream) marker,
 or end_of_file to read to the end of the stream.
-For writing to the stream, the invoker must provide a EOS, or  end_of_file to write
+When writing to the stream, the invoker may provide a EOS, or  end_of_file to write
 all lines in the list of lines given. 
 
 @author GT Nunes
@@ -56,11 +57,31 @@ all lines in the list of lines given.
 
 %-------------------------------------------------------------------------------------
 
+%! stream_lines(+Stream:ref, -Lines:list) is det.
+%! stream_lines(+Stream:ref, +Lines:list) is det.
+%
+%  If Lines is grounded, write all lines in Lines to Stream.
+%  Otherwise, read from Stream up to the end of the stream.
+%
+%  @param Stream The input/output stream
+%  @param Lines  List of lines read from, or to write to, the stream
+
+stream_lines(Stream, Lines) :-
+
+    (var(Lines) ->
+        read_line_to_codes(Stream, LineCodes),
+        stream_read(Stream, end_of_file, LineCodes, [], Lines)
+    ;
+        stream_write(Stream, end_of_file, Lines)
+    ).
+
+%-------------------------------------------------------------------------------------
+
 %! stream_lines(+Stream:ref, +EOS:list, -Lines:list) is det.
 %! stream_lines(+Stream:ref, +EOS:list, +Lines:list) is det.
 %
 %  If Lines is grounded, write lines to Stream until a line containing EOS is found.
-%  For EOS = end_of_file, write all lines in Lines
+%  For EOS = end_of_file, write all lines in Lines.
 %  Otherwise, read from Stream until a line containing EOS is found.
 %  For EOS = end_of_file, read to the end of the stream.
 %

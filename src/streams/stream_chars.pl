@@ -1,17 +1,18 @@
 :- module(stream_chars,
     [
+        stream_chars/2,
         stream_chars/3
     ]).
 
 /** <module> Read/write a list of chars from/to a given stream
  
-For reading from the stream, the invoker must provide the number of chars to read,
+When reading from the stream, the invoker may provide the number of chars to read,
 or `-1` to read to the end of the stream.
-For writing to the stream, the invoker must provide the number of chars to write,
+When writing to the stream, the invoker may provide the number of chars to write,
 or `-1` to write all chars in the list of chars given.
 
 @author GT Nunes
-@version 1.1
+@version 1.2
 @copyright (c) 2020 GT Nunes
 @license BSD-3-Clause License
 */
@@ -22,6 +23,25 @@ or `-1` to write all chars in the list of chars given.
     [
         reverse/2
     ]).
+
+%-------------------------------------------------------------------------------------
+
+%! stream_chars(+Stream:ref, -Chars:list) is det.
+%! stream_chars(+Stream:ref, +Chars:list) is det.
+%
+%  If Chars is grounded, write all chars in Chars to Stream.
+%  Otherwise, read from Stream up to the end of the stream.
+%
+%  @param Stream The input/output stream
+%  @param Chars  List of chars read from, or to write to, the stream
+
+stream_chars(Stream, Chars) :-
+
+    (var(Chars) ->
+        stream_read(Stream, -1, Chars)
+    ;
+        stream_write(Stream, -1, Chars)
+    ).
 
 %-------------------------------------------------------------------------------------
 
