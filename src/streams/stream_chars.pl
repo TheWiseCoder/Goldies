@@ -30,7 +30,7 @@ or `-1` to write all chars in the list of chars given.
 %
 %  If Chars is grounded, write Count chars in Chars to Stream.
 %  For Count = -1, write all chars in Chars.
-%  Otherwise, Read up to Count chars from Stream.
+%  Otherwise, read up to Count chars from Stream.
 %  For Count = -1, read to the end of the stream.
 %
 %  @param Stream The input/output stream
@@ -119,8 +119,8 @@ get_char(Stream, Count, Char, CountNew) :-
 %  Write up to Count bytes in Chars to Stream.
 %  For Count = -1, write all chars in Chars to Stream.
 %
-%  @param Stream The input stream
-%  @param Count  Number of bytes to read
+%  @param Stream The output stream
+%  @param Count  Number of chars to write
 %  @param Chars  List of chars to write to the stream
 
 % (done)

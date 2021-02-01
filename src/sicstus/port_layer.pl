@@ -162,9 +162,9 @@ read_line_to_codes(Stream, Codes) :-
 %      illustrated in this example:
 %      next_id(Id) :- flag(my_id, Id, Id + 1).
 % flag(+Key, -Old, +New)
-% Key       atom identifying the flag
-% Old       the flag's old value
-% New       the flag's new value
+% Key   atom identifying the flag
+% Old   the flag's old value
+% New   the flag's new value
 flag(Key, Old, New) :-
 
     (bb_get(Key, Old) ; Old = 0),

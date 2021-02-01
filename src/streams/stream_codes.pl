@@ -30,7 +30,7 @@ or `-1` to write all codes in the list of codes given.
 %
 %  If Codes is grounded, write Count codes in Codes to Stream.
 %  For Count = -1, write all codes in Codes.
-%  Otherwise, Read up to Count codes from Stream.
+%  Otherwise, read up to Count codes from Stream.
 %  For Count = -1, read to the end of the stream.
 %
 %  @param Stream The input/output stream
@@ -119,8 +119,8 @@ get_code(Stream, Count, Code, CountNew) :-
 %  Write up to Count bytes in Codes to Stream.
 %  For Count = -1, write all codes in Codes to Stream.
 %
-%  @param Stream The input stream
-%  @param Count  Number of bytes to read
+%  @param Stream The output stream
+%  @param Count  Number of bytes to write
 %  @param Codes  List of codes to write to the stream
 
 % (done)

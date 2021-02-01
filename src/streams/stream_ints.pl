@@ -49,7 +49,7 @@ or written to the stream, one per line, to the end of the list.
 %! stream_ints(+Stream:ref, +Ints:list) is det.
 %
 %  If Ints is grounded, write all ints in Ints to Stream.
-%  Otherwise, Read ints from Stream, up to the end of the stream.
+%  Otherwise, read ints from Stream, up to the end of the stream.
 %
 %  @param Stream The input/output stream
 %  @param Ints   List of ints read from, or to write to, the stream
@@ -57,22 +57,20 @@ or written to the stream, one per line, to the end of the list.
 stream_ints(Stream, Ints) :-
 
     (var(Ints) ->
-        stream_read(Stream, Ints)
+        stream_read_1(Stream, [], Ints)
     ;
         stream_write(Stream, Ints)
     ).
 
 %-------------------------------------------------------------------------------------
 
-%! stream_read(+Stream:ref, -Ints:list) is det.
+%! stream_read_1(+Stream:ref, -Ints:list) is det.
 %
-%  Read integers from a Stream, one per line, to the end of the stream.
+%  Read integers from Stream, one per line, to the end of the stream.
 %
-%  @param Stream Input stream
-%  @param Ints   List of ints read from the stream
-
-stream_read(Stream, Ints) :-
-    stream_read_1(Stream, [], Ints).
+%  @param Stream       The input stream
+%  @param IntsProgress Working list of ints read from the stream
+%  @param IntsFinal    Final list ints read from the stream
 
 % (iterate on file lines)
 stream_read_1(Stream, IntsProgress, IntsFinal) :-
@@ -104,7 +102,7 @@ stream_read_2(Stream, Line, IntsProgress, IntsFinal) :-
 %
 %  Write all ints in Ints to Stream, one per line.
 %
-%  @param Stream The input stream
+%  @param Stream The output stream
 %  @param Ints   List of ints to write to the stream
 
 % (done)

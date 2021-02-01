@@ -32,7 +32,7 @@ options list.
 %
 %  If Bytes is grounded, write Count bytes in Bytes to Stream.
 %  For Count = -1, write all bytes in Bytes.
-%  Otherwise, Read up to Count bytes from Stream.
+%  Otherwise, read up to Count bytes from Stream.
 %  For Count = -1, read to the end of the stream.
 %
 %  @param Stream The input/output stream
@@ -106,8 +106,8 @@ get_byte(Stream, Count, Byte, CountNew) :-
 %  Write up to Count bytes in Bytes to Stream.
 %  For Count = -1, write all bytes in Bytes to Stream.
 %
-%  @param Stream The input stream
-%  @param Count  Number of bytes to read
+%  @param Stream The output stream
+%  @param Count  Number of bytes to write
 %  @param Bytes  List of bytes to write to the stream
 
 % (done)
