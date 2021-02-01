@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>stream_lines.pl -- Read lines as char lists from a given stream</title>
+<title>stream_lines.pl -- Read/write lines as lists of chars from/to a given stream</title>
 
 <link rel="stylesheet" type="text/css" href="../../pldoc.css">
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -10,31 +10,35 @@
 <body>
 
 
-<h1 class="file"><span style="float:right"></span>stream_lines.pl -- Read lines as char lists from a given stream</h1>
+<h1 class="file"><span style="float:right"></span>stream_lines.pl -- Read/write lines as lists of chars from/to a given stream</h1>
 
 <p>
-Read from the current stream position up to, and until,
-one of two conditions is met:<br>
-1- the end of the stream is reached, or<br>
-2- the line read from the stream contains the provided EOS.</p>
+For reading from the stream, the invoker must provide a EOS (end-of-stream) marker,
+or end_of_file to read to the end of the stream.
+For writing to the stream, the invoker must provide a EOS, or end_of_file to write
+all lines in the list of lines given.</p>
 
 <dl class="tags">
 <dt class="keyword-author">author</dt><dd class="keyword-author">- GT Nunes</dd>
-<dt class="keyword-version">version</dt><dd class="keyword-version">- 1.0</dd>
+<dt class="keyword-version">version</dt><dd class="keyword-version">- 1.1</dd>
 <dt class="keyword-copyright">copyright</dt><dd class="keyword-copyright">- (c) 2020 GT Nunes</dd>
 <dt class="keyword-license">license</dt><dd class="keyword-license">- BSD-3-Clause License</dd>
 </dl>
 
 <dl>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="stream_lines/3"><b class="pred">stream_lines</b><var class="arglist">(+Stream:ref, +EOS:list, -Lines:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="stream_lines/3"><b class="pred">stream_lines</b><var class="arglist">(+Stream:ref, +EOS:list, -Lines:list)</var></a> is <b class="det">det</b></dt>
+<dt class="pubdef"><b class="pred">stream_lines</b><var class="arglist">(+Stream:ref, +EOS:list, +Lines:list)</var> is <b class="det">det</b></dt><dd class="defbody">If <var>Lines</var> is grounded, write lines to <var>Stream</var> until a line containing <var>EOS</var> is found.
+For <var>EOS</var> = end_of_file, write all lines in <var>Lines</var>
+Otherwise, read from <var>Stream</var> until a line containing <var>EOS</var> is found.
+For <var>EOS</var> = end_of_file, read to the end of the stream.
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>
 
 <table class="arglist">
-<tr><td><var>Stream</var></td><td class="argdescr">- The input stream</td></tr>
-<tr><td><var>EOS</var></td><td class="argdescr">- List of codes signifying end of stream (empty, if n/a)</td></tr>
-<tr><td><var>Lines</var></td><td class="argdescr">- List of lines read from stream</td></tr>
+<tr><td><var>Stream</var></td><td class="argdescr">- The input/output stream</td></tr>
+<tr><td><var>EOS</var></td><td class="argdescr">- List of codes signifying end of stream, if applicable</td></tr>
+<tr><td><var>Lines</var></td><td class="argdescr">- List of lines read from, or to write to, the stream</td></tr>
 </table>
 
 </dd>
