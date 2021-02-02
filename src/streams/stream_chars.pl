@@ -29,8 +29,8 @@ or `-1` to write all chars in the list of chars given.
 %! stream_chars(+Stream:ref, -Chars:list) is det.
 %! stream_chars(+Stream:ref, +Chars:list) is det.
 %
-%  If Chars is grounded, write all chars in Chars to Stream.
-%  Otherwise, read from Stream up to the end of the stream.
+%  If Chars is not grounded, read from Stream up to the end of the stream.
+%  Otherwise, write all chars in Chars to Stream.
 %
 %  @param Stream The input/output stream
 %  @param Chars  List of chars read from, or to write to, the stream
@@ -48,10 +48,10 @@ stream_chars(Stream, Chars) :-
 %! stream_chars(+Stream:ref, +Count:int, -Chars:list) is det.
 %! stream_chars(+Stream:ref, +Count:int, +Chars:list) is det.
 %
+%   If Chars is not grounded, read up to Count chars from Stream.
+%  For Count = -1, read to the end of the stream.
 %  If Chars is grounded, write Count chars in Chars to Stream.
 %  For Count = -1, write all chars in Chars.
-%  Otherwise, read up to Count chars from Stream.
-%  For Count = -1, read to the end of the stream.
 %
 %  @param Stream The input/output stream
 %  @param Count  Number of bytes to read or write
@@ -69,7 +69,8 @@ stream_chars(Stream, Count, Chars) :-
 
 %! stream_read(+Stream:ref, +Count:int, -Chars:list) is det.
 %
-%  Read up to Count chars from Stream. For Count = -1, read to the end of the stream.
+%  Read up to Count chars from Stream.
+%  For Count = -1, read to the end of the stream.
 %
 %  @param Stream The input stream
 %  @param Count  Number of chars to read

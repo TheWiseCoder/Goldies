@@ -31,8 +31,8 @@ options list.
 %! stream_bytes(+Stream:ref, -Bytes:list) is det.
 %! stream_bytes(+Stream:ref, +Bytes:list) is det.
 %
-%  If Bytes is grounded, write all bytes in Bytes to Stream.
-%  Otherwise, read up from Stream up to the end of the stream.
+%  If Bytes is not grounded, read from Stream up to the end of the stream.
+%  Otherwise, write all bytes in Bytes to Stream.
 %
 %  @param Stream The input/output stream
 %  @param Bytes  List of bytes read from, or to write to, the stream
@@ -50,10 +50,10 @@ stream_bytes(Stream, Bytes) :-
 %! stream_bytes(+Stream:ref, +Count:int, -Bytes:list) is det.
 %! stream_bytes(+Stream:ref, +Count:int, +Bytes:list) is det.
 %
+%  If Bytes is not grounded, read up to Count bytes from Stream.
+%  For Count = -1, read to the end of the stream.
 %  If Bytes is grounded, write Count bytes in Bytes to Stream.
 %  For Count = -1, write all bytes in Bytes.
-%  Otherwise, read up to Count bytes from Stream.
-%  For Count = -1, read to the end of the stream.
 %
 %  @param Stream The input/output stream
 %  @param Count  Number of bytes to read or write

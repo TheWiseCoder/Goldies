@@ -29,8 +29,8 @@ or `-1` to write all codes in the list of codes given.
 %! stream_codes(+Stream:ref, -Codes:list) is det.
 %! stream_codes(+Stream:ref, +Codes:list) is det.
 %
-%  If Codes is grounded, write all codes in Codes to Stream.
-%  Otherwise, read from Stream up to the end of the stream.
+%  If Codes is not grounded, read from Stream up to the end of the stream.
+%  Otherwise, write all codes in Codes to Stream.
 %
 %  @param Stream The input/output stream
 %  @param Codes  List of codes read from, or to write to, the stream
@@ -48,10 +48,10 @@ stream_codes(Stream, Codes) :-
 %! stream_codes(+Stream:ref, +Count:int, -Codes:list) is det.
 %! stream_codes(+Stream:ref, +Count:int, +Codes:list) is det.
 %
-%  If Codes is grounded, write Count codes in Codes to Stream.
-%  For Count = -1, write all codes in Codes.
-%  Otherwise, read up to Count codes from Stream.
+%  If Codes is not grounded, read up to Count codes from Stream.
 %  For Count = -1, read to the end of the stream.
+%  If Codes is not grounded, write Count codes in Codes to Stream.
+%  For Count = -1, write all codes in Codes to Stream.
 %
 %  @param Stream The input/output stream
 %  @param Count  Number of bytes to read or write
@@ -69,7 +69,8 @@ stream_codes(Stream, Count, Codes) :-
 
 %! stream_read(+Stream:ref, +Count:int, -Codes:list) is det.
 %
-%  Read up to Count codes from Stream. For Count = -1, read to the end of the stream.
+%  Read up to Count codes from Stream.
+%  For Count = -1, read to the end of the stream.
 %
 %  @param Stream The input stream
 %  @param Count  Number of codes to read

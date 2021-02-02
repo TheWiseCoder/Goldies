@@ -6,13 +6,15 @@
 
 /** <module> Read/write lines as lists of chars from/to a given stream
 
-When reading from the stream, the invoker may provide a EOS (end-of-stream) marker,
-or end_of_file to read to the end of the stream.
-When writing to the stream, the invoker may provide a EOS, or  end_of_file to write
-all lines in the list of lines given. 
+When reading from the stream, the invoker may provide a EOS (end-of-stream) marker
+to limit the reading, or the EOF (end_of_file) atom to read to the end of the stream.
+When writing to the stream, the invoker may provide a EOS to limit the writing,
+or EOF to write all lines in the list of lines provided. A EOS marker may be any
+atom suitable as an indication of the end of the stream operation, presented as a
+list of chars.
 
 @author GT Nunes
-@version 1.1
+@version 1.2
 @copyright (c) 2020 GT Nunes
 @license BSD-3-Clause License
 */
@@ -57,70 +59,19 @@ all lines in the list of lines given.
     [
         atoms_codes/2
     ]).
-/*
+
 :- use_module('stream_chars',
     [
         stream_chars/3
     ]).
-*/
-%-------------------------------------------------------------------------------------
 
-%! stream_lines(+Stream:ref, -Lines:list) is det.
-%
-%  @param Stream The input stream
-%  @param Lines  List of lines read from stream
-
-stream_lines(Stream, Lines) :-
-
-    read_line_to_codes(Stream, LineCodes),
-    stream_lines_(Stream, [], LineCodes, [], Lines).
-
-%! stream_lines(+Stream:ref, +EOS:list, -Lines:list) is det.
-%
-%  @param Stream The input stream
-%  @param EOS    List of codes signifying end of stream (empty, if n/a)
-%  @param Lines  List of lines read from stream
-
-stream_lines(Stream, EOS, Lines) :-
-
-    read_line_to_codes(Stream, LineCodes),
-    stream_lines_(Stream, EOS, LineCodes, [], Lines).
-
-% (done)
-stream_lines_(_Stream, _EOS, end_of_file, LinesProgress, LinesFinal) :-
-    reverse(LinesProgress, LinesFinal).
-
-% (iterate, add line to lines list)
-stream_lines_(Stream, EOS, LineCodes, LinesProgress, LinesFinal) :-
-
-    ( LineCodes = EOS ->
-        stream_lines_(Stream, EOS, end_of_file,
-                      LinesProgress, LinesFinal)
-    ; (EOS \= [] , sublist(LineCodes, EOS, Pos)) ->
-        (Pos = 0 ->
-            stream_lines_(Stream, EOS, end_of_file,
-                          LinesProgress, LinesFinal)
-        ;
-            sublist(LineCodes, LastCodes, 0, Pos),
-            atoms_codes(LineChars, LastCodes),
-            stream_lines_(Stream, EOS, end_of_file,
-                          [LineChars|LinesProgress], LinesFinal)
-        )
-    ;
-        atoms_codes(LineChars, LineCodes),
-        read_line_to_codes(Stream, NewCodes),
-        stream_lines_(Stream, EOS, NewCodes,
-                      [LineChars|LinesProgress], LinesFinal)
-    ).
-
-/*
 %-------------------------------------------------------------------------------------
 
 %! stream_lines(+Stream:ref, -Lines:list) is det.
 %! stream_lines(+Stream:ref, +Lines:list) is det.
 %
+%  If Lines is not grounded, read from Stream up to the end of the stream.
 %  If Lines is grounded, write all lines in Lines to Stream.
-%  Otherwise, read from Stream up to the end of the stream.
 %
 %  @param Stream The input/output stream
 %  @param Lines  List of lines read from, or to write to, the stream
@@ -139,13 +90,13 @@ stream_lines(Stream, Lines) :-
 %! stream_lines(+Stream:ref, +EOS:list, -Lines:list) is det.
 %! stream_lines(+Stream:ref, +EOS:list, +Lines:list) is det.
 %
+%  If Lines is not grounded, read from Stream until a line containing EOS is found.
+%  For EOS = end_of_file, read to the end of the stream.
 %  If Lines is grounded, write lines to Stream until a line containing EOS is found.
 %  For EOS = end_of_file, write all lines in Lines.
-%  Otherwise, read from Stream until a line containing EOS is found.
-%  For EOS = end_of_file, read to the end of the stream.
 %
 %  @param Stream The input/output stream
-%  @param EOS    List of codes signifying end of stream, if applicable
+%  @param EOS    EOF or list of chars signifying end of stream
 %  @param Lines  List of lines read from, or to write to, the stream
 
 stream_lines(Stream, EOS, Lines) :-
@@ -165,8 +116,8 @@ stream_lines(Stream, EOS, Lines) :-
 %  For EOS = end_of_file, read to the end of the stream.
 %
 %  @param Stream        The input stream
-%  @param EOS           List of codes signifying end of stream, if applicable
-%  @param LineCodes     Line currently read from the stream
+%  @param EOS           EOF or List of chars signifying end of stream
+%  @param LineCodes     Line newly read from the stream, as a list of codes
 %  @param LinesProgress Working list of lines read from the stream
 %  @param LinesFinal    Final list of lines read from the stream
 
@@ -174,20 +125,40 @@ stream_lines(Stream, EOS, Lines) :-
 stream_read(_Stream, _EOS, end_of_file, LinesProgress, LinesFinal) :-
     reverse(LinesProgress, LinesFinal).
 
-% (iterate, adding line to lines list)
+% (iterate, adding a new line to lines list)
 stream_read(Stream, EOS, LineCodes, LinesProgress, LinesFinal) :-
 
-    (LineCodes = EOS ->
+    % convert codes to chars in current line
+    atoms_codes(LineChars, LineCodes),
+
+    % is the new line equal to EOS ?
+    ( LineChars = EOS ->
+
+        % yes, so conclude the operation
         NewCodes = end_of_file,
-        LinesRevised = LinesProgress
-    ;
-        atoms_codes(LineChars, LineCodes),
-        LinesRevised = [LineChars|LinesProgress],
+        LinesAdjusted = LinesProgress
+
+    % has EOS been found within the new line ?
+    ; (EOS \= [] , sublist(LineChars, EOS, Pos)) ->
+
+        % yes, so process the line and conclude the operation
+        NewCodes = end_of_file,
+        (Pos = 0 ->
+            LinesAdjusted = LinesProgress
+        ;
+            sublist(LineChars, LastChars, 0, Pos),
+            LinesAdjusted = [LastChars|LinesProgress]
+        )
+
+    % process the new line
+    ; otherwise ->
+
+        LinesAdjusted = [LineChars|LinesProgress],
         read_line_to_codes(Stream, NewCodes)
     ),
 
     % go for the next line
-    stream_read(Stream, EOS, NewCodes, LinesRevised, LinesFinal).
+    stream_read(Stream, EOS, NewCodes, LinesAdjusted, LinesFinal).
 
 %-------------------------------------------------------------------------------------
 
@@ -197,21 +168,34 @@ stream_read(Stream, EOS, LineCodes, LinesProgress, LinesFinal) :-
 %  For EOS = end_of_file, write all lines in Lines to the stream.
 %
 %  @param Stream The output stream
-%  @param EOS    List of codes signifying end of stream, if applicable
+%  @param EOS    EOF or List of chars signifying end of stream
 %  @param Lines  List of lines to write to the stream
 
 % (done)
-stream_write(_Stream, _EOS, end_of_file).
+stream_write(_Stream, _EOS, []).
 
-% (start)
+% (iterate)
 stream_write(Stream, EOS, [Line|Lines]) :-
 
-    % has EOS been found ?
-    (Line = EOS ->
-        % yes, so signal end-of-stream
-        LinesAdjusted = end_of_file
-    ;
-        % no, so write current line, followed by a new line
+    % is the new line equal to EOS ?
+    ( Line = EOS ->
+        % yes, so signal end of the stream
+        LinesAdjusted = []
+
+    % has EOS been found within the new line ?
+    ; (EOS \= [] , sublist(Line, EOS, Pos)) ->
+
+        % yes, so process the line and conclude the operation
+        LinesAdjusted = [],
+        ( Pos = 0
+        ;
+          ( sublist(Line, LastLine, 0, Pos)
+          ,  stream_chars(Stream, -1, LastLine)
+          ,  put_char(Stream, '\n') )
+        )
+
+    % write current line, followed by a new line, and proceed
+    ; otherwise ->
         stream_chars(Stream, -1, Line),
         put_char(Stream, '\n'),
         LinesAdjusted = Lines
@@ -219,4 +203,3 @@ stream_write(Stream, EOS, [Line|Lines]) :-
 
     % go for the next line
     stream_write(Stream, EOS, LinesAdjusted).
-*/

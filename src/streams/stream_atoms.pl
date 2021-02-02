@@ -6,10 +6,11 @@
 
 /** <module> Read/write a list of atoms from/to a given stream
 
-When reading from the stream, the invoker may provide a EOS (end-of-stream) marker,
-or end_of_file to read to the end of the stream.
-When writing to the stream, the invoker may provide a EOS, or  end_of_file to write
-all atoms in the list of atoms given. 
+When reading from the stream, the invoker may provide a EOS (end-of-stream) marker
+to limit the reading, or the EOF (end_of_file) atom to read to the end of the stream.
+When writing to the stream, the invoker may provide a EOS to limit the writing,
+or EOF to write all atoms in the list of atoms provided. A EOS marker may be any
+atom suitable as an indication of the end of the stream operation.
 
 @author GT Nunes
 @version 1.2
@@ -55,8 +56,8 @@ all atoms in the list of atoms given.
 %! stream_atoms(+Stream:ref, -Atoms:list) is det.
 %! stream_atoms(+Stream:ref, +Atoms:list) is det.
 %
+%  If Atoms is not grounded, read from Stream up to the end of the stream.
 %  If Atoms is grounded, write all atoms in Atoms to Stream.
-%  Otherwise, read from Stream up to the end of the stream.
 %
 %  @param Stream The input/output stream
 %  @param Atoms  List of atoms read from, or to write to, the stream
@@ -75,13 +76,13 @@ stream_atoms(Stream, Atoms) :-
 %! stream_atoms(+Stream:ref, +EOS:list, -Atoms:list) is det.
 %! stream_atoms(+Stream:ref, +EOS:list, +Atoms:list) is det.
 %
+%  If Atoms is not grounded, read from Stream until an EOS atom is found.
+%  For EOS = end_of_file, read to the end of the stream.
 %  If Atoms is grounded, write atoms to Stream until an EOS atom is found.
 %  For EOS = end_of_file, write all atoms in Atoms.
-%  Otherwise, read from Stream until an EOS atom is found.
-%  For EOS = end_of_file, read to the end of the stream.
 %
 %  @param Stream The input/output stream
-%  @param EOS    Atom signifying end of stream (empty, if n/a)
+%  @param EOS    EOF or list of chars signifying end of stream
 %  @param Atoms  List of atoms read from, or to write to, the stream
 
 stream_atoms(Stream, EOS, Atoms) :-
@@ -101,8 +102,8 @@ stream_atoms(Stream, EOS, Atoms) :-
 %  For EOS = end_of_file, read to the end of the stream.
 %
 %  @param Stream        The input stream
-%  @param EOS           List of codes signifying end of stream, if applicable
-%  @param LineCodes     Line currently read from the stream
+%  @param EOS           EOF or atom signifying end of stream
+%  @param LineCodes     Line currently read from the stream, as a list of codes
 %  @param AtomsProgress Working list of atoms read from the stream
 %  @param AtomsFinal    Final list of atoms read from the stream
 
@@ -110,19 +111,21 @@ stream_atoms(Stream, EOS, Atoms) :-
 stream_read(_Stream, _EOS, end_of_file, AtomsProgress, AtomsFinal) :-
     reverse(AtomsProgress, AtomsFinal).
 
-% (iterate, adding line to lines list)
+% (iterate, adding atom to atoms list)
 stream_read(Stream, EOS, LineCodes, AtomsProgress, AtomsFinal) :-
 
-    (LineCodes = EOS ->
+    % convert codes to atom in current line
+    atom_codes(Atom, LineCodes),
+
+    (Atom = EOS ->
         NewCodes = end_of_file,
         AtomsRevised = AtomsProgress
     ;
-        atom_codes(Atom, LineCodes),
         AtomsRevised = [Atom|AtomsProgress],
         read_line_to_codes(Stream, NewCodes)
     ),
 
-    % go for the next line
+    % go for the next atom
     stream_read(Stream, EOS, NewCodes, AtomsRevised, AtomsFinal).
 
 %-------------------------------------------------------------------------------------
@@ -133,7 +136,7 @@ stream_read(Stream, EOS, LineCodes, AtomsProgress, AtomsFinal) :-
 %  For EOS = end_of_file, write all lines in Atoms to the stream.
 %
 %  @param Stream The output stream
-%  @param EOS    Atom signifying end of stream, if applicable
+%  @param EOS    EOF or atom signifying end of stream
 %  @param Atoms  List of atoms to write to the stream
 
 % (done)
@@ -144,15 +147,15 @@ stream_write(Stream, EOS, [Atom|Atoms]) :-
 
     % has EOS been found ?
     (Atom = EOS ->
-        % yes, so signal end-of-stream
-        AtomsAdjusted = []
+        % yes, so signal end of stream
+        AtomsRevised = []
     ;
-        % no, so write current line, followed by a new line
+        % no, so write current atom, followed by a new line
         atom_chars(Atom, Chars),
         stream_chars(Stream, -1, Chars),
         put_char(Stream, '\n'),
-        AtomsAdjusted = Atoms
+        AtomsRevised = Atoms
     ),
 
-    % go for the next line
-    stream_write(Stream, EOS, AtomsAdjusted).
+    % go for the next atom
+    stream_write(Stream, EOS, AtomsRevised).
