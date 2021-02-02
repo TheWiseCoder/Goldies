@@ -12,6 +12,7 @@
         json_member/3,
         json_members/3,
         json_merge/2,
+        json_merge/3,
         json_output/2,
         json_output/3
     ]).
@@ -173,6 +174,17 @@ json_add_([Item|Items], JsonTerm, JsonFinal) :-
     json_add_(Items, JsonRevised, JsonFinal).
 
 %-------------------------------------------------------------------------------------
+
+%! json_merge(+JsonTerm1:json, +JsonTerm2:json, -JsonResult:json) is det.
+%
+%  Merge two JSON terms into a single JSON term.
+%
+%  @param JsonTerm1  The 1st JSON term to merge
+%  @param JsonTerm2  The 2nd JSON term to merge
+%  @param JsonResult The resulting JSON term
+
+json_merge(JsonTerm1, JsonTerm2, JsonResult) :-
+    json_merge_([JsonTerm1,JsonTerm2], [], JsonResult).
 
 %! json_merge(+JsonTerms:list, -JsonResult:json) is det.
 %
