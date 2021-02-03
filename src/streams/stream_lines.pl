@@ -14,7 +14,7 @@ atom suitable as an indication of the end of the stream operation, presented as 
 list of chars.
 
 @author GT Nunes
-@version 1.1
+@version 1.2
 @copyright (c) 2020 GT Nunes
 @license BSD-3-Clause License
 */
