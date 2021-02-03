@@ -184,7 +184,7 @@ json_add_([Item|Items], JsonTerm, JsonFinal) :-
 %  @param JsonResult The resulting JSON term
 
 json_merge(JsonTerm1, JsonTerm2, JsonResult) :-
-    json_merge_([JsonTerm1,JsonTerm2], [], JsonResult).
+    json_merge_([JsonTerm1,JsonTerm2], json([]), JsonResult).
 
 %! json_merge(+JsonTerms:list, -JsonResult:json) is det.
 %
