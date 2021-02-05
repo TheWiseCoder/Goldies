@@ -192,6 +192,42 @@ left-truncating or left-padding the result with zeros, if necessary.
 </dl>
 
 </dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atom_replace/4"><b class="pred">atom_replace</b><var class="arglist">(+AtomIn:atom, +From:atom, +To:atom, -AtomOut:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Replace the first occurrence of <var>From</var> with <var>To</var> in <var>AtomIn</var>,
+and unify <var>AtomOut</var> with the result.
+Unify <var>AtomOut</var> with <var>AtomIn</var> if <var>From</var> = '', or if no replacement takes place.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>AtomIn</var></td><td class="argdescr">- The input atom</td></tr>
+<tr><td><var>From</var></td><td class="argdescr">- The sub-atom to be replaced</td></tr>
+<tr><td><var>To</var></td><td class="argdescr">- The replacement value</td></tr>
+<tr><td><var>AtomOut</var></td><td class="argdescr">- The autput atom</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atom_replace_all/4"><b class="pred">atom_replace_all</b><var class="arglist">(+AtomIn:atom, +From:atom, +To:atom, -AtomOut:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Replace all occurrences of <var>From</var> with <var>To</var> in <var>AtomIn</var>,
+and unify <var>AtomOut</var> with the result.
+Unify <var>AtomOut</var> with <var>AtomIn</var> if no replacement takes place.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>AtomIn</var></td><td class="argdescr">- The input atom</td></tr>
+<tr><td><var>From</var></td><td class="argdescr">- The sub-atom to be replaced</td></tr>
+<tr><td><var>To</var></td><td class="argdescr">- The replacement value</td></tr>
+<tr><td><var>AtomOut</var></td><td class="argdescr">- The autput atom</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
 <dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atoms_contained_all/2"><b class="pred">atoms_contained_all</b><var class="arglist">(+AtomContainer:atom, +AtomsList:list)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">True if <var>AtomContainer</var> contains all the atoms in <var>AtomsList</var>.
 
 <dl class="tags">

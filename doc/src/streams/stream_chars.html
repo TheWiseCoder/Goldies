@@ -27,8 +27,8 @@ or <code>-1</code> to write all chars in the list of chars given.</p>
 
 <dl>
 <dt class="pubdef"><span style="float:right">&nbsp;</span><a name="stream_chars/2"><b class="pred">stream_chars</b><var class="arglist">(+Stream:ref, -Chars:list)</var></a> is <b class="det">det</b></dt>
-<dt class="pubdef"><b class="pred">stream_chars</b><var class="arglist">(+Stream:ref, +Chars:list)</var> is <b class="det">det</b></dt><dd class="defbody">If <var>Chars</var> is grounded, write all chars in <var>Chars</var> to <var>Stream</var>.
-Otherwise, read from <var>Stream</var> up to the end of the stream.
+<dt class="pubdef"><b class="pred">stream_chars</b><var class="arglist">(+Stream:ref, +Chars:list)</var> is <b class="det">det</b></dt><dd class="defbody">If <var>Chars</var> is not grounded, read from <var>Stream</var> up to the end of the stream.
+Otherwise, write all chars in <var>Chars</var> to <var>Stream</var>.
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>
@@ -43,10 +43,10 @@ Otherwise, read from <var>Stream</var> up to the end of the stream.
 
 </dd>
 <dt class="pubdef"><span style="float:right">&nbsp;</span><a name="stream_chars/3"><b class="pred">stream_chars</b><var class="arglist">(+Stream:ref, +Count:int, -Chars:list)</var></a> is <b class="det">det</b></dt>
-<dt class="pubdef"><b class="pred">stream_chars</b><var class="arglist">(+Stream:ref, +Count:int, +Chars:list)</var> is <b class="det">det</b></dt><dd class="defbody">If <var>Chars</var> is grounded, write <var>Count</var> chars in <var>Chars</var> to <var>Stream</var>.
-For <var>Count</var> = -1, write all chars in <var>Chars</var>.
-Otherwise, read up to <var>Count</var> chars from <var>Stream</var>.
+<dt class="pubdef"><b class="pred">stream_chars</b><var class="arglist">(+Stream:ref, +Count:int, +Chars:list)</var> is <b class="det">det</b></dt><dd class="defbody">If <var>Chars</var> is not grounded, read up to <var>Count</var> chars from <var>Stream</var>.
 For <var>Count</var> = -1, read to the end of the stream.
+If <var>Chars</var> is grounded, write <var>Count</var> chars in <var>Chars</var> to <var>Stream</var>.
+For <var>Count</var> = -1, write all chars in <var>Chars</var>.
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>

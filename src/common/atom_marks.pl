@@ -9,6 +9,8 @@
         atom_int/3,
         atom_number/2,
         atom_prefix/2,
+        atom_replace/4,
+        atom_replace_all/4,
         atom_sort/2,
         atom_suffix/2,
         atoms_chars/2,
@@ -36,17 +38,37 @@
 :- use_module(library(lists),
     [
         maplist/2,
-        reverse/2
+        reverse/2,
+        sublist/3,
+        sublist/4,
+        sublist/5
     ]).
 
 :- elif(current_prolog_flag(dialect, swi)).
+
+:- use_module(library(apply),
+    [
+        maplist/2
+    ]).
 
 :- use_module(library(lists),
     [
         reverse/2
     ]).
 
+:- use_module('../swi/port_lists',
+    [
+        sublist/3,
+        sublist/4,
+        sublist/5
+    ]).
+
 :- endif.
+
+:- use_module(list_marks,
+    [
+        append3/4
+    ]).
   
 %! atom_contained(+AtomContainer:atom, +AtomContained:atom) is semidet.
 %
@@ -134,6 +156,8 @@ atom_sort(Atom, AtomResult) :-
 %  @param Number     Number to be concatenated
 %  @param AtomResult The result atom
 
+%-------------------------------------------------------------------------------------
+
 atom_concat_number(Atom, Number, AtomResult) :-
 
     atom_number(Num, Number),
@@ -206,6 +230,57 @@ atom_concat6(A1, A2, A3, A4, A5, A6, A123456) :-
     atom_concat(A5, A6, A56),
     atom_concat(A34, A56, A3456),
     atom_concat(A12, A3456, A123456).
+
+%-------------------------------------------------------------------------------------
+
+%! atom_replace(+AtomIn:atom, +From:atom, +To:atom, -AtomOut:atom) is det.
+%
+%  Replace the first occurrence of From with To in AtomIn,
+%  and unify AtomOut with the result.
+%  Unify AtomOut with AtomIn if From = '', or if no replacement takes place.
+%
+%  @param AtomIn  The input atom
+%  @param From    The sub-atom to be replaced
+%  @param To      The replacement value
+%  @param AtomOut The autput atom
+
+atom_replace(AtomIn, '', _To, AtomIn).
+
+atom_replace(AtomIn, From, To, AtomOut) :-
+
+    atom_chars(AtomIn, CharsIn),
+    atom_chars(From, FromChars),
+    (sublist(CharsIn, FromChars, Before) ->
+        sublist(CharsIn, CharsPre, 0, Before),
+        length(FromChars, Len),
+        Skip is Before + Len,
+        sublist(CharsIn, CharsPos, Skip, _, 0),
+    atom_chars(To, ToChars),
+        append3(CharsPre, ToChars, CharsPos, CharsOut),
+        atom_chars(AtomOut, CharsOut)
+    ;
+        AtomOut = AtomIn
+    ).
+
+%! atom_replace_all(+AtomIn:atom, +From:atom, +To:atom, -AtomOut:atom) is det.
+%
+%  Replace all occurrences of From with To in AtomIn,
+%  and unify AtomOut with the result.
+%  Unify AtomOut with AtomIn if no replacement takes place.
+%
+%  @param AtomIn  The input atom
+%  @param From    The sub-atom to be replaced
+%  @param To      The replacement value
+%  @param AtomOut The autput atom
+
+atom_replace_all(AtomIn, From, To, AtomOut) :-
+
+    atom_replace(AtomIn, From, To, AtomTemp),
+    (AtomTemp = AtomIn ->
+        AtomOut = AtomTemp
+    ;
+        atom_replace_all(AtomTemp, From, To, AtomOut)
+    ).
 
 %-------------------------------------------------------------------------------------
 

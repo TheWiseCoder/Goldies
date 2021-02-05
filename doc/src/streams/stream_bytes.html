@@ -29,8 +29,8 @@ options list.</p>
 
 <dl>
 <dt class="pubdef"><span style="float:right">&nbsp;</span><a name="stream_bytes/2"><b class="pred">stream_bytes</b><var class="arglist">(+Stream:ref, -Bytes:list)</var></a> is <b class="det">det</b></dt>
-<dt class="pubdef"><b class="pred">stream_bytes</b><var class="arglist">(+Stream:ref, +Bytes:list)</var> is <b class="det">det</b></dt><dd class="defbody">If <var>Bytes</var> is grounded, write all bytes in <var>Bytes</var> to <var>Stream</var>.
-Otherwise, read up from <var>Stream</var> up to the end of the stream.
+<dt class="pubdef"><b class="pred">stream_bytes</b><var class="arglist">(+Stream:ref, +Bytes:list)</var> is <b class="det">det</b></dt><dd class="defbody">If <var>Bytes</var> is not grounded, read from <var>Stream</var> up to the end of the stream.
+Otherwise, write all bytes in <var>Bytes</var> to <var>Stream</var>.
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>
@@ -45,10 +45,10 @@ Otherwise, read up from <var>Stream</var> up to the end of the stream.
 
 </dd>
 <dt class="pubdef"><span style="float:right">&nbsp;</span><a name="stream_bytes/3"><b class="pred">stream_bytes</b><var class="arglist">(+Stream:ref, +Count:int, -Bytes:list)</var></a> is <b class="det">det</b></dt>
-<dt class="pubdef"><b class="pred">stream_bytes</b><var class="arglist">(+Stream:ref, +Count:int, +Bytes:list)</var> is <b class="det">det</b></dt><dd class="defbody">If <var>Bytes</var> is grounded, write <var>Count</var> bytes in <var>Bytes</var> to <var>Stream</var>.
-For <var>Count</var> = -1, write all bytes in <var>Bytes</var>.
-Otherwise, read up to <var>Count</var> bytes from <var>Stream</var>.
+<dt class="pubdef"><b class="pred">stream_bytes</b><var class="arglist">(+Stream:ref, +Count:int, +Bytes:list)</var> is <b class="det">det</b></dt><dd class="defbody">If <var>Bytes</var> is not grounded, read up to <var>Count</var> bytes from <var>Stream</var>.
 For <var>Count</var> = -1, read to the end of the stream.
+If <var>Bytes</var> is grounded, write <var>Count</var> bytes in <var>Bytes</var> to <var>Stream</var>.
+For <var>Count</var> = -1, write all bytes in <var>Bytes</var>.
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>

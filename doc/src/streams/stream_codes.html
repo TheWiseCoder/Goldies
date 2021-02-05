@@ -27,8 +27,8 @@ or <code>-1</code> to write all codes in the list of codes given.</p>
 
 <dl>
 <dt class="pubdef"><span style="float:right">&nbsp;</span><a name="stream_codes/2"><b class="pred">stream_codes</b><var class="arglist">(+Stream:ref, -Codes:list)</var></a> is <b class="det">det</b></dt>
-<dt class="pubdef"><b class="pred">stream_codes</b><var class="arglist">(+Stream:ref, +Codes:list)</var> is <b class="det">det</b></dt><dd class="defbody">If <var>Codes</var> is grounded, write all codes in <var>Codes</var> to <var>Stream</var>.
-Otherwise, read from <var>Stream</var> up to the end of the stream.
+<dt class="pubdef"><b class="pred">stream_codes</b><var class="arglist">(+Stream:ref, +Codes:list)</var> is <b class="det">det</b></dt><dd class="defbody">If <var>Codes</var> is not grounded, read from <var>Stream</var> up to the end of the stream.
+Otherwise, write all codes in <var>Codes</var> to <var>Stream</var>.
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>
@@ -43,10 +43,10 @@ Otherwise, read from <var>Stream</var> up to the end of the stream.
 
 </dd>
 <dt class="pubdef"><span style="float:right">&nbsp;</span><a name="stream_codes/3"><b class="pred">stream_codes</b><var class="arglist">(+Stream:ref, +Count:int, -Codes:list)</var></a> is <b class="det">det</b></dt>
-<dt class="pubdef"><b class="pred">stream_codes</b><var class="arglist">(+Stream:ref, +Count:int, +Codes:list)</var> is <b class="det">det</b></dt><dd class="defbody">If <var>Codes</var> is grounded, write <var>Count</var> codes in <var>Codes</var> to <var>Stream</var>.
-For <var>Count</var> = -1, write all codes in <var>Codes</var>.
-Otherwise, read up to <var>Count</var> codes from <var>Stream</var>.
+<dt class="pubdef"><b class="pred">stream_codes</b><var class="arglist">(+Stream:ref, +Count:int, +Codes:list)</var> is <b class="det">det</b></dt><dd class="defbody">If <var>Codes</var> is not grounded, read up to <var>Count</var> codes from <var>Stream</var>.
 For <var>Count</var> = -1, read to the end of the stream.
+If <var>Codes</var> is not grounded, write <var>Count</var> codes in <var>Codes</var> to <var>Stream</var>.
+For <var>Count</var> = -1, write all codes in <var>Codes</var> to <var>Stream</var>.
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>
