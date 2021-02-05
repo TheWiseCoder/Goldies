@@ -25,7 +25,8 @@ or written to the stream, one per line, to the end of the list.</p>
 
 <dl>
 <dt class="pubdef"><span style="float:right">&nbsp;</span><a name="stream_ints/2"><b class="pred">stream_ints</b><var class="arglist">(+Stream:ref, -Ints:list)</var></a> is <b class="det">det</b></dt>
-<dt class="pubdef"><b class="pred">stream_ints</b><var class="arglist">(+Stream:ref, +Ints:list)</var> is <b class="det">det</b></dt><dd class="defbody">If <var>Ints</var> is not grounded, read ints from <var>Stream</var>, up to the end of the stream.
+<dt class="pubdef"><b class="pred">stream_ints</b><var class="arglist">(+Stream:ref, +Ints:list)</var> is <b class="det">det</b></dt><dd class="defbody">Read/write ints from/to stream.
+If <var>Ints</var> is not grounded, read ints from <var>Stream</var>, up to the end of the stream.
 Otherwise, write all ints in <var>Ints</var> to <var>Stream</var>.
 
 <dl class="tags">

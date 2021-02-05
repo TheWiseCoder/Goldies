@@ -56,6 +56,7 @@ atom suitable as an indication of the end of the stream operation.
 %! stream_atoms(+Stream:ref, -Atoms:list) is det.
 %! stream_atoms(+Stream:ref, +Atoms:list) is det.
 %
+%  Read/write atoms from/to stream.
 %  If Atoms is not grounded, read from Stream up to the end of the stream.
 %  If Atoms is grounded, write all atoms in Atoms to Stream.
 %
@@ -76,6 +77,7 @@ stream_atoms(Stream, Atoms) :-
 %! stream_atoms(+Stream:ref, +EOS:list, -Atoms:list) is det.
 %! stream_atoms(+Stream:ref, +EOS:list, +Atoms:list) is det.
 %
+%  Read/write atoms from/to stream.
 %  If Atoms is not grounded, read from Stream until an EOS atom is found.
 %  For EOS = end_of_file, read to the end of the stream.
 %  If Atoms is grounded, write atoms to Stream until an EOS atom is found.

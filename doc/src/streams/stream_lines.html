@@ -29,7 +29,8 @@ list of chars.</p>
 
 <dl>
 <dt class="pubdef"><span style="float:right">&nbsp;</span><a name="stream_lines/2"><b class="pred">stream_lines</b><var class="arglist">(+Stream:ref, -Lines:list)</var></a> is <b class="det">det</b></dt>
-<dt class="pubdef"><b class="pred">stream_lines</b><var class="arglist">(+Stream:ref, +Lines:list)</var> is <b class="det">det</b></dt><dd class="defbody">If <var>Lines</var> is not grounded, read from <var>Stream</var> up to the end of the stream.
+<dt class="pubdef"><b class="pred">stream_lines</b><var class="arglist">(+Stream:ref, +Lines:list)</var> is <b class="det">det</b></dt><dd class="defbody">Read/write lines from/to stream.
+If <var>Lines</var> is not grounded, read from <var>Stream</var> up to the end of the stream.
 If <var>Lines</var> is grounded, write all lines in <var>Lines</var> to <var>Stream</var>.
 
 <dl class="tags">
@@ -45,7 +46,8 @@ If <var>Lines</var> is grounded, write all lines in <var>Lines</var> to <var>Str
 
 </dd>
 <dt class="pubdef"><span style="float:right">&nbsp;</span><a name="stream_lines/3"><b class="pred">stream_lines</b><var class="arglist">(+Stream:ref, +EOS:list, -Lines:list)</var></a> is <b class="det">det</b></dt>
-<dt class="pubdef"><b class="pred">stream_lines</b><var class="arglist">(+Stream:ref, +EOS:list, +Lines:list)</var> is <b class="det">det</b></dt><dd class="defbody">If <var>Lines</var> is not grounded, read from <var>Stream</var> until a line containing <var>EOS</var> is found.
+<dt class="pubdef"><b class="pred">stream_lines</b><var class="arglist">(+Stream:ref, +EOS:list, +Lines:list)</var> is <b class="det">det</b></dt><dd class="defbody">Read/write lines from/to stream.
+If <var>Lines</var> is not grounded, read from <var>Stream</var> until a line containing <var>EOS</var> is found.
 For <var>EOS</var> = end_of_file, read to the end of the stream.
 If <var>Lines</var> is grounded, write lines to <var>Stream</var> until a line containing <var>EOS</var> is found.
 For <var>EOS</var> = end_of_file, write all lines in <var>Lines</var>.

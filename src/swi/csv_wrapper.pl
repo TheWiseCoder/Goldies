@@ -118,7 +118,7 @@ csv_output_record(Stream, Record, Options) :-
 
     (memberchk(functor(Functor), Options) ; Functor = row),
     Row =.. [Functor|Record],
-    csv_write_stream(Stream, Row, Options).
+    csv_write_stream(Stream, [Row], Options).
 
 %-------------------------------------------------------------------------------------
 
@@ -141,9 +141,9 @@ csv_output_records(Stream, Records) :-
 %  @param Options The output options
 
 csv_output_records(Stream, Records, Options) :-
-    maplist(csv_output_record_(Stream, Options), Records).
+    maplist(csv_output_records_(Stream, Options), Records).
 
-csv_output_record_(Stream, Options, Record) :-
+csv_output_records_(Stream, Options, Record) :-
     csv_output_record(Stream, Record, Options).
 
 %-------------------------------------------------------------------------------------

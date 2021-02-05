@@ -48,6 +48,7 @@ or written to the stream, one per line, to the end of the list.
 %! stream_ints(+Stream:ref, -Ints:list) is det.
 %! stream_ints(+Stream:ref, +Ints:list) is det.
 %
+%  Read/write ints from/to stream.
 %  If Ints is not grounded, read ints from Stream, up to the end of the stream.
 %  Otherwise, write all ints in Ints to Stream.
 %

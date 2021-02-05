@@ -70,6 +70,7 @@ list of chars.
 %! stream_lines(+Stream:ref, -Lines:list) is det.
 %! stream_lines(+Stream:ref, +Lines:list) is det.
 %
+%  Read/write lines from/to stream.
 %  If Lines is not grounded, read from Stream up to the end of the stream.
 %  If Lines is grounded, write all lines in Lines to Stream.
 %
@@ -90,6 +91,7 @@ stream_lines(Stream, Lines) :-
 %! stream_lines(+Stream:ref, +EOS:list, -Lines:list) is det.
 %! stream_lines(+Stream:ref, +EOS:list, +Lines:list) is det.
 %
+%  Read/write lines from/to stream.
 %  If Lines is not grounded, read from Stream until a line containing EOS is found.
 %  For EOS = end_of_file, read to the end of the stream.
 %  If Lines is grounded, write lines to Stream until a line containing EOS is found.

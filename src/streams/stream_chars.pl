@@ -29,6 +29,7 @@ or `-1` to write all chars in the list of chars given.
 %! stream_chars(+Stream:ref, -Chars:list) is det.
 %! stream_chars(+Stream:ref, +Chars:list) is det.
 %
+%  Read/write chars from/to stream.
 %  If Chars is not grounded, read from Stream up to the end of the stream.
 %  Otherwise, write all chars in Chars to Stream.
 %
@@ -48,7 +49,8 @@ stream_chars(Stream, Chars) :-
 %! stream_chars(+Stream:ref, +Count:int, -Chars:list) is det.
 %! stream_chars(+Stream:ref, +Count:int, +Chars:list) is det.
 %
-%   If Chars is not grounded, read up to Count chars from Stream.
+%  Read/write chars from/to stream.
+%  If Chars is not grounded, read up to Count chars from Stream.
 %  For Count = -1, read to the end of the stream.
 %  If Chars is grounded, write Count chars in Chars to Stream.
 %  For Count = -1, write all chars in Chars.

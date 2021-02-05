@@ -29,6 +29,7 @@ or `-1` to write all codes in the list of codes given.
 %! stream_codes(+Stream:ref, -Codes:list) is det.
 %! stream_codes(+Stream:ref, +Codes:list) is det.
 %
+%  Read/write codes from/to stream.
 %  If Codes is not grounded, read from Stream up to the end of the stream.
 %  Otherwise, write all codes in Codes to Stream.
 %
@@ -48,6 +49,7 @@ stream_codes(Stream, Codes) :-
 %! stream_codes(+Stream:ref, +Count:int, -Codes:list) is det.
 %! stream_codes(+Stream:ref, +Count:int, +Codes:list) is det.
 %
+%  Read/write codes from/to stream.
 %  If Codes is not grounded, read up to Count codes from Stream.
 %  For Count = -1, read to the end of the stream.
 %  If Codes is not grounded, write Count codes in Codes to Stream.

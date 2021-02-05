@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>stream_atoms.pl -- Read/write a list of atoms from/to a given stream</title>
+
+<link rel="stylesheet" type="text/css" href="../../pldoc.css">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+</head>
+<body>
+
+
+<h1 class="file"><span style="float:right"></span>stream_atoms.pl -- Read/write a list of atoms from/to a given stream</h1>
+
+<p>
+When reading from the stream, the invoker may provide a EOS (end-of-stream) marker
+to limit the reading, or the EOF (end_of_file) atom to read to the end of the stream.
+When writing to the stream, the invoker may provide a EOS to limit the writing,
+or EOF to write all atoms in the list of atoms provided. A EOS marker may be any
+atom suitable as an indication of the end of the stream operation.</p>
+
+<dl class="tags">
+<dt class="keyword-author">author</dt><dd class="keyword-author">- GT Nunes</dd>
+<dt class="keyword-version">version</dt><dd class="keyword-version">- 1.2</dd>
+<dt class="keyword-copyright">copyright</dt><dd class="keyword-copyright">- (c) 2020 GT Nunes</dd>
+<dt class="keyword-license">license</dt><dd class="keyword-license">- BSD-3-Clause License</dd>
+</dl>
+
+<dl>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="stream_atoms/2"><b class="pred">stream_atoms</b><var class="arglist">(+Stream:ref, -Atoms:list)</var></a> is <b class="det">det</b></dt>
+<dt class="pubdef"><b class="pred">stream_atoms</b><var class="arglist">(+Stream:ref, +Atoms:list)</var> is <b class="det">det</b></dt><dd class="defbody">Read/write atoms from/to stream.
+If <var>Atoms</var> is not grounded, read from <var>Stream</var> up to the end of the stream.
+If <var>Atoms</var> is grounded, write all atoms in <var>Atoms</var> to <var>Stream</var>.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Stream</var></td><td class="argdescr">- The input/output stream</td></tr>
+<tr><td><var>Atoms</var></td><td class="argdescr">- List of atoms read from, or to write to, the stream</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="stream_atoms/3"><b class="pred">stream_atoms</b><var class="arglist">(+Stream:ref, +EOS:list, -Atoms:list)</var></a> is <b class="det">det</b></dt>
+<dt class="pubdef"><b class="pred">stream_atoms</b><var class="arglist">(+Stream:ref, +EOS:list, +Atoms:list)</var> is <b class="det">det</b></dt><dd class="defbody">Read/write atoms from/to stream.
+If <var>Atoms</var> is not grounded, read from <var>Stream</var> until an <var>EOS</var> atom is found.
+For <var>EOS</var> = end_of_file, read to the end of the stream.
+If <var>Atoms</var> is grounded, write atoms to <var>Stream</var> until an <var>EOS</var> atom is found.
+For <var>EOS</var> = end_of_file, write all atoms in <var>Atoms</var>.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Stream</var></td><td class="argdescr">- The input/output stream</td></tr>
+<tr><td><var>EOS</var></td><td class="argdescr">- EOF or list of chars signifying end of stream</td></tr>
+<tr><td><var>Atoms</var></td><td class="argdescr">- List of atoms read from, or to write to, the stream</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+</dl>
+
+</body>
+</html>
