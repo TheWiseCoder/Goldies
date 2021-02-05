@@ -255,7 +255,7 @@ atom_replace(AtomIn, From, To, AtomOut) :-
         length(FromChars, Len),
         Skip is Before + Len,
         sublist(CharsIn, CharsPos, Skip, _, 0),
-    atom_chars(To, ToChars),
+        atom_chars(To, ToChars),
         append3(CharsPre, ToChars, CharsPos, CharsOut),
         atom_chars(AtomOut, CharsOut)
     ;
