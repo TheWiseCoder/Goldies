@@ -333,7 +333,7 @@ json_chars(JsonTerm, JsonChars, Options) :-
         atoms_codes(JsonChars, JsonCodes)
     ;
         atoms_codes(JsonChars, JsonCodes),
-        json_codes(JsonChars, JsonCodes, Options)
+        json_codes(JsonTerm, JsonCodes, Options)
     ).
 
 %-------------------------------------------------------------------------------------
