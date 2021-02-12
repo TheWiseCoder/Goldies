@@ -28,8 +28,8 @@
 /** <module>  Miscellaneous small list-related utilities
 
 @author GT Nunes
-@version 1.0
-@copyright (c) 2020 GT Nunes
+@version 1.2
+@copyright (c) TheWiseCoder 2020-2021
 @license BSD-3-Clause License
 */
 

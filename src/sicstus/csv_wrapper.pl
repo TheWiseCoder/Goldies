@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*************************************************************************************
 * FILENAME / MODULE : csv_wrapper.pl / csv_wrapper
 *
 * DESCRIPTION :
@@ -14,17 +14,12 @@
 *       csv_output_records(+Stream, +Records)
 *
 * NOTES :
-*       None yet.
+*       Author:    GT Nunes
+*       Version:   1.2
+*       Copyright: (c) TheWiseCoder 2020-2021
+*       License:   BSD-3-Clause License
 *
-*       Copyright TheWiseCoder 2020.  All rights reserved.
-*
-* REVISION HISTORY :
-*
-* DATE        AUTHOR            REVISION
-* ----------  ----------------  ------------------------------------------------
-* 2020-10-12  GT Nunes          Module creation
-*
-*******************************************************************************/
+*************************************************************************************/
 
 :- module(csv_wrapper,
     [

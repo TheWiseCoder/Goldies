@@ -13,7 +13,7 @@ or `-1` to write all codes in the list of codes given.
 
 @author GT Nunes
 @version 1.2
-@copyright (c) 2020 GT Nunes
+@copyright (c) TheWiseCoder 2020-2021
 @license BSD-3-Clause License
 */
 

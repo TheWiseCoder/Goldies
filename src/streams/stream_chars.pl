@@ -13,7 +13,7 @@ or `-1` to write all chars in the list of chars given.
 
 @author GT Nunes
 @version 1.2
-@copyright (c) 2020 GT Nunes
+@copyright (c) TheWiseCoder 2020-2021
 @license BSD-3-Clause License
 */
 

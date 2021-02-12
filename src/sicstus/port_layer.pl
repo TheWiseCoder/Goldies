@@ -1,4 +1,4 @@
-/*******************************************************************************
+/*************************************************************************************
 * FILENAME / MODULE : port_layer.pl / port_layer
 *
 * DESCRIPTION :
@@ -22,17 +22,12 @@
 *       set_flag(+Key, +Value)
 *
 * NOTES :
-*       None yet.
+*       Author:    GT Nunes
+*       Version:   1.2
+*       Copyright: (c) TheWiseCoder 2020-2021
+*       License:   BSD-3-Clause License
 *
-*       Copyright TheWiseCoder 2020.  All rights reserved.
-*
-* REVISION HISTORY :
-*
-* DATE        AUTHOR            REVISION
-* ----------  ----------------  ------------------------------------------------
-* 2020-08-08  GT Nunes          Module creation
-*
-*******************************************************************************/
+*************************************************************************************/
 
 :- module(port_layer,
     [
