@@ -374,7 +374,9 @@ list_replace1(Pos1, List, Element, ListResult) :-
 
 %! list_values(+Count:int, +Start:number, +Offset:number, -Values:list) is det.
 %
-%  Unify Values with a list with Count calculated values as elements
+%  Unify Values with a list with Count calculated values as elements.
+%  For Count <= 0, unify Values with an empty list. Note that this is useful
+%  for lists of float values. For lists of integers, use numlist/3 instead.
 %
 %  @param Count  Number of elements
 %  @param Start  The start value
@@ -382,7 +384,12 @@ list_replace1(Pos1, List, Element, ListResult) :-
 %  @param Values List with the values produced
 
 list_values(Count, Start, Offset, Values) :-
-    list_values_(Count, Start, Offset, [], Values).
+
+    (Count =< 0 ->
+        Values = []
+    ;
+        list_values_(Count, Start, Offset, [], Values)
+    ).
 
 % (done)
 list_values_(0, _Value, _Offset, ValuesProgress, ValuesFinal) :-

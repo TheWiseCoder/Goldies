@@ -227,7 +227,9 @@ yields
 </dl>
 
 </dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_values/4"><b class="pred">list_values</b><var class="arglist">(+Count:int, +Start:number, +Offset:number, -Values:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Values</var> with a list with <var>Count</var> calculated values as elements
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_values/4"><b class="pred">list_values</b><var class="arglist">(+Count:int, +Start:number, +Offset:number, -Values:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Values</var> with a list with <var>Count</var> calculated values as elements.
+For <var>Count</var> &lt;= 0, unify <var>Values</var> with an empty list. Note that this is useful
+for lists of float values. For lists of integers, use <a class="builtin" href="http://www.swi-prolog.org/pldoc/man?predicate=numlist/3">numlist/3</a> instead.
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>

@@ -16,7 +16,7 @@ The data path for Berkeley DB must be set with `bdb_base/1` (regardless of the h
 
 Using the available predicates is straigh forward:
 
-- `bdb_base(+BasePath)` - unify BasePath with the base path for Berkeley DB's persistence files 
+- `bdb_base(?BasePath)` - unify BasePath with the base path for Berkeley DB's persistence files 
 - `bdb_erase(+DataSet)` - erase the complete dataset from storage  
 - `bdb_erase(+TagSet, +DataSet)` - erase the tagset within the given dataset from storage  
 - `bdb_retrieve(+TagSet, +DataSet, -Data)` - retrieve the given tagset from storage  
