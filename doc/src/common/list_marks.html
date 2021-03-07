@@ -143,28 +143,17 @@ Fail if no such boundaries exist.
 of <var>ListElems</var>, the elements of that list ListElem are appended to its head,
 otherwise that list is appended to the head of ListsRef. Examples:
 
-<p>
-<b>1.</b></p>
-
 <pre class="code" ext="">
-  lists_consolidate([[1,d,b],[4,c,f]], [c,j,k], ListsResult)
-yields
-  ListsResult = [[1,d,b],[c,j,k,4,c,f]]</pre>
+1. lists_consolidate([[1,d,b],[4,c,f]], [c,j,k], ListsResult)
+   yields
+   ListsResult = [[1,d,b],[c,j,k,4,c,f]]
 
-<p>
-<b>2.</b></p>
+2. lists_consolidate([[1,d,b],[4,c,f]], [d,j,k], ListsResult)
+   yields
+  ListsResult = [[d,j,k,1,d,b],[4,c,f]]
 
-<pre class="code" ext="">
-  lists_consolidate([[1,d,b],[4,c,f]], [d,j,k], ListsResult)
-yields
-  ListsResult = [[d,j,k,1,d,b],[4,c,f]]</pre>
-
-<p>
-<b>3.</b></p>
-
-<pre class="code" ext="">
-  lists_consolidate([[1,d,b],[4,c,f]], [j,k,l], ListsResult)
-yields
+3.lists_consolidate([[1,d,b],[4,c,f]], [j,k,l], ListsResult)
+   yields
   ListsResult = [[j,k,l],[1,d,b],[4,c,f]]</pre>
 
 <dl class="tags">
@@ -263,8 +252,8 @@ Note that <a class="builtin" href="http://www.swi-prolog.org/pldoc/man?predicate
 </dl>
 
 </dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_fill/3"><b class="pred">list_fill</b><var class="arglist">(+Count:int, +Item:data, -List:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>List</var> with a list containing <var>Count</var> instances of <var>Item</var>.
-(Note that <var>Count</var> = 0 is acceptable).
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_fill/3"><b class="pred">list_fill</b><var class="arglist">(+Count:int, +Item:data, -List:list)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Unify <var>List</var> with a list containing <var>Count</var> instances of <var>Item</var>.
+Unify <var>List</var> with [] if <var>Count</var> = 0 (<var>Item</var> is disregarded.
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>
@@ -273,6 +262,25 @@ Note that <a class="builtin" href="http://www.swi-prolog.org/pldoc/man?predicate
 <tr><td><var>Count</var></td><td class="argdescr">- The number of instances</td></tr>
 <tr><td><var>Item</var></td><td class="argdescr">- The item to append to list</td></tr>
 <tr><td><var>List</var></td><td class="argdescr">- The resulting list</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_pad/4"><b class="pred">list_pad</b><var class="arglist">(+Length:int, +Item:data, +ListIn:list, -ListOut)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Unify <var>ListOut</var> with a list containing <var>ListIn</var> padded wit instances of <var>Item</var>,
+so as to make its length equal to <var>Length</var>. Unify <var>ListOut</var> with <var>ListIn</var> if
+<var>Length</var> = length of <var>ListIn</var> (<var>Item</var> is disregarded).
+Fail if <var>Length</var> &lt; length of <var>ListIn</var>.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Length</var></td><td class="argdescr">- The length of the output list</td></tr>
+<tr><td><var>Item</var></td><td class="argdescr">- The item to append to list</td></tr>
+<tr><td><var>ListIn</var></td><td class="argdescr">- The input list
+@param <var>ListOut</var> The output list</td></tr>
 </table>
 
 </dd>
@@ -302,21 +310,14 @@ a range of values found in the original list.
 The original list must have unique elements and be ascendingly sorted,
 otherwise the compactification will yield unpredictable results. Examples:</p>
 
-<p>
-<b>1.</b></p>
-
 <pre class="code" ext="">
-  list_compacts([1,3,4,6,7,8,10], ListsCompact)
-yields
-  ListsCompact = [[1,1],[3,4],[6,8],[10,10]]</pre>
+1. list_compacts([1,3,4,6,7,8,10], ListsCompact)
+   yields
+   ListsCompact = [[1,1],[3,4],[6,8],[10,10]]
 
-<p>
-<b>2.</b></p>
-
-<pre class="code" ext="">
-  list_compacts(List, [[1,1],[3,4],[6,8],[10,10]])
-yields
-  List = [1,3,4,6,7,8,10]</pre>
+2. list_compacts(List, [[1,1],[3,4],[6,8],[10,10]])
+   yields
+   List = [1,3,4,6,7,8,10]</pre>
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>

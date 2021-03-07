@@ -9,6 +9,7 @@
         list_count_same/3,
         list_fill/3,
         list_minus_list/3,
+        list_pad/4,
         list_replace0/4,
         list_replace1/4,
         list_same/1,
@@ -275,22 +276,17 @@ lists_start_with([Head|Lists], Sublist, List) :-
 %  of ListElems, the elements of that list ListElem are appended to its head,
 %  otherwise that list  is appended to the head of ListsRef. Examples:
 %
-%  *|1.|*
 %  ~~~
-%    lists_consolidate([[1,d,b],[4,c,f]], [c,j,k], ListsResult)
-%  yields
-%    ListsResult = [[1,d,b],[c,j,k,4,c,f]]
-%  ~~~
-%  *|2.|*
-%  ~~~
-%    lists_consolidate([[1,d,b],[4,c,f]], [d,j,k], ListsResult)
-%  yields
+%  1. lists_consolidate([[1,d,b],[4,c,f]], [c,j,k], ListsResult)
+%     yields
+%     ListsResult = [[1,d,b],[c,j,k,4,c,f]]
+%
+%  2. lists_consolidate([[1,d,b],[4,c,f]], [d,j,k], ListsResult)
+%     yields
 %    ListsResult = [[d,j,k,1,d,b],[4,c,f]]
-%  ~~~
-%  *|3.|*
-%  ~~~
-%    lists_consolidate([[1,d,b],[4,c,f]], [j,k,l], ListsResult)
-%  yields
+%
+%  3.lists_consolidate([[1,d,b],[4,c,f]], [j,k,l], ListsResult)
+%     yields
 %    ListsResult = [[j,k,l],[1,d,b],[4,c,f]]
 %  ~~~
 %
@@ -442,16 +438,19 @@ lists_flatten_([Head|Lists], ListProgress, ListFinal) :-
 
 %-------------------------------------------------------------------------------------
 
-%! list_fill(+Count:int, +Item:data, -List:list) is det.
+%! list_fill(+Count:int, +Item:data, -List:list) is semidet.
 %
 %  Unify List with a list containing Count instances of Item.
-%  (Note that Count = 0 is acceptable).
+%  Unify List with [] if Count = 0 (Item is disregarded.
 %
 %  @param Count The number of instances
 %  @param Item  The item to append to list
 %  @param List  The resulting list
 
 list_fill(Count, Item, List) :-
+
+    % fail point
+    Count >= 0,
     list_fill_(Count, Item, [], List).
 
 % (done)
@@ -460,10 +459,31 @@ list_fill_(0, _Item, ListFinal, ListFinal).
 % (iterate)
 list_fill_(Count, Item, ListProgress, ListFinal) :-
 
-    % fail point
-    Count > 0,
     CountNext is Count - 1,
     list_fill_(CountNext, Item, [Item|ListProgress], ListFinal).
+
+%-------------------------------------------------------------------------------------
+
+%! list_pad(+Length:int, +Item:data, +ListIn:list, -ListOut) is semidet.
+%
+%  Unify ListOut with a list containing ListIn padded wit instances of Item,
+%  so as to make its length equal to Length. Unify ListOut with ListIn if
+%  Length = length of ListIn (Item is disregarded).
+%  Fail if Length < length of ListIn.
+%
+%  @param Length The length of the output list
+%  @param Item   The item to append to list
+%  @param ListIn The input list
+% @param ListOut The output list
+
+list_pad(Length, Item, ListIn, ListOut) :-
+
+    length(ListIn, LengthIn),
+    Count is Length - LengthIn,
+
+    % fail point
+    list_fill(Count, Item, Filler),
+    append(Filler, ListIn, ListOut).
 
 %-------------------------------------------------------------------------------------
 
@@ -508,17 +528,14 @@ list_common_([Elem|List1], List2, CommonsProgress, CommonsFinal) :-
 %  The original list must have unique elements and be ascendingly sorted,
 %  otherwise the compactification will yield unpredictable results. Examples:
 %
-%  *|1.|*
 %  ~~~
-%    list_compacts([1,3,4,6,7,8,10], ListsCompact)
-%  yields
-%    ListsCompact = [[1,1],[3,4],[6,8],[10,10]]
-%  ~~~
-%  *|2.|*
-%  ~~~
-%    list_compacts(List, [[1,1],[3,4],[6,8],[10,10]])
-%  yields
-%    List = [1,3,4,6,7,8,10]
+%  1. list_compacts([1,3,4,6,7,8,10], ListsCompact)
+%     yields
+%     ListsCompact = [[1,1],[3,4],[6,8],[10,10]]
+%
+%  2. list_compacts(List, [[1,1],[3,4],[6,8],[10,10]])
+%     yields
+%     List = [1,3,4,6,7,8,10]
 %  ~~~
 %
 %  @param List         The input list
