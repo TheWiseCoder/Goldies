@@ -10,6 +10,7 @@
         list_fill/3,
         list_minus_list/3,
         list_pad/4,
+        list_prune_on_length/4,
         list_replace0/4,
         list_replace1/4,
         list_same/1,
@@ -169,7 +170,7 @@ convlist_first(Goal, [Head|List], Element) :-
 
 sublist_between(List, ListFrom, ListTo, Sublist, ListAdjusted) :-
 
-    % the following is the target structures:
+    % the following are the target structures:
     %
     % <                List                   >
     % <List1><ListFrom><        List2         >
@@ -207,115 +208,6 @@ sublist_between(List, ListFrom, ListTo, Sublist, ListAdjusted) :-
 
     % obtain ListAdjusted
     append(List1, List3, ListAdjusted).
-
-%-------------------------------------------------------------------------------------
-
-%! lists_find(+Lists:list, +Element:data, -Pos1:int) is semidet.
-%
-%  Unify Pos1 with the 1-based position of the first list in Lists containing Element.
-%
-%  @param Lists   List of lists under inspection
-%  @param Element Element being sought
-%  @param Pos1    1-based position of the list containing the element
-
-lists_find(Lists, Element, Pos1) :-
-
-    length(Lists, Count),
-    !,
-    % fail point
-    lists_find_(Count, Lists, Element, Pos1).
-
-% (failure)
-lists_find_(0, _Lists, _Element, _Pos1) :-
-    !, fail.
-
-% (iterate)
-lists_find_(Count, Lists, Element, Pos1) :-
-
-    nth1(Count, Lists, List),
-    (memberchk(Element, List) ->
-        Pos1 = Count
-    ;
-        CountNext is Count - 1,
-        !,
-        % fail point
-        lists_find_(CountNext, Lists, Element, Pos1)
-    ).
-
-%-------------------------------------------------------------------------------------
-
-%! lists_start_with(+Lists:list, +Sublist:list, -List:list) is semidet.
-%
-%  Unify List with the first list in Lists starting with Sublist.
-%
-%  @param Lists   List of lists under inspection
-%  @param Sublist Sublist being sought
-%  @param List    The list starting with the given elements
-
-% (failure)
-lists_start_with([], _Sublist, _List) :-
-    !, fail.
-
-% (iterate)
-lists_start_with([Head|Lists], Sublist, List) :-
-
-    (sublist(Head, Sublist, 0) ->
-        List = Head
-    ;
-        !,
-        % fail point
-        lists_start_with(Lists, Sublist, List)
-    ).
-
-%-------------------------------------------------------------------------------------
-
-%! lists_consolidate(+ListsRefs:list, +ListElems:list, -ListsResult:list) is det.
-%
-%  Consolidate ListsResults with a list of lists based on the contents of
-%  ListsRefs and ListElems. If a list within ListsRef contains the first element
-%  of ListElems, the elements of that list ListElem are appended to its head,
-%  otherwise that list  is appended to the head of ListsRef. Examples:
-%
-%  ~~~
-%  1. lists_consolidate([[1,d,b],[4,c,f]], [c,j,k], ListsResult)
-%     yields
-%     ListsResult = [[1,d,b],[c,j,k,4,c,f]]
-%
-%  2. lists_consolidate([[1,d,b],[4,c,f]], [d,j,k], ListsResult)
-%     yields
-%    ListsResult = [[d,j,k,1,d,b],[4,c,f]]
-%
-%  3.lists_consolidate([[1,d,b],[4,c,f]], [j,k,l], ListsResult)
-%     yields
-%    ListsResult = [[j,k,l],[1,d,b],[4,c,f]]
-%  ~~~
-%
-%  @param ListsRefs   The reference list of lists
-%  @param  ListElems  The list to be consolidated into the list of lists
-%  @param ListsResult The resulting list of lists
-
-lists_consolidate(ListsRefs, ListElems, ListsResult) :-
-
-    [Elem|_] = ListElems,
-
-    % is there a list containg Elem ?
-    (lists_find(ListsRefs, Elem, Pos) ->
-
-        % yes, ListElems2 is a list containing the element Elem
-        % (ListsRems has the other lists)
-        nth1(Pos, ListsRefs, ListElems2, ListsRems)
-    ;
-        % no, use empty list ListElemse2 inst\read
-        Pos = 1,
-        ListElems2 = [],
-        ListsRems = ListsRefs
-    ),
-
-    % join the elements of ListElems and ListElems2 in ListElems3
-    append(ListElems, ListElems2, ListElems3),
-
-    % insert the new list at the appropriate place in the list of lists
-    nth1(Pos, ListsResult, ListElems3, ListsRems).
 
 %-------------------------------------------------------------------------------------
 
@@ -401,43 +293,6 @@ list_values_(Count, Value, Offset, ValuesProgress, ValuesFinal) :-
 
 %-------------------------------------------------------------------------------------
 
-%! lists_flatten(+Lists:list, -List:list) is det.
-%
-%  Recursively flatten a list of lists.
-%
-%  The original order of the elements is kept, and repeating values are not removed.
-%  Note that append/2 flattens only the first level within the list of lists.
-%
-%  @param Lists List of lists to flatten
-%  @param List  Flattened list
-
-lists_flatten([], List) :-
-    List = [].
-
-lists_flatten(Lists, List) :-
-    lists_flatten_(Lists, [], List).
-
-% (done)
-lists_flatten_([], ListFinal, ListFinal).
-
-% (iterate)
-lists_flatten_([Head|Lists], ListProgress, ListFinal) :-
-
-    % is the head element itself a list ?
-    (is_list(Head) ->
-        % yes, so flatten it first
-        lists_flatten_(Head, [], List),
-        append(ListProgress, List, ListRevised)
-    ;
-        % no, so add it to the flattened result
-        append(ListProgress, [Head], ListRevised)
-    ),
-
-    % go for the next element
-    lists_flatten_(Lists, ListRevised, ListFinal). 
-
-%-------------------------------------------------------------------------------------
-
 %! list_fill(+Count:int, +Item:data, -List:list) is semidet.
 %
 %  Unify List with a list containing Count instances of Item.
@@ -484,6 +339,40 @@ list_pad(Length, Item, ListIn, ListOut) :-
     % fail point
     list_fill(Count, Item, Filler),
     append(Filler, ListIn, ListOut).
+
+%-------------------------------------------------------------------------------------
+
+%! list_prune_on_length(+ListIn:list, +MinLength:int, +MaxLength:int, -ListOut:list) is det.
+%
+%  Unify ListOut with a list containing the elements in the list of lists ListIn
+%  with length between MinLength and MaxLength, inclusive. If MaxLength is 0,
+%  the upper limit on the length is disregarded. Unify ListOut with [] if no
+%  element in ListIn has length in the desired range.
+%
+%  @param ListIn    The input list of lists
+%  @param MinLength Min acceptable length
+%  @param MaxLength Max acceptable length
+%  @param ListOut   The output list
+
+list_prune_on_length(ListIn, MinLength, MaxLength, ListOut) :-
+    list_prune_on_length_(ListIn, MinLength, MaxLength, [], ListOut).
+
+% (done)
+list_prune_on_length_([], _MinLength, _MaxLength, ListProgress, ListFinal) :-
+    reverse(ListProgress, ListFinal).
+
+% (iterate)
+list_prune_on_length_([Elem|List], MinLength, MaxLength, ListProgress, ListFinal) :-
+
+    length(Elem, Len),
+    ((Len >= MinLength , (MaxLength = 0 ; Len =< MaxLength)) ->
+        ListRevised = [Elem|ListProgress]
+    ;
+        ListRevised = ListProgress
+    ),
+
+    % go for the next element
+    list_prune_on_length_(List, MinLength, MaxLength, ListRevised, ListFinal).
 
 %-------------------------------------------------------------------------------------
 
@@ -731,8 +620,8 @@ list_same1(List, Pos1, Count) :-
 %
 %  Assert whether the given lists have at least one element in common.
 %
-%  @param List1     first list to compare
-%  @param List2     second list ot compare
+%  @param List1 First list to compare
+%  @param List2 Second list ot compare
 
 lists_common([], _List2) :- !, fail.
 lists_common(_List1, []) :- !, fail.
@@ -749,3 +638,149 @@ lists_common([Elem|List1], List2) :-
         % fail point
         lists_common(List1, List2)
     ).
+
+%-------------------------------------------------------------------------------------
+
+%! lists_find(+Lists:list, +Element:data, -Pos1:int) is semidet.
+%
+%  Unify Pos1 with the 1-based position of the first list in Lists containing Element.
+%
+%  @param Lists   List of lists under inspection
+%  @param Element Element being sought
+%  @param Pos1    1-based position of the list containing the element
+
+lists_find(Lists, Element, Pos1) :-
+
+    length(Lists, Count),
+    !,
+    % fail point
+    lists_find_(Count, Lists, Element, Pos1).
+
+% (failure)
+lists_find_(0, _Lists, _Element, _Pos1) :-
+    !, fail.
+
+% (iterate)
+lists_find_(Count, Lists, Element, Pos1) :-
+
+    nth1(Count, Lists, List),
+    (memberchk(Element, List) ->
+        Pos1 = Count
+    ;
+        CountNext is Count - 1,
+        !,
+        % fail point
+        lists_find_(CountNext, Lists, Element, Pos1)
+    ).
+
+%-------------------------------------------------------------------------------------
+
+%! lists_start_with(+Lists:list, +Sublist:list, -List:list) is semidet.
+%
+%  Unify List with the first list in Lists starting with Sublist.
+%
+%  @param Lists   List of lists under inspection
+%  @param Sublist Sublist being sought
+%  @param List    The list starting with the given elements
+
+% (failure)
+lists_start_with([], _Sublist, _List) :-
+    !, fail.
+
+% (iterate)
+lists_start_with([Head|Lists], Sublist, List) :-
+
+    (sublist(Head, Sublist, 0) ->
+        List = Head
+    ;
+        !,
+        % fail point
+        lists_start_with(Lists, Sublist, List)
+    ).
+
+%-------------------------------------------------------------------------------------
+
+%! lists_consolidate(+ListsRefs:list, +ListElems:list, -ListsResult:list) is det.
+%
+%  Consolidate ListsResults with a list of lists based on the contents of
+%  ListsRefs and ListElems. If a list within ListsRef contains the first element
+%  of ListElems, the elements of that list ListElem are appended to its head,
+%  otherwise that list  is appended to the head of ListsRef. Examples:
+%
+%  ~~~
+%  1. lists_consolidate([[1,d,b],[4,c,f]], [c,j,k], ListsResult)
+%     yields
+%     ListsResult = [[1,d,b],[c,j,k,4,c,f]]
+%
+%  2. lists_consolidate([[1,d,b],[4,c,f]], [d,j,k], ListsResult)
+%     yields
+%    ListsResult = [[d,j,k,1,d,b],[4,c,f]]
+%
+%  3.lists_consolidate([[1,d,b],[4,c,f]], [j,k,l], ListsResult)
+%     yields
+%    ListsResult = [[j,k,l],[1,d,b],[4,c,f]]
+%  ~~~
+%
+%  @param ListsRefs   The reference list of lists
+%  @param  ListElems  The list to be consolidated into the list of lists
+%  @param ListsResult The resulting list of lists
+
+lists_consolidate(ListsRefs, ListElems, ListsResult) :-
+
+    [Elem|_] = ListElems,
+
+    % is there a list containg Elem ?
+    (lists_find(ListsRefs, Elem, Pos) ->
+
+        % yes, ListElems2 is a list containing the element Elem
+        % (ListsRems has the other lists)
+        nth1(Pos, ListsRefs, ListElems2, ListsRems)
+    ;
+        % no, use empty list ListElemse2 inst\read
+        Pos = 1,
+        ListElems2 = [],
+        ListsRems = ListsRefs
+    ),
+
+    % join the elements of ListElems and ListElems2 in ListElems3
+    append(ListElems, ListElems2, ListElems3),
+
+    % insert the new list at the appropriate place in the list of lists
+    nth1(Pos, ListsResult, ListElems3, ListsRems).
+
+%-------------------------------------------------------------------------------------
+
+%! lists_flatten(+Lists:list, -List:list) is det.
+%
+%  Recursively flatten a list of lists.
+%
+%  The original order of the elements is kept, and repeating values are not removed.
+%  Note that append/2 flattens only the first level within the list of lists.
+%
+%  @param Lists List of lists to flatten
+%  @param List  Flattened list
+
+lists_flatten([], List) :-
+    List = [].
+
+lists_flatten(Lists, List) :-
+    lists_flatten_(Lists, [], List).
+
+% (done)
+lists_flatten_([], ListFinal, ListFinal).
+
+% (iterate)
+lists_flatten_([Head|Lists], ListProgress, ListFinal) :-
+
+    % is the head element itself a list ?
+    (is_list(Head) ->
+        % yes, so flatten it first
+        lists_flatten_(Head, [], List),
+        append(ListProgress, List, ListRevised)
+    ;
+        % no, so add it to the flattened result
+        append(ListProgress, [Head], ListRevised)
+    ),
+
+    % go for the next element
+    lists_flatten_(Lists, ListRevised, ListFinal).

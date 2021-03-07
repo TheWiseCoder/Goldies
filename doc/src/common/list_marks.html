@@ -108,67 +108,6 @@ Fail if no such boundaries exist.
 </dl>
 
 </dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="lists_find/3"><b class="pred">lists_find</b><var class="arglist">(+Lists:list, +Element:data, -Pos1:int)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Unify <var>Pos1</var> with the 1-based position of the first list in <var>Lists</var> containing <var>Element</var>.
-
-<dl class="tags">
-<dt class="tag">Arguments:</dt><dd>
-
-<table class="arglist">
-<tr><td><var>Lists</var></td><td class="argdescr">- List of lists under inspection</td></tr>
-<tr><td><var>Element</var></td><td class="argdescr">- <var>Element</var> being sought</td></tr>
-<tr><td><var>Pos1</var></td><td class="argdescr">- 1-based position of the list containing the element</td></tr>
-</table>
-
-</dd>
-</dl>
-
-</dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="lists_start_with/3"><b class="pred">lists_start_with</b><var class="arglist">(+Lists:list, +Sublist:list, -List:list)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Unify <var>List</var> with the first list in <var>Lists</var> starting with <var>Sublist</var>.
-
-<dl class="tags">
-<dt class="tag">Arguments:</dt><dd>
-
-<table class="arglist">
-<tr><td><var>Lists</var></td><td class="argdescr">- <var>List</var> of lists under inspection</td></tr>
-<tr><td><var>Sublist</var></td><td class="argdescr">- <var>Sublist</var> being sought</td></tr>
-<tr><td><var>List</var></td><td class="argdescr">- The list starting with the given elements</td></tr>
-</table>
-
-</dd>
-</dl>
-
-</dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="lists_consolidate/3"><b class="pred">lists_consolidate</b><var class="arglist">(+ListsRefs:list, +ListElems:list, -ListsResult:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Consolidate ListsResults with a list of lists based on the contents of
-<var>ListsRefs</var> and <var>ListElems</var>. If a list within ListsRef contains the first element
-of <var>ListElems</var>, the elements of that list ListElem are appended to its head,
-otherwise that list is appended to the head of ListsRef. Examples:
-
-<pre class="code" ext="">
-1. lists_consolidate([[1,d,b],[4,c,f]], [c,j,k], ListsResult)
-   yields
-   ListsResult = [[1,d,b],[c,j,k,4,c,f]]
-
-2. lists_consolidate([[1,d,b],[4,c,f]], [d,j,k], ListsResult)
-   yields
-  ListsResult = [[d,j,k,1,d,b],[4,c,f]]
-
-3.lists_consolidate([[1,d,b],[4,c,f]], [j,k,l], ListsResult)
-   yields
-  ListsResult = [[j,k,l],[1,d,b],[4,c,f]]</pre>
-
-<dl class="tags">
-<dt class="tag">Arguments:</dt><dd>
-
-<table class="arglist">
-<tr><td><var>ListsRefs</var></td><td class="argdescr">- The reference list of lists</td></tr>
-<tr><td><var>ListElems</var></td><td class="argdescr">- The list to be consolidated into the list of lists</td></tr>
-<tr><td><var>ListsResult</var></td><td class="argdescr">- The resulting list of lists</td></tr>
-</table>
-
-</dd>
-</dl>
-
-</dd>
 <dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_minus_list/3"><b class="pred">list_minus_list</b><var class="arglist">(+ListRef:list, +ListElems:list, -ListResult:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Remove from <var>ListRef</var> all occurrences of elements in <var>ListElems</var>.
 
 <dl class="tags">
@@ -234,24 +173,6 @@ for lists of float values. For lists of integers, use <a class="builtin" href="h
 </dl>
 
 </dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="lists_flatten/2"><b class="pred">lists_flatten</b><var class="arglist">(+Lists:list, -List:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Recursively flatten a list of lists.
-
-<p>
-The original order of the elements is kept, and repeating values are not removed.
-Note that <a class="builtin" href="http://www.swi-prolog.org/pldoc/man?predicate=append/2">append/2</a> flattens only the first level within the list of lists.</p>
-
-<dl class="tags">
-<dt class="tag">Arguments:</dt><dd>
-
-<table class="arglist">
-<tr><td><var>Lists</var></td><td class="argdescr">- <var>List</var> of lists to flatten</td></tr>
-<tr><td><var>List</var></td><td class="argdescr">- Flattened list</td></tr>
-</table>
-
-</dd>
-</dl>
-
-</dd>
 <dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_fill/3"><b class="pred">list_fill</b><var class="arglist">(+Count:int, +Item:data, -List:list)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Unify <var>List</var> with a list containing <var>Count</var> instances of <var>Item</var>.
 Unify <var>List</var> with [] if <var>Count</var> = 0 (<var>Item</var> is disregarded.
 
@@ -281,6 +202,25 @@ Fail if <var>Length</var> &lt; length of <var>ListIn</var>.
 <tr><td><var>Item</var></td><td class="argdescr">- The item to append to list</td></tr>
 <tr><td><var>ListIn</var></td><td class="argdescr">- The input list
 @param <var>ListOut</var> The output list</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_prune_on_length/4"><b class="pred">list_prune_on_length</b><var class="arglist">(+ListIn:list, +MinLength:int, +MaxLength:int, -ListOut:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>ListOut</var> with a list containing the elements in the list of lists <var>ListIn</var>
+with length between <var>MinLength</var> and <var>MaxLength</var>, inclusive. If <var>MaxLength</var> is 0,
+the upper limit on the length is disregarded. Unify <var>ListOut</var> with [] if no
+element in <var>ListIn</var> has length in the desired range.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>ListIn</var></td><td class="argdescr">- The input list of lists</td></tr>
+<tr><td><var>MinLength</var></td><td class="argdescr">- Min acceptable length</td></tr>
+<tr><td><var>MaxLength</var></td><td class="argdescr">- Max acceptable length</td></tr>
+<tr><td><var>ListOut</var></td><td class="argdescr">- The output list</td></tr>
 </table>
 
 </dd>
@@ -416,8 +356,87 @@ Note that empty lists will fail.
 <dt class="tag">Arguments:</dt><dd>
 
 <table class="arglist">
-<tr><td><var>List1</var></td><td class="argdescr">- first list to compare</td></tr>
-<tr><td><var>List2</var></td><td class="argdescr">- second list ot compare</td></tr>
+<tr><td><var>List1</var></td><td class="argdescr">- First list to compare</td></tr>
+<tr><td><var>List2</var></td><td class="argdescr">- Second list ot compare</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="lists_find/3"><b class="pred">lists_find</b><var class="arglist">(+Lists:list, +Element:data, -Pos1:int)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Unify <var>Pos1</var> with the 1-based position of the first list in <var>Lists</var> containing <var>Element</var>.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Lists</var></td><td class="argdescr">- List of lists under inspection</td></tr>
+<tr><td><var>Element</var></td><td class="argdescr">- <var>Element</var> being sought</td></tr>
+<tr><td><var>Pos1</var></td><td class="argdescr">- 1-based position of the list containing the element</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="lists_start_with/3"><b class="pred">lists_start_with</b><var class="arglist">(+Lists:list, +Sublist:list, -List:list)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Unify <var>List</var> with the first list in <var>Lists</var> starting with <var>Sublist</var>.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Lists</var></td><td class="argdescr">- <var>List</var> of lists under inspection</td></tr>
+<tr><td><var>Sublist</var></td><td class="argdescr">- <var>Sublist</var> being sought</td></tr>
+<tr><td><var>List</var></td><td class="argdescr">- The list starting with the given elements</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="lists_consolidate/3"><b class="pred">lists_consolidate</b><var class="arglist">(+ListsRefs:list, +ListElems:list, -ListsResult:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Consolidate ListsResults with a list of lists based on the contents of
+<var>ListsRefs</var> and <var>ListElems</var>. If a list within ListsRef contains the first element
+of <var>ListElems</var>, the elements of that list ListElem are appended to its head,
+otherwise that list is appended to the head of ListsRef. Examples:
+
+<pre class="code" ext="">
+1. lists_consolidate([[1,d,b],[4,c,f]], [c,j,k], ListsResult)
+   yields
+   ListsResult = [[1,d,b],[c,j,k,4,c,f]]
+
+2. lists_consolidate([[1,d,b],[4,c,f]], [d,j,k], ListsResult)
+   yields
+  ListsResult = [[d,j,k,1,d,b],[4,c,f]]
+
+3.lists_consolidate([[1,d,b],[4,c,f]], [j,k,l], ListsResult)
+   yields
+  ListsResult = [[j,k,l],[1,d,b],[4,c,f]]</pre>
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>ListsRefs</var></td><td class="argdescr">- The reference list of lists</td></tr>
+<tr><td><var>ListElems</var></td><td class="argdescr">- The list to be consolidated into the list of lists</td></tr>
+<tr><td><var>ListsResult</var></td><td class="argdescr">- The resulting list of lists</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="lists_flatten/2"><b class="pred">lists_flatten</b><var class="arglist">(+Lists:list, -List:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Recursively flatten a list of lists.
+
+<p>
+The original order of the elements is kept, and repeating values are not removed.
+Note that <a class="builtin" href="http://www.swi-prolog.org/pldoc/man?predicate=append/2">append/2</a> flattens only the first level within the list of lists.</p>
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Lists</var></td><td class="argdescr">- <var>List</var> of lists to flatten</td></tr>
+<tr><td><var>List</var></td><td class="argdescr">- Flattened list</td></tr>
 </table>
 
 </dd>
