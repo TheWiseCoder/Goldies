@@ -189,7 +189,7 @@ Unify <var>List</var> with [] if <var>Count</var> = 0 (<var>Item</var> is disreg
 </dl>
 
 </dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_pad/4"><b class="pred">list_pad</b><var class="arglist">(+Length:int, +Item:data, +ListIn:list, -ListOut)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Unify <var>ListOut</var> with a list containing <var>ListIn</var> padded wit instances of <var>Item</var>,
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_pad/4"><b class="pred">list_pad</b><var class="arglist">(+ListIn:list, +Length:int, +Item:data, -ListOut)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Unify <var>ListOut</var> with a list containing <var>ListIn</var> padded wit instances of <var>Item</var>,
 so as to make its length equal to <var>Length</var>. Unify <var>ListOut</var> with <var>ListIn</var> if
 <var>Length</var> = length of <var>ListIn</var> (<var>Item</var> is disregarded).
 Fail if <var>Length</var> &lt; length of <var>ListIn</var>.
@@ -198,9 +198,9 @@ Fail if <var>Length</var> &lt; length of <var>ListIn</var>.
 <dt class="tag">Arguments:</dt><dd>
 
 <table class="arglist">
+<tr><td><var>ListIn</var></td><td class="argdescr">- The input list</td></tr>
 <tr><td><var>Length</var></td><td class="argdescr">- The length of the output list</td></tr>
-<tr><td><var>Item</var></td><td class="argdescr">- The item to append to list</td></tr>
-<tr><td><var>ListIn</var></td><td class="argdescr">- The input list
+<tr><td><var>Item</var></td><td class="argdescr">- The item to append to list
 @param <var>ListOut</var> The output list</td></tr>
 </table>
 

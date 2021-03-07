@@ -319,19 +319,19 @@ list_fill_(Count, Item, ListProgress, ListFinal) :-
 
 %-------------------------------------------------------------------------------------
 
-%! list_pad(+Length:int, +Item:data, +ListIn:list, -ListOut) is semidet.
+%! list_pad(+ListIn:list, +Length:int, +Item:data, -ListOut) is semidet.
 %
 %  Unify ListOut with a list containing ListIn padded wit instances of Item,
 %  so as to make its length equal to Length. Unify ListOut with ListIn if
 %  Length = length of ListIn (Item is disregarded).
 %  Fail if Length < length of ListIn.
 %
+%  @param ListIn The input list
 %  @param Length The length of the output list
 %  @param Item   The item to append to list
-%  @param ListIn The input list
 % @param ListOut The output list
 
-list_pad(Length, Item, ListIn, ListOut) :-
+list_pad(ListIn, Length, Item, ListOut) :-
 
     length(ListIn, LengthIn),
     Count is Length - LengthIn,
