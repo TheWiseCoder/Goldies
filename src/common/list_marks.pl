@@ -9,7 +9,8 @@
         list_count_same/3,
         list_fill/3,
         list_minus_list/3,
-        list_pad/4,
+        list_pad_head/4,
+        list_pad_tail/4,
         list_prune_on_length/4,
         list_replace0/4,
         list_replace1/4,
@@ -319,19 +320,18 @@ list_fill_(Count, Item, ListProgress, ListFinal) :-
 
 %-------------------------------------------------------------------------------------
 
-%! list_pad(+ListIn:list, +Length:int, +Item:data, -ListOut) is semidet.
+%! list_pad_head(+ListIn:list, +Length:int, +Item:data, -ListOut) is semidet.
 %
-%  Unify ListOut with a list containing ListIn padded wit instances of Item,
-%  so as to make its length equal to Length. Unify ListOut with ListIn if
-%  Length = length of ListIn (Item is disregarded).
-%  Fail if Length < length of ListIn.
+%  Unify ListOut with a list containing ListIn head-padded to length Length
+%  with instances of Item. if Length is equal to the length of ListIn,
+%  disregard Item and unify ListOut with ListIn. Fail if Length < length of ListIn.
 %
 %  @param ListIn The input list
 %  @param Length The length of the output list
 %  @param Item   The item to append to list
 % @param ListOut The output list
 
-list_pad(ListIn, Length, Item, ListOut) :-
+list_pad_head(ListIn, Length, Item, ListOut) :-
 
     length(ListIn, LengthIn),
     Count is Length - LengthIn,
@@ -339,6 +339,26 @@ list_pad(ListIn, Length, Item, ListOut) :-
     % fail point
     list_fill(Count, Item, Filler),
     append(Filler, ListIn, ListOut).
+
+%! list_pad_tail(+ListIn:list, +Length:int, +Item:data, -ListOut) is semidet.
+%
+%  Unify ListOut with a list containing ListIn tail-padded to length Length
+%  with instances of Item. if Length is equal to the length of ListIn,
+%  disregard Item and unify ListOut with ListIn. Fail if Length < length of ListIn.
+%
+%  @param ListIn The input list
+%  @param Length The length of the output list
+%  @param Item   The item to append to list
+% @param ListOut The output list
+
+list_pad_tail(ListIn, Length, Item, ListOut) :-
+
+    length(ListIn, LengthIn),
+    Count is Length - LengthIn,
+
+    % fail point
+    list_fill(Count, Item, Filler),
+    append(ListIn, Filler, ListOut).
 
 %-------------------------------------------------------------------------------------
 
