@@ -189,9 +189,9 @@ Unify <var>List</var> with [] if <var>Count</var> = 0 (<var>Item</var> is disreg
 </dl>
 
 </dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_pad_head/4"><b class="pred">list_pad_head</b><var class="arglist">(+ListIn:list, +Length:int, +Item:data, -ListOut)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Unify <var>ListOut</var> with a list containing <var>ListIn</var> head-padded to length <var>Length</var>
-with instances of <var>Item</var>. if <var>Length</var> is equal to the length of <var>ListIn</var>,
-disregard <var>Item</var> and unify <var>ListOut</var> with <var>ListIn</var>. Fail if <var>Length</var> &lt; length of <var>ListIn</var>.
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_pad_head/4"><b class="pred">list_pad_head</b><var class="arglist">(+ListIn:list, +Length:int, +Item:data, -ListOut)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Unify <var>ListOut</var> with a list containing <var>ListIn</var>, head-padded with instances of <var>Item</var>
+to length <var>Length</var>. if <var>Length</var> is equal to the length of <var>ListIn</var>, disregard <var>Item</var> and
+unity <var>ListOut</var> with <var>ListIn</var>. Fail if <var>Length</var> is less than the length of <var>ListIn</var>.
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>
@@ -207,9 +207,9 @@ disregard <var>Item</var> and unify <var>ListOut</var> with <var>ListIn</var>. F
 </dl>
 
 </dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_pad_tail/4"><b class="pred">list_pad_tail</b><var class="arglist">(+ListIn:list, +Length:int, +Item:data, -ListOut)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Unify <var>ListOut</var> with a list containing <var>ListIn</var> tail-padded to length <var>Length</var>
-with instances of <var>Item</var>. if <var>Length</var> is equal to the length of <var>ListIn</var>,
-disregard <var>Item</var> and unify <var>ListOut</var> with <var>ListIn</var>. Fail if <var>Length</var> &lt; length of <var>ListIn</var>.
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_pad_tail/4"><b class="pred">list_pad_tail</b><var class="arglist">(+ListIn:list, +Length:int, +Item:data, -ListOut)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Unify <var>ListOut</var> with a list containing <var>ListIn</var>, tail-padded with instances of <var>Item</var>
+to length <var>Length</var>. if <var>Length</var> is equal to the length of <var>ListIn</var>, disregard <var>Item</var> and
+unity <var>ListOut</var> with <var>ListIn</var>. Fail if <var>Length</var> is less than the length of <var>ListIn</var>.
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>

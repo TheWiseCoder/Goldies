@@ -322,9 +322,9 @@ list_fill_(Count, Item, ListProgress, ListFinal) :-
 
 %! list_pad_head(+ListIn:list, +Length:int, +Item:data, -ListOut) is semidet.
 %
-%  Unify ListOut with a list containing ListIn head-padded to length Length
-%  with instances of Item. if Length is equal to the length of ListIn,
-%  disregard Item and unify ListOut with ListIn. Fail if Length < length of ListIn.
+%  Unify ListOut with a list containing ListIn, head-padded with instances of Item
+%  to length Length. if Length is equal to the length of ListIn, disregard Item and
+%  unity ListOut with ListIn. Fail if Length is less than the length of ListIn.
 %
 %  @param ListIn The input list
 %  @param Length The length of the output list
@@ -342,9 +342,9 @@ list_pad_head(ListIn, Length, Item, ListOut) :-
 
 %! list_pad_tail(+ListIn:list, +Length:int, +Item:data, -ListOut) is semidet.
 %
-%  Unify ListOut with a list containing ListIn tail-padded to length Length
-%  with instances of Item. if Length is equal to the length of ListIn,
-%  disregard Item and unify ListOut with ListIn. Fail if Length < length of ListIn.
+%  Unify ListOut with a list containing ListIn, tail-padded with instances of Item
+%  to length Length. if Length is equal to the length of ListIn, disregard Item and
+%  unity ListOut with ListIn. Fail if Length is less than the length of ListIn.
 %
 %  @param ListIn The input list
 %  @param Length The length of the output list
