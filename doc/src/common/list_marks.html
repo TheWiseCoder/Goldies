@@ -288,6 +288,38 @@ otherwise the compactification will yield unpredictable results. Examples:</p>
 </dl>
 
 </dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_pairs/3"><b class="pred">list_pairs</b><var class="arglist">(+Pairs:list, -Elements1st:list, -Elements2nd:lists)</var></a> is <b class="det">det</b></dt>
+<dt class="pubdef"><b class="pred">list_pairs</b><var class="arglist">(-Pairs:list, +Elements1st:list, +Elements2nd:lists)</var> is <b class="det">det</b></dt><dd class="defbody">Unify <var>Pairs</var> with a list of lists comprising elements from the lists <var>Elements1st</var>
+and <var>Elements2nd</var>, or conversely. Fail if <var>Pairs</var> is not a list of lists of pairs.
+<var>Pairs</var> will have the cardinality of the list with the smaller number of elements
+between <var>Elements1st</var> and <var>Elements2nd</var>.
+
+<pre class="code" ext="">
+1) Pairs grounded:
+   Pairs:       [[a,1],[[23,4,5],2],[b,[4,5]],...]
+   yields
+   Elements1st: [a,[23,4,5],b,...]
+   Elements2nd: [[1,2,[4,5],...]
+
+2) FirstElments and Elements2nd grounded:
+   Elements1st: [78,[5,8,a],x,...]
+   Elements2nd: [[91],y,[c,d],...]
+   yield
+   Pairs:       [[78,[91]],[[5,8,a],y],[x,[c,d]],...]</pre>
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Pairs</var></td><td class="argdescr">- List of lists containing pairs of elements</td></tr>
+<tr><td><var>Elements1st</var></td><td class="argdescr">- List of first elements in pairs</td></tr>
+<tr><td><var>Elements2nd</var></td><td class="argdescr">- List of second elements in pairs</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
 <dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_split/3"><b class="pred">list_split</b><var class="arglist">(+List:list, +Sep:atom, -Lists:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Split a list into various lists, based on a given separator.
 If no separator exists, a list of lists with one element is returned.
 
@@ -397,6 +429,7 @@ Note that empty lists will fail.
 
 </dd>
 <dt class="pubdef"><span style="float:right">&nbsp;</span><a name="lists_start_with/3"><b class="pred">lists_start_with</b><var class="arglist">(+Lists:list, +Sublist:list, -List:list)</var></a> is <b class="det">semidet</b></dt><dd class="defbody">Unify <var>List</var> with the first list in <var>Lists</var> starting with <var>Sublist</var>.
+Fail if so such list exists.
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>

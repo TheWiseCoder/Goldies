@@ -80,8 +80,8 @@ date_weekday_(Year, Month, Day, Dow) :-
 
 date_now(Year, Month, Day) :-
 
-   datime(Now),
-   datime(Year, Month, Day, _Hour, _Min, _Sec) = Now.
+    datime(Now),
+    datime(Year, Month, Day, _Hour, _Min, _Sec) = Now.
 
 %! datetime_now(-Year:int, -Month:int, -Day:int, -Hour:int, -Min:int, -Sec:int) is det.
 %
@@ -96,8 +96,8 @@ date_now(Year, Month, Day) :-
 
 datetime_now(Year, Month, Day, Hour, Min, Sec) :-
 
-   datime(Now),
-   datime(Year, Month, Day, Hour, Min, Sec) = Now.
+    datime(Now),
+    datime(Year, Month, Day, Hour, Min, Sec) = Now.
 
 %! time_now(-Hour:int, -Min:int, -Sec:int) is det.
 %
@@ -109,8 +109,8 @@ datetime_now(Year, Month, Day, Hour, Min, Sec) :-
 
 time_now(Hour, Min, Sec) :-
 
-   datime(Now),
-   datime(_Year, _Month, _Day, Hour, Min, Sec) = Now.
+    datime(Now),
+    datime(_Year, _Month, _Day, Hour, Min, Sec) = Now.
 
 %-------------------------------------------------------------------------------------
 
@@ -123,15 +123,15 @@ time_now(Hour, Min, Sec) :-
 
 date_display(today, Display) :-
 
-   datime(Now),
-   datime(Year, Month, Day, _Hour, _Min, _Sec) = Now,
-   date_display(Year, Month, Day, Display).
+    datime(Now),
+    datime(Year, Month, Day, _Hour, _Min, _Sec) = Now,
+    date_display(Year, Month, Day, Display).
 
 date_display(When, Display) :-
 
-   datime(When, Timestamp),
-   datime(Year, Month, Day, _Hour, _Min, _Sec) = Timestamp,
-   date_display(Year, Month, Day, Display).
+    datime(When, Timestamp),
+    datime(Year, Month, Day, _Hour, _Min, _Sec) = Timestamp,
+    date_display(Year, Month, Day, Display).
 
 %! date_display(+Year:int, +Month:int, +Day:int, -Display)
 %
@@ -144,11 +144,11 @@ date_display(When, Display) :-
 
 date_display(Year, Month, Day, Display) :-
 
-   atom_int(Ayear, Year, 4),
-   atom_int(Amonth, Month, 2),
-   atom_int(Aday, Day, 2),
-   format_to_codes('~a-~a-~a', [Ayear,Amonth,Aday], Codes),
-   atom_codes(Display, Codes).
+    atom_int(Ayear, Year, 4),
+    atom_int(Amonth, Month, 2),
+    atom_int(Aday, Day, 2),
+    format_to_codes('~a-~a-~a', [Ayear,Amonth,Aday], Codes),
+    atom_codes(Display, Codes).
 
 %-------------------------------------------------------------------------------------
 
@@ -161,9 +161,12 @@ date_display(Year, Month, Day, Display) :-
 
 datetime_display(now, Display) :-
 
-   datime(Now),
-   datime(Year, Month, Day, Hour, Min, Sec) = Now,
-   datetime_display(Year, Month, Day, Hour, Min, Sec, Display).
+    datime(Now),
+    datime(Year, Month, Day, Hour, Min, Sec) = Now,
+    datetime_display(Year, Month, Day, Hour, Min, Sec, Display),
+
+    % do not leave choice points
+    !.
 
 datetime_display(When, Display) :-
 
@@ -185,15 +188,15 @@ datetime_display(When, Display) :-
 
 datetime_display(Year, Month, Day, Hour, Min, Sec, Display) :-
 
-   atom_int(Ayear, Year, 4),
-   atom_int(Amonth, Month, 2),
-   atom_int(Aday, Day, 2),
-   atom_int(Ahour, Hour, 2),
-   atom_int(Amin, Min, 2),
-   atom_int(Asec, Sec, 2),
-   format_to_codes('~a-~a-~a ~a:~a:~a',
-                   [Ayear,Amonth,Aday,Ahour,Amin,Asec], Codes),
-   atom_codes(Display, Codes).
+    atom_int(Ayear, Year, 4),
+    atom_int(Amonth, Month, 2),
+    atom_int(Aday, Day, 2),
+    atom_int(Ahour, Hour, 2),
+    atom_int(Amin, Min, 2),
+    atom_int(Asec, Sec, 2),
+    format_to_codes('~a-~a-~a ~a:~a:~a',
+                    [Ayear,Amonth,Aday,Ahour,Amin,Asec], Codes),
+    atom_codes(Display, Codes).
 
 %-------------------------------------------------------------------------------------
 
@@ -207,9 +210,12 @@ datetime_display(Year, Month, Day, Hour, Min, Sec, Display) :-
 
 time_display(now, Display) :-
 
-   datime(Now),
-   datime(_Year, _Month, _Day, Hour, Min, Sec) = Now,
-   time_display(Hour, Min, Sec, Display).
+    datime(Now),
+    datime(_Year, _Month, _Day, Hour, Min, Sec) = Now,
+    time_display(Hour, Min, Sec, Display),
+
+    % do not leave choice points
+    !.
 
 time_display(When, Display) :-
 
@@ -246,20 +252,26 @@ time_display(Hour, Min, Sec, Display) :-
 
 datetime_ietf(now, DtIetf) :-
 
-   datime(Now),
-   datime(Year, Month, Day, Hour, Min, Sec) = Now,
-   datetime_ietf(Year, Month, Day, Hour, Min, Sec, DtIetf).
+    datime(Now),
+    datime(Year, Month, Day, Hour, Min, Sec) = Now,
+    datetime_ietf(Year, Month, Day, Hour, Min, Sec, DtIetf),
+
+    % do not leave choice points
+    !.
 
 datetime_ietf(today, DtIetf) :-
 
-   datime(Now),
-   datime(Year, Month, Day, _, _, _) = Now,
-   datetime_ietf(Year, Month, Day, 0, 0, 0, DtIetf).
+    datime(Now),
+    datime(Year, Month, Day, _, _, _) = Now,
+    datetime_ietf(Year, Month, Day, 0, 0, 0, DtIetf),
+
+    % do not leave choice points
+    !.
 
 datetime_ietf(Mjd, DtIetf) :-
 
-   gregorian_mjd(Year, Mon, Day, Mjd),
-   datetime_ietf(Year, Mon, Day, 0, 0, 0, DtIetf).
+    gregorian_mjd(Year, Mon, Day, Mjd),
+    datetime_ietf(Year, Mon, Day, 0, 0, 0, DtIetf).
 
 %! datetime_ietf(+Year:int, +Month:int, +Day:int, +Hour:int, +Min:int, +Sec:int, -DtIetf:atom) is det.
 %
@@ -276,16 +288,16 @@ datetime_ietf(Mjd, DtIetf) :-
 
 datetime_ietf(Year, Month, Day, Hour, Min, Sec, DtIetf) :-
 
-   date_weekday(Year, Month, Day, Dow),
-   atom_int(Ayear, Year, 4),
-   month_ordinal(Amonth, Month),
-   atom_int(Aday, Day, 2),
-   atom_int(Ahour, Hour, 2),
-   atom_int(Amin, Min, 2),
-   atom_int(Asec, Sec, 2),
-   format_to_codes('~a, ~a ~a ~a ~a:~a:~a GMT',
-                   [Dow,Aday,Amonth,Ayear,Ahour,Amin,Asec], Codes),
-   atom_codes(DtIetf, Codes).
+    date_weekday(Year, Month, Day, Dow),
+    atom_int(Ayear, Year, 4),
+    month_ordinal(Amonth, Month),
+    atom_int(Aday, Day, 2),
+    atom_int(Ahour, Hour, 2),
+    atom_int(Amin, Min, 2),
+    atom_int(Asec, Sec, 2),
+    format_to_codes('~a, ~a ~a ~a ~a:~a:~a GMT',
+                    [Dow,Aday,Amonth,Ayear,Ahour,Amin,Asec], Codes),
+    atom_codes(DtIetf, Codes).
 
 %-------------------------------------------------------------------------------------
 
@@ -299,7 +311,10 @@ datetime_ietf(Year, Month, Day, Hour, Min, Sec, DtIetf) :-
 date_weekday(today, Dow) :-
 
     date_now(Year, Month, Day),
-    date_weekday(Year, Month, Day, Dow).
+    date_weekday(Year, Month, Day, Dow),
+
+    % do not leave choice points
+    !.
 
 date_weekday(Mjd, Dow) :-
 

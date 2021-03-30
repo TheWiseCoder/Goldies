@@ -11,6 +11,7 @@
         list_minus_list/3,
         list_pad_head/4,
         list_pad_tail/4,
+        list_pairs/3,
         list_prune_on_length/4,
         list_replace0/4,
         list_replace1/4,
@@ -497,6 +498,62 @@ compacts_list_([[First,Last]|ListsCompact], ListProgress, ListFinal) :-
 
 %-------------------------------------------------------------------------------------
 
+%! list_pairs(+Pairs:list, -Elements1st:list, -Elements2nd:lists) is det.
+%! list_pairs(-Pairs:list, +Elements1st:list, +Elements2nd:lists) is det.
+%
+%  Unify Pairs with a list of lists comprising elements from the lists Elements1st
+%  and Elements2nd, or conversely. Fail if Pairs is not a list of lists of pairs.
+%  Pairs will have the cardinality of the list with the smaller number of elements
+%  between Elements1st and Elements2nd.
+%  ~~~
+%  1) Pairs grounded:
+%     Pairs:       [[a,1],[[23,4,5],2],[b,[4,5]],...]
+%     yields
+%     Elements1st: [a,[23,4,5],b,...]
+%     Elements2nd: [[1,2,[4,5],...]
+%
+%  2) FirstElments and Elements2nd grounded:
+%     Elements1st: [78,[5,8,a],x,...]
+%     Elements2nd: [[91],y,[c,d],...]
+%     yield
+%     Pairs:       [[78,[91]],[[5,8,a],y],[x,[c,d]],...]
+%  ~~~
+%
+%  @param Pairs       List of lists containing pairs of elements
+%  @param Elements1st List of first elements in pairs
+%  @param Elements2nd List of second elements in pairs
+
+list_pairs(Pairs, Elements1st, Elements2nd) :-
+
+    (var(Pairs) ->
+        lists_to_pairs(Elements1st, Elements2nd, [], Pairs)
+    ;
+        pairs_to_lists(Pairs, [], Elements1st, [], Elements2nd)
+    ).
+
+%(done)
+lists_to_pairs([], _Elements2nd, PairsFinal, PairsFinal).
+
+%(done)
+lists_to_pairs(_Elements1st, [], PairsFinal, PairsFinal).
+
+% (iterate)
+lists_to_pairs([Element1st|Elements1st],
+               [Element2nd|Elements2nd], PairsProgress, PairsFinal) :-
+    lists_to_pairs(Elements1st, Elements2nd,
+                   [[Element1st,Element2nd]|PairsProgress], PairsFinal).
+
+% (done)
+pairs_to_lists([], Final1st, Final1st, Final2nd, Final2nd).
+
+% (iterate)
+pairs_to_lists([[Element1st,Element2nd]|Pairs],
+              Progress1st, Final1st, Progress2nd, Final2nd) :-
+    pairs_to_lists(Pairs, [Element1st|Progress1st], Final1st,
+                   [Element2nd|Progress2nd], Final2nd).
+
+%-------------------------------------------------------------------------------------
+
 %! list_split(+List:list, +Sep:atom, -Lists:list) is det.
 %
 %  Split a list into various lists, based on a given separator.
@@ -698,6 +755,7 @@ lists_find_(Count, Lists, Element, Pos1) :-
 %! lists_start_with(+Lists:list, +Sublist:list, -List:list) is semidet.
 %
 %  Unify List with the first list in Lists starting with Sublist.
+%  Fail if so such list exists.
 %
 %  @param Lists   List of lists under inspection
 %  @param Sublist Sublist being sought
