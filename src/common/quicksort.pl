@@ -27,7 +27,7 @@ respectively.
 
 %-------------------------------------------------------------------------------------
 
-:- meta_predicate quicksort(+, 3, +).
+:- meta_predicate quicksort(+, 3, -).
 :- meta_predicate quicksort_partition(3, +, +, +, +).
 
 %! quicksort(+List:list, :Comparator:pred, -SortedList:list) is det.
