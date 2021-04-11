@@ -12,7 +12,7 @@ When writing to the stream, the invoker may provide the number of codes to write
 or `-1` to write all codes in the list of codes given.
 
 @author GT Nunes
-@version 1.2
+@version 1.3
 @copyright (c) TheWiseCoder 2020-2021
 @license BSD-3-Clause License
 */
@@ -80,7 +80,7 @@ stream_codes(Stream, Count, Codes) :-
 
 % (done)
 stream_read(_Stream, 0, Codes) :-
-    Codes = [].
+    Codes = [], !.
 
 % (start)
 stream_read(Stream, Count, Codes) :-
@@ -91,10 +91,10 @@ stream_read(Stream, Count, Codes) :-
 
 % (done, number of codes obtained)
 stream_read_(_Stream, 0, Code, CodesProgress, CodesFinal) :-
-    CodesFinal = [Code|CodesProgress].
+    CodesFinal = [Code|CodesProgress], !.
 
 % (done, end of stream reached)
-stream_read_(_Stream, _Count, -1, CodesFinal, CodesFinal).
+stream_read_(_Stream, _Count, -1, CodesFinal, CodesFinal) :- !.
 
 % (iterate)
 stream_read_(Stream, Count, Code, CodesProgress, CodesFinal) :-
@@ -147,10 +147,10 @@ get_code(Stream, Count, Code, CountNew) :-
 %  @param Codes  List of codes to write to the stream
 
 % (done)
-stream_write(_Stream, 0, _Codes).
+stream_write(_Stream, 0, _Codes) :- !.
 
 % (done)
-stream_write(_Stream, _Count, []).
+stream_write(_Stream, _Count, []) :- !.
 
 % (start)
 stream_write(Stream, Count, [Code|Codes]) :-

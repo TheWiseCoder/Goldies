@@ -14,7 +14,7 @@ These are predicates providing a portability layer on SICStus-style
 lists handling for the SWI-Prolog platform.
 
 @author GT Nunes
-@version 1.2
+@version 1.3
 @copyright (c) TheWiseCoder 2020-2021
 @license BSD-3-Clause License
 */
@@ -28,8 +28,8 @@ lists handling for the SWI-Prolog platform.
 %
 %  True when Subseq is a subsequence of List.
 %
-%  @param List The reference list
-%  @param Subseq    list for subsequence assertion
+%  @param List   The reference list
+%  @param Subseq List for subsequence assertion
 
 subseq0(List, List).
 
@@ -232,7 +232,7 @@ keyclumps(Pairs, Clumps):-
     keyclumps_1(Groups, [], Clumps).
 
 keyclumps_1([], ClumpsProgress, ClumpsFinal) :-
-	sort(ClumpsProgress, ClumpsFinal).
+	sort(ClumpsProgress, ClumpsFinal), !.
 
 keyclumps_1([Key-Values|Groups], ClumpsProgress, ClumpsFinal) :-
 
@@ -240,7 +240,7 @@ keyclumps_1([Key-Values|Groups], ClumpsProgress, ClumpsFinal) :-
     keyclumps_1(Groups, [ClumpFinal|ClumpsProgress], ClumpsFinal).
 
 keyclumps_2(_Key, [], ClumpProgress, ClumpFinal) :-
-	sort(ClumpProgress, ClumpFinal).
+	sort(ClumpProgress, ClumpFinal), !.
 
 keyclumps_2(Key, [Value|Values], ClumpProgress, ClumpFinal) :-
 	keyclumps_2(Key, Values, [Key-Value|ClumpProgress], ClumpFinal).

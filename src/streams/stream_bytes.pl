@@ -14,7 +14,7 @@ In both situations, make sure to open the stream with 'type(binary)' in the
 options list.
 
 @author GT Nunes
-@version 1.2
+@version 1.3
 @copyright (c) TheWiseCoder 2020-2021
 @license BSD-3-Clause License
 */
@@ -82,7 +82,7 @@ stream_bytes(Stream, Count, Bytes) :-
 
 % (done)
 stream_read(_Stream, 0, Bytes) :-
-    Bytes = [].
+    Bytes = [], !.
 
 % (start)
 stream_read(Stream, Count, Bytes) :-
@@ -96,7 +96,7 @@ stream_read_(_Stream, 0, Byte, BytesProgress, BytesFinal) :-
     BytesFinal = [Byte|BytesProgress].
 
 % (done, end of stream reached)
-stream_read_(_Stream, _Count, -1, BytesFinal, BytesFinal).
+stream_read_(_Stream, _Count, -1, BytesFinal, BytesFinal) :- !.
 
 % (iterate)
 stream_read_(Stream, Count, Byte, BytesProgress, BytesFinal) :-
@@ -133,10 +133,10 @@ get_byte(Stream, Count, Byte, CountNew) :-
 %  @param Bytes  List of bytes to write to the stream
 
 % (done)
-stream_write(_Stream, 0, _Bytes).
+stream_write(_Stream, 0, _Bytes) :- !.
 
 % (done)
-stream_write(_Stream, _Count, []).
+stream_write(_Stream, _Count, []) :- !.
 
 % (start)
 stream_write(Stream, Count, [Byte|Bytes]) :-

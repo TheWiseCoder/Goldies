@@ -14,7 +14,7 @@
 Repeat invocation of goal a given number of times, with varying number of parameters.
 
 @author GT Nunes
-@version 1.2
+@version 1.3
 @copyright (c) TheWiseCoder 2020-2021
 @license BSD-3-Clause License
 */
@@ -29,6 +29,15 @@ Repeat invocation of goal a given number of times, with varying number of parame
     repeat_goal(5, +, +, +, +, +, -),
     repeat_goal(6, +, +, +, +, +, +, -),
     repeat_goal(7, +, +, +, +, +, +, +, -).
+
+:- meta_predicate
+    repeat_goal_(1, +, +, -),
+    repeat_goal_(2, +, +, +, -),
+    repeat_goal_(3, +, +, +, +, -),
+    repeat_goal_(4, +, +, +, +, +, -),
+    repeat_goal_(5, +, +, +, +, +, +, -),
+    repeat_goal_(6, +, +, +, +, +, +, +, -),
+    repeat_goal_(7, +, +, +, +, +, +, +, +, -).
 
 :- use_module(library(lists),
     [
@@ -54,7 +63,7 @@ repeat_goal(Goal, N, Result) :-
 
 % (done)
 repeat_goal_(_Goal, 0, ResultProgress, ResultFinal) :-
-    reverse(ResultProgress, ResultFinal).
+    reverse(ResultProgress, ResultFinal), !.
 
 % (iterate)
 repeat_goal_(Goal, N, ResultProgress, ResultFinal) :-
@@ -83,7 +92,7 @@ repeat_goal(Goal, N, P, Result) :-
 
 % (done)
 repeat_goal_(_Goal, 0, _P, ResultProgress, ResultFinal) :-
-    reverse(ResultProgress, ResultFinal).
+    reverse(ResultProgress, ResultFinal), !.
 
 % (iterate)
 repeat_goal_(Goal, N, P, ResultProgress, ResultFinal) :-
@@ -113,7 +122,7 @@ repeat_goal(Goal, N, P1, P2, Result) :-
 
 % (done)
 repeat_goal_(_Goal, 0, _P1, _P2, ResultProgress, ResultFinal) :-
-    reverse(ResultProgress, ResultFinal).
+    reverse(ResultProgress, ResultFinal), !.
 
 % (iterate)
 repeat_goal_(Goal, N, P1, P2, ResultProgress, ResultFinal) :-
@@ -144,7 +153,7 @@ repeat_goal(Goal, N, P1, P2, P3, Result) :-
 
 % (done)
 repeat_goal_(_Goal, 0, _P1, _P2, _P3, ResultProgress, ResultFinal) :-
-    reverse(ResultProgress, ResultFinal).
+    reverse(ResultProgress, ResultFinal), !.
 
 % (iterate)
 repeat_goal_(Goal, N, P1, P2, P3, ResultProgress, ResultFinal) :-
@@ -177,7 +186,7 @@ repeat_goal(Goal, N, P1, P2, P3, P4, Result) :-
 
 % (done)
 repeat_goal_(_Goal, 0, _P1, _P2, _P3, _P4, ResultProgress, ResultFinal) :-
-    reverse(ResultProgress, ResultFinal).
+    reverse(ResultProgress, ResultFinal), !.
 
 % (iterate)
 repeat_goal_(Goal, N, P1, P2, P3, P4,
@@ -213,7 +222,7 @@ repeat_goal(Goal, N, P1, P2, P3, P4, P5, Result) :-
 % (done)
 repeat_goal_(_Goal, 0, _P1, _P2, _P3, _P4, _P5,
              ResultProgress, ResultFinal) :-
-    reverse(ResultProgress, ResultFinal).
+    reverse(ResultProgress, ResultFinal), !.
 
 % (iterate)
 repeat_goal_(Goal, N, P1, P2, P3, P4, P5,
@@ -250,7 +259,7 @@ repeat_goal(Goal, N, P1, P2, P3, P4, P5, P6, Result) :-
 % (done)
 repeat_goal_(_Goal, 0, _P1, _P2, _P3, _P4, _P5, _P6,
              ResultProgress, ResultFinal) :-
-    reverse(ResultProgress, ResultFinal).
+    reverse(ResultProgress, ResultFinal), !.
 
 % (iterate)
 repeat_goal_(Goal, N, P1, P2, P3, P4, P5, P6, ResultProgress, ResultFinal) :-

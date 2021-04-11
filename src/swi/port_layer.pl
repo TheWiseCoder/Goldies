@@ -20,7 +20,7 @@ These are predicates providing a portability layer for the SWI-Prolog platform,
 by implementing some unique, or convenient, SICStus Prolog features.
 
 @author GT Nunes
-@version 1.2
+@version 1.3
 @copyright (c) TheWiseCoder 2020-2021
 @license BSD-3-Clause License
 */

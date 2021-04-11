@@ -20,15 +20,16 @@ first parameter is smaller than, equal to, or greater than the second parameter,
 respectively.  
 
 @author GT Nunes
-@version 1.2
+@version 1.3
 @copyright (c) TheWiseCoder 2020-2021
 @license BSD-3-Clause License
 */
 
 %-------------------------------------------------------------------------------------
 
-:- meta_predicate quicksort(+, 3, -).
-:- meta_predicate quicksort_partition(3, +, +, +, +).
+:- meta_predicate quicksort(+, 3, -),
+                  quicksort_list(3, +, -),
+                  quicksort_partition(3, +, +, +, +).
 
 %! quicksort(+List:list, :Comparator:pred, -SortedList:list) is det.
 %

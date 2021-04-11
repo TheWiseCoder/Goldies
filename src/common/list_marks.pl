@@ -32,7 +32,7 @@
 /** <module>  Miscellaneous small list-related utilities
 
 @author GT Nunes
-@version 1.2
+@version 1.3
 @copyright (c) TheWiseCoder 2020-2021
 @license BSD-3-Clause License
 */
@@ -222,7 +222,7 @@ sublist_between(List, ListFrom, ListTo, Sublist, ListAdjusted) :-
 %  @param ListResult The resulting purged list
 
 % (done)
-list_minus_list(ListResult, [], ListResult).
+list_minus_list(ListResult, [], ListResult) :- !.
 
 % (iterate)
 list_minus_list(ListRef, [E|ListElems], ListResult) :-
@@ -283,7 +283,7 @@ list_values(Count, Start, Offset, Values) :-
 
 % (done)
 list_values_(0, _Value, _Offset, ValuesProgress, ValuesFinal) :-
-    reverse(ValuesProgress, ValuesFinal).
+    reverse(ValuesProgress, ValuesFinal), !.
 
 % (iterate)
 list_values_(Count, Value, Offset, ValuesProgress, ValuesFinal) :-
@@ -311,7 +311,7 @@ list_fill(Count, Item, List) :-
     list_fill_(Count, Item, [], List).
 
 % (done)
-list_fill_(0, _Item, ListFinal, ListFinal).
+list_fill_(0, _Item, ListFinal, ListFinal) :- !.
 
 % (iterate)
 list_fill_(Count, Item, ListProgress, ListFinal) :-
@@ -380,7 +380,7 @@ list_prune_on_length(ListIn, MinLength, MaxLength, ListOut) :-
 
 % (done)
 list_prune_on_length_([], _MinLength, _MaxLength, ListProgress, ListFinal) :-
-    reverse(ListProgress, ListFinal).
+    reverse(ListProgress, ListFinal), !.
 
 % (iterate)
 list_prune_on_length_([Elem|List], MinLength, MaxLength, ListProgress, ListFinal) :-
@@ -411,7 +411,7 @@ list_common(List1, List2, ListCommon) :-
 
 % (done)
 list_common_([], _List2, CommonsProgress, CommonsFinal) :-
-    reverse(CommonsProgress, CommonsFinal).
+    reverse(CommonsProgress, CommonsFinal), !.
 
 % (iterate
 list_common_([Elem|List1], List2, CommonsProgress, CommonsFinal) :-
@@ -453,11 +453,11 @@ list_common_([Elem|List1], List2, CommonsProgress, CommonsFinal) :-
 
 % (done)
 list_compacts([], ListsCompact) :-
-    ListsCompact = [].
+    ListsCompact = [], !.
 
 % (done)
 list_compacts(List, []) :-
-    List = [].
+    List = [], !.
 
 % (start)
 list_compacts(List, ListsCompact) :-
@@ -471,7 +471,7 @@ list_compacts(List, ListsCompact) :-
 
 % (done)
 list_compacts_([], [[First,Last]|ListsProgress], ListsFinal) :-
-    reverse([[Last,First]|ListsProgress], ListsFinal).
+    reverse([[Last,First]|ListsProgress], ListsFinal), !.
 
 % (iterate)
 list_compacts_([Elem|List], [[First,Last]|ListsProgress], ListsFinal) :-
@@ -487,7 +487,7 @@ list_compacts_([Elem|List], [[First,Last]|ListsProgress], ListsFinal) :-
     ).
 
 % (done)
-compacts_list_([], ListFinal, ListFinal).
+compacts_list_([], ListFinal, ListFinal) :- !.
 
 % (iterate)
 compacts_list_([[First,Last]|ListsCompact], ListProgress, ListFinal) :-
@@ -532,10 +532,10 @@ list_pairs(Pairs, Elements1st, Elements2nd) :-
     ).
 
 %(done)
-lists_to_pairs([], _Elements2nd, PairsFinal, PairsFinal).
+lists_to_pairs([], _Elements2nd, PairsFinal, PairsFinal) :- !.
 
 %(done)
-lists_to_pairs(_Elements1st, [], PairsFinal, PairsFinal).
+lists_to_pairs(_Elements1st, [], PairsFinal, PairsFinal) :- !.
 
 % (iterate)
 lists_to_pairs([Element1st|Elements1st],
@@ -599,7 +599,7 @@ list_count_same(List, Pos, Count) :-
     list_count_same_(Pos, Len, Elem, List, 0, Count).
 
 % (done)
-list_count_same_(Len, Len, _Elem, _List, CountFinal, CountFinal).
+list_count_same_(Len, Len, _Elem, _List, CountFinal, CountFinal) :- !.
 
 % (iterate)
 list_count_same_(Pos, Len, Elem, List, CountProgress, CountFinal) :-
@@ -630,7 +630,7 @@ list_same(List) :-
     (Len = 1 ; list_same_(List)).
 
 % (done)
-list_same_([_|[]]).
+list_same_([_|[]]) :- !.
 
 % (iterate)
 list_same_(List) :-
@@ -839,13 +839,13 @@ lists_consolidate(ListsRefs, ListElems, ListsResult) :-
 %  @param List  Flattened list
 
 lists_flatten([], List) :-
-    List = [].
+    List = [], !.
 
 lists_flatten(Lists, List) :-
     lists_flatten_(Lists, [], List).
 
 % (done)
-lists_flatten_([], ListFinal, ListFinal).
+lists_flatten_([], ListFinal, ListFinal) :- !.
 
 % (iterate)
 lists_flatten_([Head|Lists], ListProgress, ListFinal) :-

@@ -21,7 +21,7 @@
 /** <module>Date and time related utilities
 
 @author GT Nunes
-@version 1.2
+@version 1.3
 @copyright (c) TheWiseCoder 2020-2021
 @license BSD-3-Clause License
 */
@@ -125,7 +125,8 @@ date_display(today, Display) :-
 
     datime(Now),
     datime(Year, Month, Day, _Hour, _Min, _Sec) = Now,
-    date_display(Year, Month, Day, Display).
+    date_display(Year, Month, Day, Display),
+    !.
 
 date_display(When, Display) :-
 
@@ -164,8 +165,6 @@ datetime_display(now, Display) :-
     datime(Now),
     datime(Year, Month, Day, Hour, Min, Sec) = Now,
     datetime_display(Year, Month, Day, Hour, Min, Sec, Display),
-
-    % do not leave choice points
     !.
 
 datetime_display(When, Display) :-
@@ -213,8 +212,6 @@ time_display(now, Display) :-
     datime(Now),
     datime(_Year, _Month, _Day, Hour, Min, Sec) = Now,
     time_display(Hour, Min, Sec, Display),
-
-    % do not leave choice points
     !.
 
 time_display(When, Display) :-
@@ -255,8 +252,6 @@ datetime_ietf(now, DtIetf) :-
     datime(Now),
     datime(Year, Month, Day, Hour, Min, Sec) = Now,
     datetime_ietf(Year, Month, Day, Hour, Min, Sec, DtIetf),
-
-    % do not leave choice points
     !.
 
 datetime_ietf(today, DtIetf) :-
@@ -264,8 +259,6 @@ datetime_ietf(today, DtIetf) :-
     datime(Now),
     datime(Year, Month, Day, _, _, _) = Now,
     datetime_ietf(Year, Month, Day, 0, 0, 0, DtIetf),
-
-    % do not leave choice points
     !.
 
 datetime_ietf(Mjd, DtIetf) :-
@@ -312,8 +305,6 @@ date_weekday(today, Dow) :-
 
     date_now(Year, Month, Day),
     date_weekday(Year, Month, Day, Dow),
-
-    % do not leave choice points
     !.
 
 date_weekday(Mjd, Dow) :-
@@ -424,31 +415,31 @@ gregorian_mjd(Year, Month, Day, MJD) :-
 %  @param Month The short-hand month name
 %  @param Ord   The corresponding 1-based ordinal
 %
-month_ordinal('Jan', Ord) :- Ord = 1.
-month_ordinal('Feb', Ord) :- Ord = 2.
-month_ordinal('Mar', Ord) :- Ord = 3.
-month_ordinal('Apr', Ord) :- Ord = 4.
-month_ordinal('May', Ord) :- Ord = 5.
-month_ordinal('Jun', Ord) :- Ord = 6.
-month_ordinal('Jul', Ord) :- Ord = 7.
-month_ordinal('Aug', Ord) :- Ord = 8.
-month_ordinal('Sep', Ord) :- Ord = 9.
-month_ordinal('Oct', Ord) :- Ord = 10.
-month_ordinal('Nov', Ord) :- Ord = 11.
-month_ordinal('Dez', Ord) :- Ord = 12.
+month_ordinal('Jan', Ord) :- Ord = 1, !.
+month_ordinal('Feb', Ord) :- Ord = 2, !.
+month_ordinal('Mar', Ord) :- Ord = 3, !.
+month_ordinal('Apr', Ord) :- Ord = 4, !.
+month_ordinal('May', Ord) :- Ord = 5, !.
+month_ordinal('Jun', Ord) :- Ord = 6, !.
+month_ordinal('Jul', Ord) :- Ord = 7, !.
+month_ordinal('Aug', Ord) :- Ord = 8, !.
+month_ordinal('Sep', Ord) :- Ord = 9, !.
+month_ordinal('Oct', Ord) :- Ord = 10, !.
+month_ordinal('Nov', Ord) :- Ord = 11, !.
+month_ordinal('Dez', Ord) :- Ord = 12, !.
 
-month_ordinal(Month,  1) :- Month = 'Jan'.
-month_ordinal(Month,  2) :- Month = 'Feb'.
-month_ordinal(Month,  3) :- Month = 'Mar'.
-month_ordinal(Month,  4) :- Month = 'Apr'.
-month_ordinal(Month,  5) :- Month = 'May'.
-month_ordinal(Month,  6) :- Month = 'Jun'.
-month_ordinal(Month,  7) :- Month = 'Jul'.
-month_ordinal(Month,  8) :- Month = 'Aug'.
-month_ordinal(Month,  9) :- Month = 'Sep'.
-month_ordinal(Month, 10) :- Month = 'Oct'.
-month_ordinal(Month, 11) :- Month = 'Nov'.
-month_ordinal(Month, 12) :- Month = 'Dec'.
+month_ordinal(Month,  1) :- Month = 'Jan', !.
+month_ordinal(Month,  2) :- Month = 'Feb', !.
+month_ordinal(Month,  3) :- Month = 'Mar', !.
+month_ordinal(Month,  4) :- Month = 'Apr', !.
+month_ordinal(Month,  5) :- Month = 'May', !.
+month_ordinal(Month,  6) :- Month = 'Jun', !.
+month_ordinal(Month,  7) :- Month = 'Jul', !.
+month_ordinal(Month,  8) :- Month = 'Aug', !.
+month_ordinal(Month,  9) :- Month = 'Sep', !.
+month_ordinal(Month, 10) :- Month = 'Oct', !.
+month_ordinal(Month, 11) :- Month = 'Nov', !.
+month_ordinal(Month, 12) :- Month = 'Dec', !.
 
 %-------------------------------------------------------------------------------------
 
@@ -460,18 +451,18 @@ month_ordinal(Month, 12) :- Month = 'Dec'.
 %  @param Dow Short-hand 3-letter weekday name
 %  @param Ord The corresponding ISO ordinal number
 
-weekday_ordinal('Mon', Ord) :- Ord = 0.
-weekday_ordinal('Tue', Ord) :- Ord = 1.
-weekday_ordinal('Wed', Ord) :- Ord = 2.
-weekday_ordinal('Thu', Ord) :- Ord = 3.
-weekday_ordinal('Fri', Ord) :- Ord = 4.
-weekday_ordinal('Sat', Ord) :- Ord = 5.
-weekday_ordinal('Sun', Ord) :- Ord = 6.
+weekday_ordinal('Mon', Ord) :- Ord = 0, !.
+weekday_ordinal('Tue', Ord) :- Ord = 1, !.
+weekday_ordinal('Wed', Ord) :- Ord = 2, !.
+weekday_ordinal('Thu', Ord) :- Ord = 3, !.
+weekday_ordinal('Fri', Ord) :- Ord = 4, !.
+weekday_ordinal('Sat', Ord) :- Ord = 5, !.
+weekday_ordinal('Sun', Ord) :- Ord = 6, !.
 
-weekday_ordinal(Dow, 0) :- Dow = 'Mon'.
-weekday_ordinal(Dow, 1) :- Dow = 'Tue'.
-weekday_ordinal(Dow, 2) :- Dow = 'Wed'.
-weekday_ordinal(Dow, 3) :- Dow = 'Thu'.
-weekday_ordinal(Dow, 4) :- Dow = 'Fri'.
-weekday_ordinal(Dow, 5) :- Dow = 'Sat'.
-weekday_ordinal(Dow, 6) :- Dow = 'Sun'.
+weekday_ordinal(Dow, 0) :- Dow = 'Mon', !.
+weekday_ordinal(Dow, 1) :- Dow = 'Tue', !.
+weekday_ordinal(Dow, 2) :- Dow = 'Wed', !.
+weekday_ordinal(Dow, 3) :- Dow = 'Thu', !.
+weekday_ordinal(Dow, 4) :- Dow = 'Fri', !.
+weekday_ordinal(Dow, 5) :- Dow = 'Sat', !.
+weekday_ordinal(Dow, 6) :- Dow = 'Sun', !.

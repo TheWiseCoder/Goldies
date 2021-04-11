@@ -14,7 +14,7 @@ atom suitable as an indication of the end of the stream operation, presented as 
 list of chars.
 
 @author GT Nunes
-@version 1.2
+@version 1.3
 @copyright (c) TheWiseCoder 2020-2021
 @license BSD-3-Clause License
 */
@@ -125,7 +125,7 @@ stream_lines(Stream, EOS, Lines) :-
 
 % (done)
 stream_read(_Stream, _EOS, end_of_file, LinesProgress, LinesFinal) :-
-    reverse(LinesProgress, LinesFinal).
+    reverse(LinesProgress, LinesFinal), !.
 
 % (iterate, adding a new line to lines list)
 stream_read(Stream, EOS, LineCodes, LinesProgress, LinesFinal) :-
@@ -174,7 +174,7 @@ stream_read(Stream, EOS, LineCodes, LinesProgress, LinesFinal) :-
 %  @param Lines  List of lines to write to the stream
 
 % (done)
-stream_write(_Stream, _EOS, []).
+stream_write(_Stream, _EOS, []) :- !.
 
 % (iterate)
 stream_write(Stream, EOS, [Line|Lines]) :-

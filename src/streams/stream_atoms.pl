@@ -13,7 +13,7 @@ or EOF to write all atoms in the list of atoms provided. A EOS marker may be any
 atom suitable as an indication of the end of the stream operation.
 
 @author GT Nunes
-@version 1.2
+@version 1.3
 @copyright (c) TheWiseCoder 2020-2021
 @license BSD-3-Clause License
 */
@@ -111,7 +111,7 @@ stream_atoms(Stream, EOS, Atoms) :-
 
 % (done)
 stream_read(_Stream, _EOS, end_of_file, AtomsProgress, AtomsFinal) :-
-    reverse(AtomsProgress, AtomsFinal).
+    reverse(AtomsProgress, AtomsFinal), !.
 
 % (iterate, adding atom to atoms list)
 stream_read(Stream, EOS, LineCodes, AtomsProgress, AtomsFinal) :-
@@ -142,7 +142,7 @@ stream_read(Stream, EOS, LineCodes, AtomsProgress, AtomsFinal) :-
 %  @param Atoms  List of atoms to write to the stream
 
 % (done)
-stream_write(_Stream, _EOS, []).
+stream_write(_Stream, _EOS, []) :- !.
 
 % (start)
 stream_write(Stream, EOS, [Atom|Atoms]) :-

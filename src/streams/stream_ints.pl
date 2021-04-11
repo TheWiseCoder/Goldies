@@ -10,7 +10,7 @@ Integers are read from the stream one per line, to the end of the stream,
 or written to the stream, one per line, to the end of the list.
 
 @author GT Nunes
-@version 1.2
+@version 1.3
 @copyright (c) TheWiseCoder 2020-2021
 @license BSD-3-Clause License
 */
@@ -81,15 +81,15 @@ stream_read_1(Stream, IntsProgress, IntsFinal) :-
 
 % (done)
 stream_read_2(_Stream, end_of_file, IntsProgress, IntsFinal) :-
-    reverse(IntsProgress, IntsFinal).
+    reverse(IntsProgress, IntsFinal), !.
 
 % (skip empty line)
 stream_read_2(Stream, [], IntsProgress, IntsFinal) :-
-    stream_read_1(Stream, IntsProgress, IntsFinal).
+    stream_read_1(Stream, IntsProgress, IntsFinal), !.
 
 % (skip commented line - ascii value for '%' is 37)
 stream_read_2(Stream, [37|_Line], IntsProgress, IntsFinal) :-
-    stream_read_1(Stream, IntsProgress, IntsFinal).
+    stream_read_1(Stream, IntsProgress, IntsFinal), !.
 
 % (keep the int)
 stream_read_2(Stream, Line, IntsProgress, IntsFinal) :-
@@ -107,7 +107,7 @@ stream_read_2(Stream, Line, IntsProgress, IntsFinal) :-
 %  @param Ints   List of ints to write to the stream
 
 % (done)
-stream_write(_Stream, []).
+stream_write(_Stream, []) :- !.
 
 % (start)
 stream_write(Stream, [Int|Ints]) :-
@@ -119,4 +119,3 @@ stream_write(Stream, [Int|Ints]) :-
 
     % go for the next code
     stream_write(Stream, Ints).
-

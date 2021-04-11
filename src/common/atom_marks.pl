@@ -26,7 +26,7 @@
 /** <module> Atom handling utilities
 
 @author GT Nunes
-@version 1.2
+@version 1.3
 @copyright (c) TheWiseCoder 2020-2021
 @license BSD-3-Clause License
 */
@@ -244,7 +244,7 @@ atom_concat6(A1, A2, A3, A4, A5, A6, A123456) :-
 %  @param To      The replacement value
 %  @param AtomOut The autput atom
 
-atom_replace(AtomIn, '', _To, AtomIn).
+atom_replace(AtomIn, '', _To, AtomIn) :- !.
 
 atom_replace(AtomIn, From, To, AtomOut) :-
 
@@ -291,7 +291,7 @@ atom_replace_all(AtomIn, From, To, AtomOut) :-
 %  @param AtomContainer Container atom
 %  @param AtomsList     List of contained atoms
 
-atoms_contained_all(_AtomContainer, []).
+atoms_contained_all(_AtomContainer, []) :- !.
 
 atoms_contained_all(AtomContainer, AtomsList) :-
     % fail point
@@ -340,7 +340,7 @@ atoms_chars(Atoms, Chars) :-
     ; (atoms_chars_(Atoms, [], Chars)) ).
 
 % (done)
-atoms_chars_([], CharsFinal, CharsFinal).
+atoms_chars_([], CharsFinal, CharsFinal) :- !.
 
 % (iterate)
 atoms_chars_([Atom|Atoms], CharsProgress, CharsFinal) :-
@@ -374,7 +374,7 @@ atoms_codes(Atoms, Codes) :-
     ; (var(Codes) , atoms_codes_(Atoms, [], Codes)) ).
 
 % (done)
-atoms_codes_([], CodesFinal, CodesFinal).
+atoms_codes_([], CodesFinal, CodesFinal) :- !.
 
 % (iterate)
 atoms_codes_([Atom|Atoms], CodesProgress, CodesFinal) :-
@@ -386,7 +386,7 @@ atoms_codes_([Atom|Atoms], CodesProgress, CodesFinal) :-
 
 % (done)
 codes_atoms_([], AtomsProgress,  AtomsFinal) :-
-    reverse(AtomsProgress, AtomsFinal).
+    reverse(AtomsProgress, AtomsFinal), !.
 
 % (iterate)
 codes_atoms_([Code|Codes], AtomsProgress, AtomsFinal) :-
@@ -415,7 +415,7 @@ atoms_numbers(Atoms, Numbers) :-
 
 % (done)
 atoms_numbers_([], NumbersProgress, NumbersFinal) :-
-    reverse(NumbersProgress, NumbersFinal).
+    reverse(NumbersProgress, NumbersFinal), !.
 
 % (iterate)
 atoms_numbers_([Atom|Atoms], NumbersProgress, NumbersFinal) :-
@@ -425,7 +425,7 @@ atoms_numbers_([Atom|Atoms], NumbersProgress, NumbersFinal) :-
 
 % (done)
 numbers_atoms_([], AtomsProgress, AtomsFinal) :-
-    reverse(AtomsProgress, AtomsFinal).
+    reverse(AtomsProgress, AtomsFinal), !.
 
 % (iterate)
 numbers_atoms_([Number|Numbers], AtomsProgress, AtomsFinal) :-
@@ -504,8 +504,8 @@ sub_atom_between(Atom, AtomFrom, AtomTo, Subatom, AtomAdjusted) :-
 %  @param Chars List of chars
 %  @param Lines List of lists of chars
 
-chars_lines([], Lines) :- Lines = [].
-chars_lines(Chars, []) :- Chars = [].
+chars_lines([], Lines) :- Lines = [], !.
+chars_lines(Chars, []) :- Chars = [], !.
 
 chars_lines(Chars, Lines) :-
 
@@ -517,15 +517,15 @@ chars_lines(Chars, Lines) :-
 
 % (done)
 chars_lines_([], LinesProgress, LinesFinal) :-
-    reverse(LinesProgress, LinesFinal).
+    reverse(LinesProgress, LinesFinal), !.
 
 % suppress CR
 chars_lines_(['\r'|Chars], LinesProgress, LinesFinal) :-
-    chars_lines_(Chars, LinesProgress, LinesFinal).
+    chars_lines_(Chars, LinesProgress, LinesFinal), !.
 
 % originate new empty line
 chars_lines_(['\n'|Chars], LinesProgress, LinesFinal) :-
-    chars_lines_(Chars, [[]|LinesProgress], LinesFinal).
+    chars_lines_(Chars, [[]|LinesProgress], LinesFinal), !.
 
 % add char to current line, in the proper order
 chars_lines_([Char|Chars], [Head|Tail], LinesFinal) :-
@@ -538,7 +538,8 @@ lines_chars_([], Ls, CharsProgress, CharsFinal) :-
 
     [_|CharsRevised] = CharsProgress,
     ( (length(Ls, 2) , [_|CharsFinal] = CharsRevised)
-      ; CharsFinal = CharsRevised ).
+      ; CharsFinal = CharsRevised ),
+    !.
 
 % iterate
 lines_chars_([Line|Lines], Ls, CharsProgress, CharsFinal) :-
@@ -561,8 +562,8 @@ lines_chars_([Line|Lines], Ls, CharsProgress, CharsFinal) :-
 %  @param Codes List of codes
 %  @param Lines List of lists of codes
 
-codes_lines([], Lines) :- Lines = [].
-codes_lines(Codes, []) :- Codes = [].
+codes_lines([], Lines) :- Lines = [], !.
+codes_lines(Codes, []) :- Codes = [], !.
 
 codes_lines(Codes, Lines) :-
 
@@ -574,15 +575,15 @@ codes_lines(Codes, Lines) :-
 
 % (done)
 codes_lines_([], CodesProgress, CodesFinal) :-
-    reverse(CodesProgress, CodesFinal).
+    reverse(CodesProgress, CodesFinal), !.
 
 % suppress CR
 codes_lines_([13|Codes], LinesProgress, LinesFinal) :-
-    codes_lines_(Codes, LinesProgress, LinesFinal).
+    codes_lines_(Codes, LinesProgress, LinesFinal), !.
 
 % originate new empty line
 codes_lines_([10|Codes], LinesProgress, LinesFinal) :-
-    codes_lines_(Codes, [[]|LinesProgress], LinesFinal).
+    codes_lines_(Codes, [[]|LinesProgress], LinesFinal), !.
 
 % add code to current line, in the proper order
 codes_lines_([Code|Codes], [Head|Tail], LinesFinal) :-
@@ -595,7 +596,8 @@ lines_codes_([], Ls, CodesProgress, CodesFinal) :-
 
     [_|CodesRevised] = CodesProgress,
     ( (length(Ls, 2) , [_|CodesFinal] = CodesRevised)
-      ; CodesFinal = CodesRevised ).
+      ; CodesFinal = CodesRevised ),
+    !.
 
 % iterate
 lines_codes_([Line|Lines], Ls, CodesProgress, CodesFinal) :-

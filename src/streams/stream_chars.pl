@@ -12,7 +12,7 @@ When writing to the stream, the invoker may provide the number of chars to write
 or `-1` to write all chars in the list of chars given.
 
 @author GT Nunes
-@version 1.2
+@version 1.3
 @copyright (c) TheWiseCoder 2020-2021
 @license BSD-3-Clause License
 */
@@ -80,7 +80,7 @@ stream_chars(Stream, Count, Chars) :-
 
 % (done)
 stream_read(_Stream, 0, Chars) :-
-    Chars = [].
+    Chars = [], !.
 
 % (start)
 stream_read(Stream, Count, Chars) :-
@@ -91,10 +91,10 @@ stream_read(Stream, Count, Chars) :-
 
 % (done, number of chars obtained)
 stream_read_(_Stream, 0, Char, CharsProgress, CharsFinal) :-
-    CharsFinal = [Char|CharsProgress].
+    CharsFinal = [Char|CharsProgress], !.
 
 % (done, end of stream reached)
-stream_read_(_Stream, _Count, end_of_file, CharsFinal, CharsFinal).
+stream_read_(_Stream, _Count, end_of_file, CharsFinal, CharsFinal) :- !.
 
 % (iterate)
 stream_read_(Stream, Count, Char, CharsProgress, CharsFinal) :-
@@ -147,10 +147,10 @@ get_char(Stream, Count, Char, CountNew) :-
 %  @param Chars  List of chars to write to the stream
 
 % (done)
-stream_write(_Stream, 0, _Chars).
+stream_write(_Stream, 0, _Chars) :- !.
 
 % (done)
-stream_write(_Stream, _Count, []).
+stream_write(_Stream, _Count, []) :- !.
 
 % (start)
 stream_write(Stream, Count, [Char|Chars]) :-

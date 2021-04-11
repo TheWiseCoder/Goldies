@@ -27,7 +27,7 @@ To summmarize the algorithm:
 ~~~
 
 @author GT Nunes
-@version 1.2
+@version 1.3
 @copyright (c) TheWiseCoder 2020-2021
 @license BSD-3-Clause License
 */
@@ -79,7 +79,7 @@ bin_search(Target, Values, Index) :-
 
 % (success)
 bin_search_(Value, Value, _PosFirst, _PosLast, PosMid, _Values, Index) :-
-    Index = PosMid.
+    Index = PosMid, !.
 
 % (iterate)
 bin_search_(Value, Target, PosFirst, PosLast, PosMid, Values, Index) :-

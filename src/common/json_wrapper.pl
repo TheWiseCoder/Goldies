@@ -46,7 +46,7 @@ are as follows:
 ~~~
 
 @author GT Nunes
-@version 1.2
+@version 1.3
 @copyright (c) TheWiseCoder 2020-2021
 @license BSD-3-Clause License
 */
@@ -164,7 +164,7 @@ json_add(JsonTerm, Item, JsonResult) :-
     ).
 
 % (done)
-json_add_([], JsonFinal, JsonFinal).
+json_add_([], JsonFinal, JsonFinal) :- !.
 
 % (iterate)
 json_add_([Item|Items], JsonTerm, JsonFinal) :-
@@ -197,7 +197,7 @@ json_merge(JsonTerms, JsonResult) :-
     json_merge_(JsonTerms, json([]), JsonResult).
 
 % (done)
-json_merge_([], JsonFinal, JsonFinal).
+json_merge_([], JsonFinal, JsonFinal) :- !.
 
 % (iterate)
 json_merge_([JsonTerm|JsonTerms], JsonProgress, JsonFinal) :-
@@ -242,7 +242,7 @@ json_members(JsonTerm, Names, JsonValues) :-
 
 % (done)
 json_members_(_JsonObj, [], JsonProgress, JsonValues) :-
-    reverse(JsonProgress, JsonValues).
+    reverse(JsonProgress, JsonValues), !.
 
 % (iterate)
 json_members_(JsonTerm, [Name|Names], JsonProgress, JsonValues) :-
