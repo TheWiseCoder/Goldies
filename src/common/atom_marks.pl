@@ -336,8 +336,11 @@ atoms_contained_any(AtomContainer, [Atom|AtomsList]) :-
 atoms_chars(Atoms, Chars) :-
 
     % a list of single-char atoms is identical to a list of chars
-    ( (var(Atoms) , Atoms = Chars)
-    ; (atoms_chars_(Atoms, [], Chars)) ).
+    (var(Atoms) ->
+        Atoms = Chars
+    ;
+        atoms_chars_(Atoms, [], Chars)
+    ).
 
 % (done)
 atoms_chars_([], CharsFinal, CharsFinal) :- !.
@@ -370,8 +373,11 @@ atoms_chars_([Atom|Atoms], CharsProgress, CharsFinal) :-
 
 atoms_codes(Atoms, Codes) :-
 
-    ( (var(Atoms) , codes_atoms_(Codes, [], Atoms))
-    ; (var(Codes) , atoms_codes_(Atoms, [], Codes)) ).
+    (var(Atoms) ->
+        codes_atoms_(Codes, [], Atoms)
+    ;
+        atoms_codes_(Atoms, [], Codes)
+    ).
 
 % (done)
 atoms_codes_([], CodesFinal, CodesFinal) :- !.
@@ -410,8 +416,11 @@ codes_atoms_([Code|Codes], AtomsProgress, AtomsFinal) :-
 
 atoms_numbers(Atoms, Numbers) :-
 
-    ( (var(Atoms) , numbers_atoms_(Numbers, [], Atoms))
-    ; (var(Numbers) , atoms_numbers_(Atoms, [], Numbers)) ).
+    (var(Atoms) ->
+        numbers_atoms_(Numbers, [], Atoms)
+    ; 
+        atoms_numbers_(Atoms, [], Numbers)
+    ).
 
 % (done)
 atoms_numbers_([], NumbersProgress, NumbersFinal) :-
@@ -509,11 +518,17 @@ chars_lines(Chars, []) :- Chars = [], !.
 
 chars_lines(Chars, Lines) :-
 
-    ( ( var(Chars)
-      , current_prolog_flag(os_data,  os(Os, _, _))
-      , ((Os = windows , Ls = ['\r','\n']) ; Ls = ['\n'])
-      , lines_chars_(Lines, Ls, [], Chars) )
-    ; (var(Lines) , chars_lines_(Chars, [[]], Lines)) ).
+    (var(Chars) ->
+        current_prolog_flag(os_data,  os(Os, _, _)),
+        (Os = windows ->
+            Ls = ['\r','\n']
+        ;
+            Ls = ['\n']
+        ),
+        lines_chars_(Lines, Ls, [], Chars)
+    ;
+        chars_lines_(Chars, [[]], Lines)
+    ).
 
 % (done)
 chars_lines_([], LinesProgress, LinesFinal) :-
@@ -537,8 +552,11 @@ chars_lines_([Char|Chars], [Head|Tail], LinesFinal) :-
 lines_chars_([], Ls, CharsProgress, CharsFinal) :-
 
     [_|CharsRevised] = CharsProgress,
-    ( (length(Ls, 2) , [_|CharsFinal] = CharsRevised)
-      ; CharsFinal = CharsRevised ),
+    (length(Ls, 2) ->
+        [_|CharsFinal] = CharsRevised
+    ;
+        CharsFinal = CharsRevised
+    ),
     !.
 
 % iterate
@@ -567,11 +585,17 @@ codes_lines(Codes, []) :- Codes = [], !.
 
 codes_lines(Codes, Lines) :-
 
-    ( ( var(Codes)
-      , current_prolog_flag(os_data,  os(Os, _, _))
-      , ((Os = windows , Ls = [13,10]) ; Ls = [10])
-      , lines_codes_(Lines, Ls, [], Codes) )
-    ; (var(Lines) , codes_lines_(Codes, [[]], Lines)) ).
+    (var(Codes) ->
+        current_prolog_flag(os_data,  os(Os, _, _)),
+        (Os = windows ->
+            Ls = [13,10]
+        ;
+            Ls = [10]
+        ),
+        lines_codes_(Lines, Ls, [], Codes)
+    ;
+        codes_lines_(Codes, [[]], Lines)
+    ).
 
 % (done)
 codes_lines_([], CodesProgress, CodesFinal) :-
@@ -595,8 +619,11 @@ codes_lines_([Code|Codes], [Head|Tail], LinesFinal) :-
 lines_codes_([], Ls, CodesProgress, CodesFinal) :-
 
     [_|CodesRevised] = CodesProgress,
-    ( (length(Ls, 2) , [_|CodesFinal] = CodesRevised)
-      ; CodesFinal = CodesRevised ),
+    (length(Ls, 2) ->
+        [_|CodesFinal] = CodesRevised
+    ;
+        CodesFinal = CodesRevised
+    ),
     !.
 
 % iterate

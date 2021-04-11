@@ -153,7 +153,8 @@ convlist_first(_Goal, [], _Element) :-
 convlist_first(Goal, [Head|List], Element) :-
 
     ( call(Goal, Head, Element) ;
-      convlist_first(Goal, List, Element) ).
+      convlist_first(Goal, List, Element) ),
+    !.
 
 %-------------------------------------------------------------------------------------
 
@@ -391,6 +392,7 @@ list_prune_on_length_([Elem|List], MinLength, MaxLength, ListProgress, ListFinal
     ;
         ListRevised = ListProgress
     ),
+    !,
 
     % go for the next element
     list_prune_on_length_(List, MinLength, MaxLength, ListRevised, ListFinal).
@@ -627,7 +629,8 @@ list_same(List) :-
     length(List, Len),
     !,
     % fail point
-    (Len = 1 ; list_same_(List)).
+    (Len = 1 ; list_same_(List)),
+    !.
 
 % (done)
 list_same_([_|[]]) :- !.

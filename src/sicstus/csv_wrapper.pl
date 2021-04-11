@@ -73,7 +73,8 @@ unwrap_field(Field, Value) :-
 
     ( integer(Value, _) = Field
     ; float(Value, _) = Field
-    ; (string(Codes) = Field , atom_codes(Value, Codes)) ).
+    ; (string(Codes) = Field , atom_codes(Value, Codes)) ),
+    !.
 
 %-------------------------------------------------------------------------------------
 % csv file output

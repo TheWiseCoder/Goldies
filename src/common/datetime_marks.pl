@@ -402,7 +402,9 @@ gregorian_mjd(Year, Month, Day, MJD) :-
         labeling([ff,up,bisect], [Year,Month,Day])
     ; ground(Year), ground(Month), ground(Day) ->
         labeling([leftmost, up, bisect], [MJD])
-    ; true ).
+    ; otherwise ->
+      true
+    ).
 
 %-------------------------------------------------------------------------------------
 

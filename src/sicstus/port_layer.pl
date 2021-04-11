@@ -162,8 +162,14 @@ read_line_to_codes(Stream, Codes) :-
 % New   the flag's new value
 flag(Key, Old, New) :-
 
-    (bb_get(Key, Old) ; Old = 0),
-    (Val is New ; Val = New),
+    (bb_get(Key, Old) ->
+        true
+    ;
+        Old = 0
+    ),
+
+    % needed if New is an arithmetic expression
+    Val is New,
     bb_put(Key, Val),
     !.
 
@@ -174,8 +180,12 @@ flag(Key, Old, New) :-
 % Value     the flag's current value
 get_flag(Key, Value) :-
 
-    ( bb_get(Key, Value)
-    ; (Value = 0 , bb_put(Key, Value)) ).
+    (bb_get(Key, Value) ->
+        true
+    ;
+       Value = 0,
+       bb_put(Key, Value)
+    ).
 
 % Create the flag Key, if it does not exist, and set its value to Value.
 % set_flag(+Key, +Value)
