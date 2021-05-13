@@ -247,7 +247,7 @@ list_replace0(Pos0, List, Element, ListResult) :-
     nth0(Pos0, List, _, ListTemp),
     nth0(Pos0, ListResult, Element, ListTemp).
 
-%! list_replace1(+Pos0:int, +List:list, +Element:data, -ListResult:list) is det.
+%! list_replace1(+Pos1:int, +List:list, +Element:data, -ListResult:list) is det.
 %
 %  Replace the element at 1-based Pos1 in List with Element.
 %
@@ -328,10 +328,10 @@ list_fill_(Count, Item, ListProgress, ListFinal) :-
 %  to length Length. if Length is equal to the length of ListIn, disregard Item and
 %  unity ListOut with ListIn. Fail if Length is less than the length of ListIn.
 %
-%  @param ListIn The input list
-%  @param Length The length of the output list
-%  @param Item   The item to append to list
-% @param ListOut The output list
+%  @param ListIn  The input list
+%  @param Length  The length of the output list
+%  @param Item    The item to append to list
+%  @param ListOut The output list
 
 list_pad_head(ListIn, Length, Item, ListOut) :-
 
@@ -348,10 +348,10 @@ list_pad_head(ListIn, Length, Item, ListOut) :-
 %  to length Length. if Length is equal to the length of ListIn, disregard Item and
 %  unity ListOut with ListIn. Fail if Length is less than the length of ListIn.
 %
-%  @param ListIn The input list
-%  @param Length The length of the output list
-%  @param Item   The item to append to list
-% @param ListOut The output list
+%  @param ListIn  The input list
+%  @param Length  The length of the output list
+%  @param Item    The item to append to list
+%  @param ListOut The output list
 
 list_pad_tail(ListIn, Length, Item, ListOut) :-
 
@@ -432,6 +432,9 @@ list_common_([Elem|List1], List2, CommonsProgress, CommonsFinal) :-
 
 %-------------------------------------------------------------------------------------
 
+:- dynamic  compacts_dyn/2.
+:- volatile compacts_dyn/2.
+
 %! list_compacts(+List:list, -ListsCompact:list) is det.
 %
 %  Unify a list of integers with a list of lists, each one of them containing
@@ -450,6 +453,16 @@ list_common_([Elem|List1], List2, CommonsProgress, CommonsFinal) :-
 %     List = [1,3,4,6,7,8,10]
 %  ~~~
 %
+%  Note that, in the case of lists with a very large number of elements (a typical
+%  situation this operation woould be suited for), a stack trace overflow is
+%  guaranteed if a standard predicate loop scheme is used. This holds true
+%  for SWI-Prolog, and very likely, to Sicstus Prolog as well. In fact, on an
+%  Intel-based 64-bit desktop loaded with 16GB of RAM, SWI-Prolog will break on
+%  predicate loops with over 200000 recursive invocations. With a startup parameter
+%  such as "--stack-limit=32g", SWI-Prolog will break execution at or near the
+%  5-million recursive invocations mark. We thus resort to a backtrack loop to
+%  process the elements in the list, using temporary fact storage.
+%
 %  @param List         The input list
 %  @param ListsCompact The resulting compactified list
 
@@ -467,25 +480,7 @@ list_compacts(List, ListsCompact) :-
     (var(List) ->
         compacts_list_(ListsCompact, [], List)
     ;
-        [Prev|Tail] = List,
-        list_compacts_(Tail, [[Prev,Prev]], ListsCompact)
-    ).
-
-% (done)
-list_compacts_([], [[First,Last]|ListsProgress], ListsFinal) :-
-    reverse([[Last,First]|ListsProgress], ListsFinal), !.
-
-% (iterate)
-list_compacts_([Elem|List], [[First,Last]|ListsProgress], ListsFinal) :-
-
-    % is the current element in proper sequence ?
-    (Elem =:= First + 1 ->
-        % yes, so go for the next element
-        list_compacts_(List, [[Elem,Last]|ListsProgress], ListsFinal)
-    ;
-        % no, so register the interval and proceed
-        list_compacts_(List, [[Elem,Elem],[Last,First]|ListsProgress],
-                       ListsFinal)
+        list_compacts_1(List, ListsCompact)
     ).
 
 % (done)
@@ -497,6 +492,74 @@ compacts_list_([[First,Last]|ListsCompact], ListProgress, ListFinal) :-
     numlist(First, Last, List),
     append(ListProgress, List, ListRevised),
     compacts_list_(ListsCompact, ListRevised, ListFinal).
+
+list_compacts_1(List, ListsCompact) :-
+
+    [Head|Tail] = List,
+    length(Tail, Count),
+    retractall(compacts_dyn(_, _)),
+    assertz(compacts_dyn(elem, [Head,Head])),
+    assertz(compacts_dyn(list, [])),
+
+%>>> bactrack until Tail is exausted
+    nth1(Pos, Tail, Elem),
+    list_compacts_2(Elem),
+
+    % fail point
+    Pos = Count,
+%<<< backtrack
+
+    % retrieve the compacts list and release the storage
+    compacts_dyn(elem, Last),
+    compacts_dyn(list, ListReversed),
+    reverse([Last|ListReversed], ListsCompact),
+    retractall(compacts_dyn(_, _)).
+
+list_compacts_2(Elem) :-
+
+    compacts_dyn(elem, [First,Last]),
+    retract(compacts_dyn(elem, _)),
+
+    % is the current element in proper sequence ?
+    (Elem =:= Last + 1 ->
+        % yes, so establish the new last element
+        assertz(compacts_dyn(elem, [First,Elem]))
+    ;
+        % no, so register the interval and current compacts
+        assertz(compacts_dyn(elem, [Elem,Elem])),
+        compacts_dyn(list, List),
+        retract(compacts_dyn(list, _)),
+        assertz(compacts_dyn(list, [[First,Last]|List]))
+    ),
+
+    % do not leave choice points
+    !.
+
+/* Alternative code using a standard predicate loop - invoke at list_compacts/2 as:
+    (var(List) ->
+        ...
+    ;
+        [Head|Tail] = List,
+        list_compacts_(Tail, [[Head,Head]], ListsCompact)
+    ).
+
+% (done)
+list_compacts_([], ListsProgress, ListsFinal) :-
+    reverse(ListsProgress, ListsFinal), !.
+
+% (iterate)
+list_compacts_([Elem|List], [[First,Last]|ListsProgress], ListsFinal) :-
+
+    % is the current element in proper sequence ?
+    (Elem =:= Last + 1 ->
+        % yes, so go for the next element
+        list_compacts_(List, [[First,Elem]|ListsProgress], ListsFinal)
+    ;
+        % no, so register the interval and proceed
+        list_compacts_(List, [[Elem,Elem],[First,Last]|ListsProgress], ListsFinal)
+    ).
+
+*/
 
 %-------------------------------------------------------------------------------------
 
@@ -514,7 +577,7 @@ compacts_list_([[First,Last]|ListsCompact], ListProgress, ListFinal) :-
 %     Elements1st: [a,[23,4,5],b,...]
 %     Elements2nd: [[1,2,[4,5],...]
 %
-%  2) FirstElments and Elements2nd grounded:
+%  2) Elements1st and Elements2nd grounded:
 %     Elements1st: [78,[5,8,a],x,...]
 %     Elements2nd: [[91],y,[c,d],...]
 %     yield
