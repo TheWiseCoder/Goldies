@@ -432,9 +432,6 @@ list_common_([Elem|List1], List2, CommonsProgress, CommonsFinal) :-
 
 %-------------------------------------------------------------------------------------
 
-:- dynamic  compacts_dyn/2.
-:- volatile compacts_dyn/2.
-
 %! list_compacts(+List:list, -ListsCompact:list) is det.
 %
 %  Unify a list of integers with a list of lists, each one of them containing
@@ -453,15 +450,14 @@ list_common_([Elem|List1], List2, CommonsProgress, CommonsFinal) :-
 %     List = [1,3,4,6,7,8,10]
 %  ~~~
 %
-%  Note that, in the case of lists with a very large number of elements (a typical
-%  situation this operation woould be suited for), a stack trace overflow is
-%  guaranteed if a standard predicate loop scheme is used. This holds true
-%  for SWI-Prolog, and very likely, to Sicstus Prolog as well. In fact, on an
-%  Intel-based 64-bit desktop loaded with 16GB of RAM, SWI-Prolog will break on
-%  predicate loops with over 200000 recursive invocations. With a startup parameter
-%  such as "--stack-limit=32g", SWI-Prolog will break execution at or near the
-%  5-million recursive invocations mark. We thus resort to a backtrack loop to
-%  process the elements in the list, using temporary fact storage.
+%  Note that, due to the standard predicate loop scheme used, invoking this predicate
+%  with lists with a very large number of elements might cause a stack trace overflow.
+%  This holds true for SWI-Prolog, and very likely, to Sicstus Prolog as well.
+%  In fact, on an Intel-based 64-bit desktop loaded with 16GB of RAM, SWI-Prolog
+%  will break on predicate loops with over 200000 recursive invocations.
+%  With a startup parameter such as "--stack-limit=32g", SWI-Prolog will break
+%  execution at or near the 5-million recursive invocations mark. Thus, care
+%  should be exercised when invoking this predicate on large lists.
 %
 %  @param List         The input list
 %  @param ListsCompact The resulting compactified list
@@ -480,7 +476,25 @@ list_compacts(List, ListsCompact) :-
     (var(List) ->
         compacts_list_(ListsCompact, [], List)
     ;
-        list_compacts_1(List, ListsCompact)
+        [Prev|Tail] = List,
+        list_compacts_(Tail, [[Prev,Prev]], ListsCompact)
+    ).
+
+% (done)
+list_compacts_([], [[First,Last]|ListsProgress], ListsFinal) :-
+    reverse([[Last,First]|ListsProgress], ListsFinal), !.
+
+% (iterate)
+list_compacts_([Elem|List], [[First,Last]|ListsProgress], ListsFinal) :-
+
+    % is the current element in proper sequence ?
+    (Elem =:= First + 1 ->
+        % yes, so go for the next element
+        list_compacts_(List, [[Elem,Last]|ListsProgress], ListsFinal)
+    ;
+        % no, so register the interval and proceed
+        list_compacts_(List, [[Elem,Elem],[Last,First]|ListsProgress],
+                       ListsFinal)
     ).
 
 % (done)
@@ -492,74 +506,6 @@ compacts_list_([[First,Last]|ListsCompact], ListProgress, ListFinal) :-
     numlist(First, Last, List),
     append(ListProgress, List, ListRevised),
     compacts_list_(ListsCompact, ListRevised, ListFinal).
-
-list_compacts_1(List, ListsCompact) :-
-
-    [Head|Tail] = List,
-    length(Tail, Count),
-    retractall(compacts_dyn(_, _)),
-    assertz(compacts_dyn(elem, [Head,Head])),
-    assertz(compacts_dyn(list, [])),
-
-%>>> bactrack until Tail is exausted
-    nth1(Pos, Tail, Elem),
-    list_compacts_2(Elem),
-
-    % fail point
-    Pos = Count,
-%<<< backtrack
-
-    % retrieve the compacts list and release the storage
-    compacts_dyn(elem, Last),
-    compacts_dyn(list, ListReversed),
-    reverse([Last|ListReversed], ListsCompact),
-    retractall(compacts_dyn(_, _)).
-
-list_compacts_2(Elem) :-
-
-    compacts_dyn(elem, [First,Last]),
-    retract(compacts_dyn(elem, _)),
-
-    % is the current element in proper sequence ?
-    (Elem =:= Last + 1 ->
-        % yes, so establish the new last element
-        assertz(compacts_dyn(elem, [First,Elem]))
-    ;
-        % no, so register the interval and current compacts
-        assertz(compacts_dyn(elem, [Elem,Elem])),
-        compacts_dyn(list, List),
-        retract(compacts_dyn(list, _)),
-        assertz(compacts_dyn(list, [[First,Last]|List]))
-    ),
-
-    % do not leave choice points
-    !.
-
-/* Alternative code using a standard predicate loop - invoke at list_compacts/2 as:
-    (var(List) ->
-        ...
-    ;
-        [Head|Tail] = List,
-        list_compacts_(Tail, [[Head,Head]], ListsCompact)
-    ).
-
-% (done)
-list_compacts_([], ListsProgress, ListsFinal) :-
-    reverse(ListsProgress, ListsFinal), !.
-
-% (iterate)
-list_compacts_([Elem|List], [[First,Last]|ListsProgress], ListsFinal) :-
-
-    % is the current element in proper sequence ?
-    (Elem =:= Last + 1 ->
-        % yes, so go for the next element
-        list_compacts_(List, [[First,Elem]|ListsProgress], ListsFinal)
-    ;
-        % no, so register the interval and proceed
-        list_compacts_(List, [[Elem,Elem],[First,Last]|ListsProgress], ListsFinal)
-    ).
-
-*/
 
 %-------------------------------------------------------------------------------------
 

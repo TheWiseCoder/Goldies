@@ -277,15 +277,14 @@ otherwise the compactification will yield unpredictable results. Examples:</p>
    List = [1,3,4,6,7,8,10]</pre>
 
 <p>
-Note that, in the case of lists with a very large number of elements (a typical
-situation this operation woould be suited for), a stack trace overflow is
-guaranteed if a standard predicate loop scheme is used. This holds true
-for SWI-Prolog, and very likely, to Sicstus Prolog as well. In fact, on an
-Intel-based 64-bit desktop loaded with 16GB of RAM, SWI-Prolog will break on
-predicate loops with over 200000 recursive invocations. With a startup parameter
-such as "--stack-limit=32g", SWI-Prolog will break execution at or near the
-5-million recursive invocations mark. We thus resort to a backtrack loop to
-process the elements in the list, using temporary fact storage.</p>
+Note that, due to the standard predicate loop scheme used, invoking this predicate
+with lists with a very large number of elements might cause a stack trace overflow.
+This holds true for SWI-Prolog, and very likely, to Sicstus Prolog as well.
+In fact, on an Intel-based 64-bit desktop loaded with 16GB of RAM, SWI-Prolog
+will break on predicate loops with over 200000 recursive invocations.
+With a startup parameter such as "--stack-limit=32g", SWI-Prolog will break
+execution at or near the 5-million recursive invocations mark. Thus, care
+should be exercised when invoking this predicate on large lists.</p>
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>
