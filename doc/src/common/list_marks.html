@@ -123,6 +123,23 @@ Fail if no such boundaries exist.
 </dl>
 
 </dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_replace/4"><b class="pred">list_replace</b><var class="arglist">(+Old:data, +List:list, +New:data, -ListResult:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Bind <var>ListResult</var> with the result of replacing all occurrences of <var>Old</var> in <var>List</var>
+with <var>New</var>.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Old</var></td><td class="argdescr">- the element to be replaced</td></tr>
+<tr><td><var>List</var></td><td class="argdescr">- the source list</td></tr>
+<tr><td><var>New</var></td><td class="argdescr">- The replacing element</td></tr>
+<tr><td><var>ListResult</var></td><td class="argdescr">- The resulting list</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
 <dt class="pubdef"><span style="float:right">&nbsp;</span><a name="list_replace0/4"><b class="pred">list_replace0</b><var class="arglist">(+Pos0:int, +List:list, +Element:data, -ListResult:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Replace the element at 0-based <var>Pos0</var> in <var>List</var> with <var>Element</var>.
 
 <dl class="tags">

@@ -13,6 +13,7 @@
         list_pad_tail/4,
         list_pairs/3,
         list_prune_on_length/4,
+        list_replace/4,
         list_replace0/4,
         list_replace1/4,
         list_same/1,
@@ -230,6 +231,38 @@ list_minus_list(ListRef, [E|ListElems], ListResult) :-
 
     delete(ListRef, E, ListPurged),
     list_minus_list(ListPurged, ListElems, ListResult).
+
+%-------------------------------------------------------------------------------------
+
+%! list_replace(+Old:data, +List:list, +New:data, -ListResult:list) is det.
+%
+%  Bind ListResult with the result of replacing all occurrences of Old in List
+%  with New.
+%
+%  @param Old        the element to be replaced
+%  @param List       the source list
+%  @param New        The replacing element
+%  @param ListResult The resulting list
+
+list_replace(Old, List, New, ListResult) :-
+    list_replace_(List, Old, New, [], ListResult).
+
+% (done)
+list_replace_([], _, _, ListWorking, ListFinal) :-
+
+    reverse(ListWorking, ListFinal),
+    !.
+
+list_replace_([HeadOld|TailOld], Old, New, ListWorking, ListFinal) :-
+
+    (Old = HeadOld ->
+        HeadNew = New
+    ;
+        HeadNew = HeadOld
+    ),
+
+    % go for the next element
+    list_replace_(TailOld, Old, New, [HeadNew|ListWorking], ListFinal).
 
 %-------------------------------------------------------------------------------------
 
