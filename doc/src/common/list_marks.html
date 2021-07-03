@@ -471,10 +471,14 @@ Fail if so such list exists.
 </dl>
 
 </dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="lists_consolidate/3"><b class="pred">lists_consolidate</b><var class="arglist">(+ListsRefs:list, +ListElems:list, -ListsResult:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Consolidate ListsResults with a list of lists based on the contents of
-<var>ListsRefs</var> and <var>ListElems</var>. If a list within ListsRef contains the first element
-of <var>ListElems</var>, the elements of that list ListElem are appended to its head,
-otherwise that list is appended to the head of ListsRef. Examples:
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="lists_consolidate/3"><b class="pred">lists_consolidate</b><var class="arglist">(+ListsRefs:list, +ListElems:list, -ListsResult:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>ListsResult</var> with a list of lists based on the contents of <var>ListsRefs</var>
+and <var>ListElems</var>. &lt;/br&gt;
+For the first list ListIn within ListsRef containing the first element of
+<var>ListElems</var>, the elements of <var>ListElems</var> are added to the head of ListIn.
+If no such list exists, <var>ListElems</var> is added to the tail of <var>ListsRefs</var>.
+Unify <var>ListsResult</var> with <var>ListsRefs</var> if <var>ListElems</var> is empty. Unify <var>ListsResult</var>
+with a list containing <var>ListElems</var> if <var>ListsRefs</var> is empty.
+Examples:
 
 <pre class="code" ext="">
 1. lists_consolidate([[1,d,b],[4,c,f]], [c,j,k], ListsResult)
@@ -486,7 +490,7 @@ otherwise that list is appended to the head of ListsRef. Examples:
   ListsResult = [[d,j,k,1,d,b],[4,c,f]]
 
 3.lists_consolidate([[1,d,b],[4,c,f]], [j,k,l], ListsResult)
-   yields
+  yields
   ListsResult = [[j,k,l],[1,d,b],[4,c,f]]</pre>
 
 <dl class="tags">

@@ -825,11 +825,14 @@ lists_start_with([Head|Lists], Sublist, List) :-
 
 %! lists_consolidate(+ListsRefs:list, +ListElems:list, -ListsResult:list) is det.
 %
-%  Consolidate ListsResults with a list of lists based on the contents of
-%  ListsRefs and ListElems. If a list within ListsRef contains the first element
-%  of ListElems, the elements of that list ListElem are appended to its head,
-%  otherwise that list  is appended to the head of ListsRef. Examples:
-%
+%  Unify ListsResult with a list of lists based on the contents of ListsRefs
+%  and ListElems. </br>
+%  For the first list ListIn within ListsRef containing the first element of
+%  ListElems, the elements of ListElems are added to the head of ListIn.
+%  If no such list exists, ListElems is added to the tail of ListsRefs.
+%  Unify ListsResult with ListsRefs if ListElems is empty. Unify ListsResult
+%  with a list containing ListElems if ListsRefs is empty.
+%  Examples:
 %  ~~~
 %  1. lists_consolidate([[1,d,b],[4,c,f]], [c,j,k], ListsResult)
 %     yields
@@ -840,13 +843,16 @@ lists_start_with([Head|Lists], Sublist, List) :-
 %    ListsResult = [[d,j,k,1,d,b],[4,c,f]]
 %
 %  3.lists_consolidate([[1,d,b],[4,c,f]], [j,k,l], ListsResult)
-%     yields
+%    yields
 %    ListsResult = [[j,k,l],[1,d,b],[4,c,f]]
 %  ~~~
 %
 %  @param ListsRefs   The reference list of lists
 %  @param  ListElems  The list to be consolidated into the list of lists
 %  @param ListsResult The resulting list of lists
+
+lists_consolidate(ListsRefs, [], ListsResult) :-
+    ListsResult = ListsRefs, !.
 
 lists_consolidate(ListsRefs, ListElems, ListsResult) :-
 
@@ -859,7 +865,7 @@ lists_consolidate(ListsRefs, ListElems, ListsResult) :-
         % (ListsRems has the other lists)
         nth1(Pos, ListsRefs, ListElems2, ListsRems)
     ;
-        % no, use empty list ListElemse2 inst\read
+        % no, use empty list ListElems2 instead
         Pos = 1,
         ListElems2 = [],
         ListsRems = ListsRefs
