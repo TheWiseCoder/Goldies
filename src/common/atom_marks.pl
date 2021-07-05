@@ -8,6 +8,8 @@
         atom_contained/2,
         atom_int/3,
         atom_number/2,
+        atom_pad_left/4,
+        atom_pad_right/4,
         atom_prefix/2,
         atom_replace/4,
         atom_replace_all/4,
@@ -156,12 +158,96 @@ atom_sort(Atom, AtomResult) :-
 %  @param Number     Number to be concatenated
 %  @param AtomResult The result atom
 
-%-------------------------------------------------------------------------------------
-
 atom_concat_number(Atom, Number, AtomResult) :-
 
     atom_number(Num, Number),
     atom_concat(Atom, Num, AtomResult).
+
+%-------------------------------------------------------------------------------------
+
+%! atom_pad_left(+Atom:atom, +Length:int, +Pad:atom, -AtomResult:atom) is det.
+%
+%  Unify AtomResult with Atom, left-padded with Pad to length Length.
+%  If the padding operation yields an atom with length > Length, the resulting
+%  atom is left-truncated. Unify AtomResult with Atom if Pad is the empty atom,
+%  left-truncated if appropriate.
+%
+%  @param Atom       Atom to be left-padded
+%  @param Length     The length to pad to
+%  @param Pad        Atom to use for padding
+%  @param AtomResult The result atom
+
+atom_pad_left(Atom, Length, Pad, AtomResult) :-
+
+    Len = max(0, Length),
+    atom_pad_left_(Atom, Len, Pad, AtomResult).
+
+atom_pad_left_(Atom, Length, '', AtomResult) :-
+
+    atom_length(Atom, Len1),
+    Len2 is min(Len1, Length), 
+    sub_atom(Atom, _, Len2, 0, AtomResult),
+    !.
+
+atom_pad_left_(Atom, Length, Pad, AtomResult) :-
+
+    atom_length(Atom, Len),
+
+    % assess the length of the atom
+    ( Len < Length ->
+        % Atom is too short, so pad it
+        atom_concat(Pad, Atom, Concat),
+        atom_pad_left_(Concat, Length, Pad, AtomResult)
+    ; Len = Length ->
+        % Atom has the right length, so return it
+        AtomResult = Atom
+    ; otherwise ->
+        % Atom is too long, so truncate it
+        sub_atom(Atom, _, Length, 0, AtomResult)
+    ).
+
+%! atom_pad_right(+Atom:atom, +Length:int, +Pad:atom, -AtomResult:atom) is det.
+%
+%  Unify AtomResult with Atom, right-padded with Pad to length Length.
+%  If the padding operation yields an atom with length > Length, the resulting
+%  atom is right-truncated. Unify AtomResult with Atom if Pad is the empty atom,
+%  right-truncated if appropriate.
+%
+%  @param Atom       Atom to be right-padded
+%  @param Length     The length to pad to
+%  @param Pad        Atom to use for padding
+%  @param AtomResult The result atom
+
+atom_pad_right(Atom, Length, Pad, AtomResult) :-
+
+    Len is max(0, Length),
+    atom_pad_right_(Atom, Len, Pad, AtomResult).
+
+atom_pad_right_(Atom, Length, '', AtomResult) :-
+
+    atom_length(Atom, Len1),
+    Len2 is min(Len1, Length), 
+    sub_atom(Atom, 0, Len2, _, AtomResult),
+    !.
+
+atom_pad_right_(Atom, Length, Pad, AtomResult) :-
+
+    atom_length(Atom, Len),
+
+    % assess the length of the atom
+    ( Len < Length ->
+        % Atom is too short, so pad it
+        atom_concat(Atom, Pad, Concat),
+        atom_pad_right_(Concat, Length, Pad, AtomResult)
+    ; Len = Length ->
+        % Atom has the right length, so return it
+        AtomResult = Atom
+    ; otherwise ->
+        % Atom is too long, so truncate it
+        sub_atom(Atom, 0, Length, _, AtomResult)
+    ).
+
+%-------------------------------------------------------------------------------------
 
 %! atom_concat3(+Atom1:atom, +Atom2:atom, +Atom3:atom, -Atom123:atom) is det.
 %

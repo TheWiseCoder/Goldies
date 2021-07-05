@@ -122,6 +122,44 @@ left-truncating or left-padding the result with zeros, if necessary.
 </dl>
 
 </dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atom_pad_left/4"><b class="pred">atom_pad_left</b><var class="arglist">(+Atom:atom, +Length:int, +Pad:atom, -AtomResult:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>AtomResult</var> with <var>Atom</var>, left-padded with <var>Pad</var> to length <var>Length</var>.
+If the padding operation yields an atom with length &gt; <var>Length</var>, the resulting
+atom is left-truncated. Unify <var>AtomResult</var> with <var>Atom</var> if <var>Pad</var> is the empty atom,
+left-truncated if appropriate.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Atom</var></td><td class="argdescr">- <var>Atom</var> to be left-padded</td></tr>
+<tr><td><var>Length</var></td><td class="argdescr">- The length to pad to</td></tr>
+<tr><td><var>Pad</var></td><td class="argdescr">- <var>Atom</var> to use for padding</td></tr>
+<tr><td><var>AtomResult</var></td><td class="argdescr">- The result atom</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atom_pad_right/4"><b class="pred">atom_pad_right</b><var class="arglist">(+Atom:atom, +Length:int, +Pad:atom, -AtomResult:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Unify <var>AtomResult</var> with <var>Atom</var>, right-padded with <var>Pad</var> to length <var>Length</var>.
+If the padding operation yields an atom with length &gt; <var>Length</var>, the resulting
+atom is right-truncated. Unify <var>AtomResult</var> with <var>Atom</var> if <var>Pad</var> is the empty atom,
+right-truncated if appropriate.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>Atom</var></td><td class="argdescr">- <var>Atom</var> to be right-padded</td></tr>
+<tr><td><var>Length</var></td><td class="argdescr">- The length to pad to</td></tr>
+<tr><td><var>Pad</var></td><td class="argdescr">- <var>Atom</var> to use for padding</td></tr>
+<tr><td><var>AtomResult</var></td><td class="argdescr">- The result atom</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
 <dt class="pubdef"><span style="float:right">&nbsp;</span><a name="atom_concat3/4"><b class="pred">atom_concat3</b><var class="arglist">(+Atom1:atom, +Atom2:atom, +Atom3:atom, -Atom123:atom)</var></a> is <b class="det">det</b></dt><dd class="defbody">Concatenate 3 atoms together.
 
 <dl class="tags">

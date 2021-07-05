@@ -830,8 +830,8 @@ lists_start_with([Head|Lists], Sublist, List) :-
 %  For the first list ListIn within ListsRef containing the first element of
 %  ListElems, the elements of ListElems are added to the head of ListIn.
 %  If no such list exists, ListElems is added to the tail of ListsRefs.
-%  Unify ListsResult with ListsRefs if ListElems is empty. Unify ListsResult
-%  with a list containing ListElems if ListsRefs is empty.
+%  Unify ListsResult with ListsRefs, if ListElems is empty. Unify ListsResult
+%  with a list containing ListElems, if ListsRefs is empty.
 %  Examples:
 %  ~~~
 %  1. lists_consolidate([[1,d,b],[4,c,f]], [c,j,k], ListsResult)
