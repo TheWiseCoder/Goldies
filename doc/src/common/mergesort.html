@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>mergesort.pl -- Binary search on sorted lists</title>
+
+<link rel="stylesheet" type="text/css" href="../../pldoc.css">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+</head>
+<body>
+
+
+<h1 class="file"><span style="float:right"></span>mergesort.pl -- Binary search on sorted lists</h1>
+
+<p>
+An implementation of the classic <code>mergesort</code> sorting algorithm on generic lists.
+Mergesort is an efficient, general-purpose, and comparison-based sorting algorithm.
+For a description of the merge sort algorithm, see
+<a href="https://en.wikipedia.org/wiki/Merge_sort">https://en.wikipedia.org/wiki/Merge_sort</a> .<br>
+This implementation takes as input a <code>comparator</code>. This is a predicate able to
+perform a comparison between any two elements of the input list as parameters,
+and return a negative number, zero, or a positive number, to indicate whether the
+first parameter is smaller than, equal to, or greater than the second parameter,
+respectively.<br>
+This implementation was adapted from Markus Triska's implementation, found at
+<a href="https://www.metalevel.at/misc/sorting.pl">https://www.metalevel.at/misc/sorting.pl</a> . This is a stable sort implementation,
+meaning that the relative order of equal sort items is not preserved.</p>
+
+<dl class="tags">
+<dt class="keyword-author">author</dt><dd class="keyword-author">- GT Nunes</dd>
+<dt class="keyword-version">version</dt><dd class="keyword-version">- 1.0</dd>
+<dt class="keyword-copyright">copyright</dt><dd class="keyword-copyright">- (c) TheWiseCoder 2020-2021</dd>
+<dt class="keyword-license">license</dt><dd class="keyword-license">- BSD-3-Clause License</dd>
+</dl>
+
+<dl>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="mergesort/3"><b class="pred">mergesort</b><var class="arglist">(+List:list, :Comparator:pred, -SortedList:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Sort the contents of <var>List</var> according to the given comparison predicate,
+and unify the result with <var>SortedList</var>. <br>
+The comparison predicate must accept two parameters, <var>ValueX</var> and <var>ValueY</var>,
+which might be any two elements in <var>List</var>, and have the following behavior:
+
+<pre class="code" ext="">
+&lt;Comparator&gt;(-Result:atom, +ValueX, +ValueY) is det
+where Result is unified with
+  a) = (equal sign)        - ValueX is equal to ValueY
+  b) &lt; (less than sign)    - ValueX is less than ValueY
+  c) &gt; (greater than sign) - ValueX is greater than ValueY</pre>
+
+<p>
+The criteria that will determine the results of the comparisons are entirely up
+to <var>Comparator</var>, and as such it must be able to handle the values it will receive.
+In most cases, the built-in predicate <a class="builtin" href="http://www.swi-prolog.org/pldoc/man?predicate=compare/3">compare/3</a> may be readily used as the
+comparator for the sort. Nothing is done if <var>List</var> has less than 2 elements.</p>
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>List</var></td><td class="argdescr">- The list to be sorted</td></tr>
+<tr><td><var>Comparator</var></td><td class="argdescr">- Predicate to perform comparisons between any two elements in <var>List</var></td></tr>
+<tr><td><var>SortedList</var></td><td class="argdescr">- The resulting sorted list</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="split/3"><b class="pred">split</b><var class="arglist">(+List:list, -ListOdd:list, -ListEven:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Alternate the odd- and even-position elements of <var>List</var> into <var>ListOdd</var> and <var>ListEven</var>,
+respectively. Positions are 1-based.
+
+<dl class="tags">
+<dt class="tag">Arguments:</dt><dd>
+
+<table class="arglist">
+<tr><td><var>List</var></td><td class="argdescr">- The source list</td></tr>
+<tr><td><var>Odds</var></td><td class="argdescr">- The odd-position elements</td></tr>
+<tr><td><var>Evens</var></td><td class="argdescr">- The even-position elements</td></tr>
+</table>
+
+</dd>
+</dl>
+
+</dd>
+</dl>
+
+</body>
+</html>

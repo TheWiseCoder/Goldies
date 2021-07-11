@@ -13,14 +13,13 @@ For a description of the quicksort algorithm, see
 https://en.wikipedia.org/wiki/Quicksort .<br/>
 This implementation takes as input a `comparator`. This is a predicate able to
 perform a comparison between any two elements of the input list as parameters,
-and return a negative number, zero, or a positive number, to indicate whether the
-first parameter is smaller than, equal to, or greater than the second parameter,
-respectively.<br/>
+and return the atoms '=', '<', or '>', to indicate whether the first parameter
+is smaller than, equal to, or greater than the second parameter, respectively.<br/>
 Finally, this is not a stable sort implementation, meaning that the relative
 order of equal sort items is not preserved.
 
 @author GT Nunes
-@version 1.3
+@version 1.3.3
 @copyright (c) TheWiseCoder 2020-2021
 @license BSD-3-Clause License
 */
@@ -54,8 +53,8 @@ order of equal sort items is not preserved.
 
 quicksort([], _Comparator, Sorted) :- Sorted = [], !.
 
-quicksort([E|[]], _Comparator, Sorted) :- Sorted = [E], !.
-    
+quicksort([Value|[]], _Comparator, Sorted) :- Sorted = [Value], !.
+
 quicksort([Value|Unsorted], Comparator, Sorted) :-
 
     quicksort_partition(Comparator, Unsorted, Value, ListLeft, ListRight),

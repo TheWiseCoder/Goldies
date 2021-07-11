@@ -20,7 +20,7 @@ https://www.metalevel.at/misc/sorting.pl . This is a stable sort implementation,
 meaning that the relative order of equal sort items is not preserved.
 
 @author GT Nunes
-@version 1.3
+@version 1.0
 @copyright (c) TheWiseCoder 2020-2021
 @license BSD-3-Clause License
 */
@@ -54,53 +54,53 @@ meaning that the relative order of equal sort items is not preserved.
 
 mergesort([], _Comparator, SortedList) :- SortedList = [], !.
 
-mergesort([E|[]], _Comparator, SortedList) :- SortedList = [E], !.
+mergesort([Value|[]], _Comparator, SortedList) :- SortedList = [Value], !.
 
-mergesort(U, Comparator, S) :-
+mergesort(Unsorted, Comparator, Sorted) :-
     
-    split(U, L, R),
-    mergesort(L, Comparator, SL),
-    mergesort(R, Comparator, SR),
-    merge(Comparator, SL, SR, S).
+    split(Unsorted, Odds, Evens),
+    mergesort(Odds, Comparator, SortedLeft),
+    mergesort(Evens, Comparator, SortedRight),
+    merge(Comparator, SortedLeft, SortedRight, Sorted).
 
-%! merge(+Sorted1:list, +Sorted2:list, -Merged:list) is det.
+%! merge(+Comparator:pred, +Sorted1:list, +Sorted2:list, -Merged:list) is det.
 %
 %  Unify Merged with the result of merging the sorted lists Sorted1 and Sorted2.
 %  Sorted1 and Sorted2 are sorted as per Comparator.
 %
-%  @param Comparator Predicate to perform comparisons between any two elements in List
+%  @param Comparator Predicate to perform comparisons between any two list elements
 %  @param Sorted1    The first sorted list
 %  @param Sorted2    The second sorted list
 %  @param Merged     The merged list
 
-merge(_Comparator, [], SortedList, SortedList).
+merge(_Comparator, [], Merged, Merged).
 
-merge(_Comparator, SortedList, [], SortedList).
+merge(_Comparator, Merged, [], Merged).
 
-merge(Comparator, [First|Sorted1], [Second|Sorted2], [First|Merged] ) :-
+merge(Comparator, [Elem1|Sorted1], [Elem2|Sorted2], [Elem1|Merged] ) :-
 
-    call(Comparator, Cmp, First, Second),
+    call(Comparator, Cmp, Elem1, Elem2),
     \+ Cmp = '>',
-    merge(Comparator, Sorted1, [Second|Sorted2], Merged).
+    merge(Comparator, Sorted1, [Elem2|Sorted2], Merged).
 
-merge(Comparator, [First|Sorted1], [Second|Sorted2], [Second|Merged] ) :-
+merge(Comparator, [Elem1|Sorted1], [Elem2|Sorted2], [Elem2|Merged] ) :-
 
-    call(Comparator, Cmp, First, Second),
+    call(Comparator, Cmp, Elem1, Elem2),
     Cmp = '>',
-    merge(Comparator, [First|Sorted1], Sorted2, Merged).
+    merge(Comparator, [Elem1|Sorted1], Sorted2, Merged).
 
 %! split(+List:list, -ListOdd:list, -ListEven:list) is det
 %
 %  Alternate the odd- and even-position elements of List into ListOdd and ListEven,
 %  respectively. Positions are 1-based.
 %
-%  @param List The source list
-%  @param Odd  The odd-position elements
-%  @param Even The even-position elements
+%  @param List  The source list
+%  @param Odds  The odd-position elements
+%  @param Evens The even-position elements
 
 split([], [], []).
 
 split([List], [List], []).
 
-split([First,Second|List], [First|ListOdd], [Second|ListEven]) :-
-    split(List, ListOdd, ListEven).
+split([First,Second|List], [First|Odds], [Second|Evens]) :-
+    split(List, Odds, Evens).
