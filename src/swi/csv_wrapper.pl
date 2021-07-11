@@ -117,6 +117,7 @@ csv_output_record(Stream, Record) :-
 csv_output_record(Stream, Record, Options) :-
 
     (memberchk(functor(Functor), Options) ; Functor = row),
+    !,
     Row =.. [Functor|Record],
     csv_write_stream(Stream, [Row], Options).
 

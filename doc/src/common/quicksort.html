@@ -23,7 +23,9 @@ This implementation takes as input a <code>comparator</code>. This is a predicat
 perform a comparison between any two elements of the input list as parameters,
 and return a negative number, zero, or a positive number, to indicate whether the
 first parameter is smaller than, equal to, or greater than the second parameter,
-respectively.</p>
+respectively.<br>
+Finally, this is not a stable sort implementation, meaning that the relative
+order of equal sort items is not preserved.</p>
 
 <dl class="tags">
 <dt class="keyword-author">author</dt><dd class="keyword-author">- GT Nunes</dd>
@@ -33,64 +35,31 @@ respectively.</p>
 </dl>
 
 <dl>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="quicksort/3"><b class="pred">quicksort</b><var class="arglist">(+List:list, :Comparator:pred, -SortedList:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Sort the contents of <var>List</var> according to the given comparison predicate,
-and unify the result with <var>SortedList</var>. <br>
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="quicksort/3"><b class="pred">quicksort</b><var class="arglist">(+Unsorted:list, :Comparator:pred, -Sorted:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">Sort the contents of <var>Unsorted</var> according to the given comparison predicate,
+and unify the result with <var>Sorted</var>. <br>
 The comparison predicate must accept two parameters, <var>ValueX</var> and <var>ValueY</var>,
-which might be any two elements in <var>List</var>, and have the following behavior:
+which might be any two elements in List, and have the following behavior:
 
 <pre class="code" ext="">
-&lt;Comparator&gt;(+ValueX, +ValueY, -Result:number) is det
+&lt;Comparator&gt;(-Result:atom, +ValueX, +ValueY) is det
 where Result is unified with
-  a) 0 (zero)          - ValueX is equal to ValueY
-  b) a negative number - ValueX is less than ValueY
-  c) a positive number - ValueX is greater than ValueY</pre>
+  a) = ('equal' sign)        - ValueX is equal to ValueY
+  b) &lt; ('less than' sign)    - ValueX is less than ValueY
+  c) &gt; ('greater than' sign) - ValueX is greater than ValueY</pre>
 
 <p>
 The criteria that will determine the results of the comparisons are entirely up
 to <var>Comparator</var>, and as such it must be able to handle the values it will receive.
-Nothing is done if <var>List</var> has less than 2 elements.</p>
+In most cases, the built-in predicate <a class="builtin" href="http://www.swi-prolog.org/pldoc/man?predicate=compare/3">compare/3</a> may be readily used as the
+comparator for the sort. Nothing is done if List has less than 2 elements.</p>
 
 <dl class="tags">
 <dt class="tag">Arguments:</dt><dd>
 
 <table class="arglist">
-<tr><td><var>List</var></td><td class="argdescr">- The list to be sorted</td></tr>
-<tr><td><var>Comparator</var></td><td class="argdescr">- Predicate to perform comparisons between any two elements in <var>List</var></td></tr>
-<tr><td><var>SortedList</var></td><td class="argdescr">- The resulting sorted list</td></tr>
-</table>
-
-</dd>
-</dl>
-
-</dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="quicksort_number_asc/3"><b class="pred">quicksort_number_asc</b><var class="arglist">(+ValueX:number, +ValueY:number, Cmp:int)</var></a> is <b class="det">det</b></dt><dd class="defbody">Compare the numbers <var>ValueX</var> and <var>ValueY</var> ascendingly. <br>
-Unify <var>Cmp</var> with -1, 0, or 1, depending on whether <var>ValueX</var> is smaller than,
-equal to, or greater than, <var>ValueY</var>.
-
-<dl class="tags">
-<dt class="tag">Arguments:</dt><dd>
-
-<table class="arglist">
-<tr><td><var>ValueX</var></td><td class="argdescr">- The first value to compare</td></tr>
-<tr><td><var>ValueY</var></td><td class="argdescr">- The second value to compare</td></tr>
-<tr><td><var>Cmp</var></td><td class="argdescr">- The result of the comparison</td></tr>
-</table>
-
-</dd>
-</dl>
-
-</dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="quicksort_number_desc/3"><b class="pred">quicksort_number_desc</b><var class="arglist">(+ValueX:number, +ValueY:number, Cmp:int)</var></a> is <b class="det">det</b></dt><dd class="defbody">Compare the numbers <var>ValueX</var> and <var>ValueY</var> descendingly. <br>
-Unify <var>Cmp</var> with -1, 0, or 1, depending on whether <var>ValueX</var> is greater than,
-equal to, or smaller than, <var>ValueY</var>.
-
-<dl class="tags">
-<dt class="tag">Arguments:</dt><dd>
-
-<table class="arglist">
-<tr><td><var>ValueX</var></td><td class="argdescr">- The first value to compare</td></tr>
-<tr><td><var>ValueY</var></td><td class="argdescr">- The second value to compare</td></tr>
-<tr><td><var>Cmp</var></td><td class="argdescr">- The result of the comparison</td></tr>
+<tr><td><var>Unsorted</var></td><td class="argdescr">- The list to be sorted</td></tr>
+<tr><td><var>Comparator</var></td><td class="argdescr">- Predicate to perform comparisons between any two elements in List</td></tr>
+<tr><td><var>Sorted</var></td><td class="argdescr">- The resulting sorted list</td></tr>
 </table>
 
 </dd>

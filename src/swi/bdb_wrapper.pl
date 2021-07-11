@@ -76,6 +76,7 @@ bdb_base(BasePath) :-
     ;
         % register the base path for Berkeley DB (make sure it is '/'-terminated)
         (retract(swi_bdb_base(_)) ; true),
+        !,
         (sub_atom(BasePath, _, 1, 0, '/') ->
             BdbPath = BasePath
         ;
@@ -85,7 +86,8 @@ bdb_base(BasePath) :-
     ),
 
     % make sure path exists
-    (exists_directory(BasePath) ; make_directory(BasePath)).
+    (exists_directory(BasePath) ; make_directory(BasePath)),
+    !.
 
 %! bdb_store(+TagSet:atom, +DataSet:atom, +Data:data) is det.
 %
@@ -103,8 +105,8 @@ bdb_store(TagSet, DataSet, Data) :-
     % create base directory, if necessary
     file_directory_name(DsPath, BaseDir),
     (exists_directory(BaseDir) ; make_directory(BaseDir)),
-
     !,
+
     % fail point (create the database)
     catch(bdb_open(DsPath, update, DbRef, []), _, fail),
 
@@ -168,7 +170,8 @@ bdb_erase(TagSet, DataSet) :-
     storage_path(TagSet, DataSet, DsPath),
 
     % delete it, if necessary
-    (\+ exists_file(DsPath) ; (delete_file(DsPath))).
+    (\+ exists_file(DsPath) ; (delete_file(DsPath))),
+    !.
 
 %-------------------------------------------------------------------------------------
 
@@ -184,6 +187,7 @@ storage_path(TagSet, DataSet, DsPath) :-
 
     % obtain the registered base path
     (swi_bdb_base(BasePath) ; BasePath = ''),
+    !,
 
     % build the base directory
     atom_concat(BasePath, DataSet, BaseDir),

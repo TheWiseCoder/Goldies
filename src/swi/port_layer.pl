@@ -100,7 +100,8 @@ now(Now) :-
 current_directory(CurrDir) :-
 
     ( (var(CurrDir) , working_directory(CurrDir, CurrDir))
-    ; (nonvar(CurrDir) , working_directory(_, CurrDir)) ).
+    ; (nonvar(CurrDir) , working_directory(_, CurrDir)) ),
+    !.
 
 %! current_directory(-OldDir:atom, +NewDir:atom) is det.
 %
@@ -139,7 +140,9 @@ delete_directory(Dir, [if_nonempty(fail)]) :-
 
 % delete directory Dir if empty, or ignore it if otherwise
 delete_directory(Dir, [if_nonempty(ignore)]) :-
-    (delete_directory(Dir) ; true).
+
+    (delete_directory(Dir) ; true),
+    !.
 
 %! directory_exists(+Dir:atom) is semidet.
 %
