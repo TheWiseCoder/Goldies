@@ -29,7 +29,7 @@ comparator for any of these two sorts.</p>
 </dl>
 
 <dl>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="mergesort/3"><b class="pred">mergesort</b><var class="arglist">(+Unsorted:list, +Comparator:pred, -Sorted:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">An implementation of the classic <code>mergesort</code> sorting algorithm on generic lists.
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="mergesort/3"><b class="pred">mergesort</b><var class="arglist">(:Comparator:pred, +Unsorted:list, -Sorted:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">An implementation of the classic <code>mergesort</code> sorting algorithm on generic lists.
 Mergesort is an efficient, general-purpose, and comparison-based sorting algorithm.
 This is a stable sort implementation, meaning that the relative order of equal
 sort items is preserved. For a description of the mergesort algorithm, see
@@ -56,8 +56,8 @@ comparator for the sort. Nothing is done if List has less than 2 elements.</p>
 <dt class="tag">Arguments:</dt><dd>
 
 <table class="arglist">
-<tr><td><var>Unsorted</var></td><td class="argdescr">- The list to be sorted</td></tr>
 <tr><td><var>Comparator</var></td><td class="argdescr">- Predicate to perform comparisons between any two elements in List</td></tr>
+<tr><td><var>Unsorted</var></td><td class="argdescr">- The list to be sorted</td></tr>
 <tr><td><var>Sorted</var></td><td class="argdescr">- The resulting sorted list</td></tr>
 </table>
 
@@ -65,7 +65,7 @@ comparator for the sort. Nothing is done if List has less than 2 elements.</p>
 </dl>
 
 </dd>
-<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="quicksort/3"><b class="pred">quicksort</b><var class="arglist">(+Unsorted:list, +Comparator:pred, -Sorted:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">An implementation of the classic <var>Quicksort</var> sorting algorithm on generic lists.
+<dt class="pubdef"><span style="float:right">&nbsp;</span><a name="quicksort/3"><b class="pred">quicksort</b><var class="arglist">(:Comparator:pred, +Unsorted:list, -Sorted:list)</var></a> is <b class="det">det</b></dt><dd class="defbody">An implementation of the classic <var>Quicksort</var> sorting algorithm on generic lists.
 <var>Quicksort</var> works by selecting a 'pivot' element from the list to be sorted and
 partitioning the other elements into two sublists, according to whether they are
 less than or greater than the pivot.The sublists are then sorted recursively.
@@ -94,8 +94,8 @@ comparator for the sort. Nothing is done if List has less than 2 elements.</p>
 <dt class="tag">Arguments:</dt><dd>
 
 <table class="arglist">
-<tr><td><var>Unsorted</var></td><td class="argdescr">- The list to be sorted</td></tr>
 <tr><td><var>Comparator</var></td><td class="argdescr">- Predicate to perform comparisons between any two elements in List</td></tr>
+<tr><td><var>Unsorted</var></td><td class="argdescr">- The list to be sorted</td></tr>
 <tr><td><var>Sorted</var></td><td class="argdescr">- The resulting sorted list</td></tr>
 </table>
 

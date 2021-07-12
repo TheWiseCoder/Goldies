@@ -23,11 +23,11 @@ comparator for any of these two sorts.
 %-------------------------------------------------------------------------------------
 
 :- meta_predicate merge(3, +, +, -),
-                  mergesort(+, 3, -),
-                  quicksort(+, 3, -),
+                  mergesort(3, +, -),
+                  quicksort(3, +, -),
                   quicksort_partition(3, +, +, +, +).
 
-%! mergesort(+Unsorted:list, +Comparator:pred, -Sorted:list) is det.
+%! mergesort(:Comparator:pred, +Unsorted:list, -Sorted:list) is det.
 %
 %  An implementation of the classic `mergesort` sorting algorithm on generic lists.
 %  Mergesort is an efficient, general-purpose, and comparison-based sorting algorithm.
@@ -50,19 +50,19 @@ comparator for any of these two sorts.
 %  In most cases, the built-in predicate `compare/3` may be readily used as the
 %  comparator for the sort. Nothing is done if List has less than 2 elements.
 %
-%  @param Unsorted   The list to be sorted
 %  @param Comparator Predicate to perform comparisons between any two elements in List
-%  @param Sorted    The resulting sorted list
+%  @param Unsorted   The list to be sorted
+%  @param Sorted     The resulting sorted list
 
-mergesort([], _Comparator, Sorted) :- Sorted = [], !.
+mergesort(_Comparator, [], Sorted) :- Sorted = [], !.
 
-mergesort([Value|[]], _Comparator, Sorted) :- Sorted = [Value], !.
+mergesort(_Comparator, [Value|[]], Sorted) :- Sorted = [Value], !.
 
-mergesort(Unsorted, Comparator, Sorted) :-
+mergesort(Comparator, Unsorted, Sorted) :-
     
     split(Unsorted, Odds, Evens),
-    mergesort(Odds, Comparator, SortedLeft),
-    mergesort(Evens, Comparator, SortedRight),
+    mergesort(Comparator, Odds, SortedLeft),
+    mergesort(Comparator, Evens, SortedRight),
     merge(Comparator, SortedLeft, SortedRight, Sorted).
 
 %! merge(+Comparator:pred, +Sorted1:list, +Sorted2:list, -Merged:list) is det.
@@ -91,9 +91,9 @@ merge(Comparator, [Elem1|Sorted1], [Elem2|Sorted2], [Elem2|Merged] ) :-
     Cmp = '>',
     merge(Comparator, [Elem1|Sorted1], Sorted2, Merged).
 
-%! split(+List:list, -ListOdd:list, -ListEven:list) is det
+%! split(+List:list, -Odds:list, -Evens:list) is det
 %
-%  Alternate the odd- and even-position elements of List into ListOdd and ListEven,
+%  Alternate the odd- and even-position elements of List into Odds and Evens,
 %  respectively. Positions are 1-based.
 %
 %  @param List  The source list
@@ -109,7 +109,7 @@ split([First,Second|List], [First|Odds], [Second|Evens]) :-
 
 %-------------------------------------------------------------------------------------
 
-%! quicksort(+Unsorted:list, +Comparator:pred, -Sorted:list) is det.
+%! quicksort(:Comparator:pred, +Unsorted:list, -Sorted:list) is det.
 %
 %  An implementation of the classic `Quicksort` sorting algorithm on generic lists.
 %  `Quicksort` works by selecting a 'pivot' element from the list to be sorted and
@@ -134,19 +134,19 @@ split([First,Second|List], [First|Odds], [Second|Evens]) :-
 %  In most cases, the built-in predicate `compare/3` may be readily used as the
 %  comparator for the sort. Nothing is done if List has less than 2 elements.
 %
-%  @param Unsorted   The list to be sorted
 %  @param Comparator Predicate to perform comparisons between any two elements in List
+%  @param Unsorted   The list to be sorted
 %  @param Sorted     The resulting sorted list
 
-quicksort([], _Comparator, Sorted) :- Sorted = [], !.
+quicksort(_Comparator, [], Sorted) :- Sorted = [], !.
 
-quicksort([Value|[]], _Comparator, Sorted) :- Sorted = [Value], !.
+quicksort(_Comparator, [Value|[]], Sorted) :- Sorted = [Value], !.
 
-quicksort([Value|Unsorted], Comparator, Sorted) :-
+quicksort(Comparator, [Value|Unsorted], Sorted) :-
 
     quicksort_partition(Comparator, Unsorted, Value, ListLeft, ListRight),
-    quicksort(ListLeft, Comparator, SortedLeft),
-    quicksort(ListRight, Comparator, SortedRight),
+    quicksort(Comparator, ListLeft, SortedLeft),
+    quicksort(Comparator, ListRight, SortedRight),
     quicksort_append(SortedLeft, [Value|SortedRight], Sorted).
 
 quicksort_partition(_Comparator, [], _ValueY, [], []).
