@@ -80,8 +80,10 @@
 %  @param AtomContained Contained atom
 
 atom_contained(AtomContainer, AtomContained) :-
+
     % fail point
-    sub_atom(AtomContainer, _, _, _, AtomContained).
+    sub_atom(AtomContainer, _, _, _, AtomContained),
+    !.
 
 %! atom_prefix(+AtomPrefixed:atom, +AtomPrefix:atom) is semidet.
 %
@@ -91,8 +93,10 @@ atom_contained(AtomContainer, AtomContained) :-
 %  @param AtomPrefix   The candidate leading atom
 
 atom_prefix(AtomPrefixed, AtomPrefix) :-
+
     % fail point
-    sub_atom(AtomPrefixed, 0, _, _, AtomPrefix).
+    sub_atom(AtomPrefixed, 0, _, _, AtomPrefix),
+    !.
 
 %! atom_suffix(+AtomSuffixed:atom, +AtomSuffix:atom) is semidet
 %
@@ -102,8 +106,10 @@ atom_prefix(AtomPrefixed, AtomPrefix) :-
 %  @param AtomSuffix    the candidate leading atom
 
 atom_suffix(AtomSuffixed, AtomSuffix) :-
+
     % fail point
-    sub_atom(AtomSuffixed, _, _, 0, AtomSuffix).
+    sub_atom(AtomSuffixed, _, _, 0, AtomSuffix),
+    !.
 
 %! atom_int(-Atom:atom, +Int:int, +Len:int) is det.
 %
@@ -130,13 +136,21 @@ atom_int(Atom, Int, Len) :-
 
 atom_number(Atom, Number) :-
 
-    (var(Atom) ->
-        number_chars(Number, Chars),
-        atom_chars(Atom, Chars)
-    ;
-        atom_chars(Atom, Chars),
-        number_chars(Number, Chars)
-    ).
+    % fail point
+    var(Atom),
+
+    number_chars(Number, Chars),
+    atom_chars(Atom, Chars),
+    !.
+
+atom_number(Atom, Number) :-
+
+    % fail point
+    var(Atom),
+
+    atom_chars(Atom, Chars),
+    number_chars(Number, Chars),
+    !.
 
 %! atom_sort(+Atom:atom, -AtomResult:atom) is det.
 %
@@ -204,7 +218,8 @@ atom_pad_left_(Atom, Length, Pad, AtomResult) :-
     ; otherwise ->
         % Atom is too long, so truncate it
         sub_atom(Atom, _, Length, 0, AtomResult)
-    ).
+    ),
+    !.
 
 %! atom_pad_right(+Atom:atom, +Length:int, +Pad:atom, -AtomResult:atom) is det.
 %
@@ -245,7 +260,8 @@ atom_pad_right_(Atom, Length, Pad, AtomResult) :-
     ; otherwise ->
         % Atom is too long, so truncate it
         sub_atom(Atom, 0, Length, _, AtomResult)
-    ).
+    ),
+    !.
 
 %-------------------------------------------------------------------------------------
 
@@ -336,6 +352,7 @@ atom_replace(AtomIn, From, To, AtomOut) :-
 
     atom_chars(AtomIn, CharsIn),
     atom_chars(From, FromChars),
+
     (sublist(CharsIn, FromChars, Before) ->
         sublist(CharsIn, CharsPre, 0, Before),
         length(FromChars, Len),
@@ -346,7 +363,8 @@ atom_replace(AtomIn, From, To, AtomOut) :-
         atom_chars(AtomOut, CharsOut)
     ;
         AtomOut = AtomIn
-    ).
+    ),
+    !.
 
 %! atom_replace_all(+AtomIn:atom, +From:atom, +To:atom, -AtomOut:atom) is det.
 %
@@ -390,18 +408,14 @@ atoms_contained_all(AtomContainer, AtomsList) :-
 %  @param AtomContainer Container atom
 %  @param AtomsList     List of contained atoms
   
-atoms_contained_any(_AtomContainer, []) :-
-    !, fail.
+atoms_contained_any(_AtomContainer, []) :- !, fail.
 
 atoms_contained_any(AtomContainer, [Atom|AtomsList]) :-
 
-    (sub_atom(AtomContainer, _, _, _, Atom) ->
-        true
-    ;
-        !,
-        % fail point
-        atoms_contained_any(AtomContainer, AtomsList)
-    ).
+    ( sub_atom(AtomContainer, _, _, _, Atom)
+    ; atoms_contained_any(AtomContainer, AtomsList)
+    ),
+    !.
 
 %-------------------------------------------------------------------------------------
 
@@ -421,12 +435,19 @@ atoms_contained_any(AtomContainer, [Atom|AtomsList]) :-
 
 atoms_chars(Atoms, Chars) :-
 
-    % a list of single-char atoms is identical to a list of chars
-    (var(Atoms) ->
-        Atoms = Chars
-    ;
-        atoms_chars_(Atoms, [], Chars)
-    ).
+    % fail point
+    var(Atoms),
+
+    Atoms = Chars,
+    !.
+
+atoms_chars(Atoms, Chars) :-
+
+    % fail point
+    nonvar(Atoms),
+
+    atoms_chars_(Atoms, [], Chars),
+    !.
 
 % (done)
 atoms_chars_([], CharsFinal, CharsFinal) :- !.
@@ -459,11 +480,19 @@ atoms_chars_([Atom|Atoms], CharsProgress, CharsFinal) :-
 
 atoms_codes(Atoms, Codes) :-
 
-    (var(Atoms) ->
-        codes_atoms_(Codes, [], Atoms)
-    ;
-        atoms_codes_(Atoms, [], Codes)
-    ).
+    % fail point
+    var(Atoms),
+
+    codes_atoms_(Codes, [], Atoms),
+    !.
+
+atoms_codes(Atoms, Codes) :-
+
+    % fail point
+    var(Atoms),
+
+    atoms_codes_(Atoms, [], Codes),
+    !.
 
 % (done)
 atoms_codes_([], CodesFinal, CodesFinal) :- !.
@@ -502,11 +531,19 @@ codes_atoms_([Code|Codes], AtomsProgress, AtomsFinal) :-
 
 atoms_numbers(Atoms, Numbers) :-
 
-    (var(Atoms) ->
-        numbers_atoms_(Numbers, [], Atoms)
-    ; 
-        atoms_numbers_(Atoms, [], Numbers)
-    ).
+    % fail point
+    var(Atoms),
+
+    numbers_atoms_(Numbers, [], Atoms),
+    !.
+
+atoms_numbers(Atoms, Numbers) :-
+
+    % fail point
+    nonvar(Atoms),
+
+    atoms_numbers_(Atoms, [], Numbers),
+    !.
 
 % (done)
 atoms_numbers_([], NumbersProgress, NumbersFinal) :-

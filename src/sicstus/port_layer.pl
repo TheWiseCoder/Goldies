@@ -162,16 +162,12 @@ read_line_to_codes(Stream, Codes) :-
 % New   the flag's new value
 flag(Key, Old, New) :-
 
-    (bb_get(Key, Old) ->
-        true
-    ;
-        Old = 0
-    ),
+    (bb_get(Key, Old) ; Old = 0),
+    !,
 
     % needed if New is an arithmetic expression
     Val is New,
-    bb_put(Key, Val),
-    !.
+    bb_put(Key, Val).
 
 % Unify Value with the current value of the flag. As per SWI-Prolog,
 % if the flag does not exist, a new flag with value '0' (zero) is created.

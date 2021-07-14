@@ -79,12 +79,20 @@ list of chars.
 
 stream_lines(Stream, Lines) :-
 
-    (var(Lines) ->
-        read_line_to_codes(Stream, LineCodes),
-        stream_read(Stream, end_of_file, LineCodes, [], Lines)
-    ;
-        stream_write(Stream, end_of_file, Lines)
-    ).
+    % fail point
+    var(Lines),
+
+    read_line_to_codes(Stream, LineCodes),
+    stream_read(Stream, end_of_file, LineCodes, [], Lines),
+    !.
+
+stream_lines(Stream, Lines) :-
+
+    % fail point
+    nonvar(Lines),
+
+    stream_write(Stream, end_of_file, Lines),
+    !.
 
 %-------------------------------------------------------------------------------------
 
@@ -103,12 +111,20 @@ stream_lines(Stream, Lines) :-
 
 stream_lines(Stream, EOS, Lines) :-
 
-    (var(Lines) ->
-        read_line_to_codes(Stream, LineCodes),
-        stream_read(Stream, EOS, LineCodes, [], Lines)
-    ;
-        stream_write(Stream, EOS, Lines)
-    ).
+    % fail point
+    var(Lines),
+
+    read_line_to_codes(Stream, LineCodes),
+    stream_read(Stream, EOS, LineCodes, [], Lines),
+    !.
+
+stream_lines(Stream, EOS, Lines) :-
+
+    % fail point
+    nonvar(Lines),
+
+    stream_write(Stream, EOS, Lines),
+    !.
 
 %-------------------------------------------------------------------------------------
 

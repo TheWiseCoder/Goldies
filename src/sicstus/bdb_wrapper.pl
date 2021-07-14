@@ -91,11 +91,10 @@ bdb_base(BasePath) :-
     ),
 
     % make sure path exists
-    (directory_exists(BasePath) ->
-        true
-    ;
-        make_directory(BasePath)
-    ).
+    ( directory_exists(BasePath)
+    ; make_directory(BasePath)
+    ),
+    !.
 
 % persist the given data to external storage
 % bdb_store(+TagSet, +DataSet, +Data)
@@ -108,26 +107,18 @@ bdb_store(TagSet, DataSet, Data) :-
     storage_dir(DataSet, BaseDir),
 
     % create base directory, if necessary
-    (directory_exists(BaseDir) ->
-        true
-    ;
-        make_directory(BaseDir)
-    ),
+    (directory_exists(BaseDir) ; make_directory(BaseDir)),
+    !,
 
     % establish the new working directory
     current_directory(SaveDir, BaseDir),
 
-    !,
     % fail point (create the database)
-    catch(db_open(TagSet, update, [bdb_data(-,-)], DbRef),
-          _, bdb_fail(SaveDir)),
+    catch(db_open(TagSet, update, [bdb_data(-,-)], DbRef), _, bdb_fail(SaveDir)),
 
-    !,
     % fail point (store the data)
-    catch(db_store(DbRef, bdb_data(TagSet,Data), _TermRef),
-          _, bdb_fail(SaveDir)),
+    catch(db_store(DbRef, bdb_data(TagSet,Data), _TermRef), _, bdb_fail(SaveDir)),
 
-    !,
     % fail point (close the database)
     catch(db_close(DbRef), _, bdb_fail(SaveDir)),
 
@@ -144,24 +135,20 @@ bdb_retrieve(TagSet, DataSet, Data) :-
     % obtain the base and specific storage locations for this dataset 
     storage_dir(DataSet, BaseDir),
     atom_concat(BaseDir, TagSet, TagDir),
-
     !,
+
     % fail point
     directory_exists(TagDir),
 
     % establish the new working directory
     current_directory(SaveDir, BaseDir),
 
-    !,
     % fail point (database might not exist)
     catch(db_open(TagSet, read, _DbSpecs, DbRef), _, bdb_fail(SaveDir)),
 
-    !,
     % fail point (read the data)
-    catch(db_fetch(DbRef, bdb_data(TagSet, Data), _TermRef),
-          _, bdb_fail(SaveDir)),
+    catch(db_fetch(DbRef, bdb_data(TagSet, Data), _TermRef), _, bdb_fail(SaveDir)),
 
-    !,
     % fail point (close the database)
     catch(db_close(DbRef), _, bdb_fail(SaveDir)),
 
@@ -232,4 +219,5 @@ storage_dir(DataSet, BaseDir) :-
     ;
        atom_concat(DataSet, '/', SetAdjusted),
        atom_concat(BasePath, SetAdjusted, BaseDir)
-    ).
+    ),
+    !.

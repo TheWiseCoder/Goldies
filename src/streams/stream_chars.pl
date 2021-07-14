@@ -38,11 +38,19 @@ or `-1` to write all chars in the list of chars given.
 
 stream_chars(Stream, Chars) :-
 
-    (var(Chars) ->
-        stream_read(Stream, -1, Chars)
-    ;
-        stream_write(Stream, -1, Chars)
-    ).
+    % fail point
+    var(Chars),
+
+    stream_read(Stream, -1, Chars),
+    !.
+
+stream_chars(Stream, Chars) :-
+
+    % fail point
+    nonvar(Chars),
+
+    stream_write(Stream, -1, Chars),
+    !.
 
 %-------------------------------------------------------------------------------------
 
@@ -61,11 +69,19 @@ stream_chars(Stream, Chars) :-
 
 stream_chars(Stream, Count, Chars) :-
 
-    (var(Chars) ->
-        stream_read(Stream, Count, Chars)
-    ;
-        stream_write(Stream, Count, Chars)
-    ).
+    % fail point
+    var(Chars),
+
+    stream_read(Stream, Count, Chars),
+    !.
+
+stream_chars(Stream, Count, Chars) :-
+
+    % fail point
+    nonvar(Chars),
+
+    stream_write(Stream, Count, Chars),
+    !.
 
 %-------------------------------------------------------------------------------------
 
@@ -79,8 +95,7 @@ stream_chars(Stream, Count, Chars) :-
 %  @param Chars  List of chars read from the stream
 
 % (done)
-stream_read(_Stream, 0, Chars) :-
-    Chars = [], !.
+stream_read(_Stream, 0, []) :- !.
 
 % (start)
 stream_read(Stream, Count, Chars) :-

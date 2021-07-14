@@ -38,11 +38,19 @@ or `-1` to write all codes in the list of codes given.
 
 stream_codes(Stream, Codes) :-
 
-    (var(Codes) ->
-        stream_read(Stream, -1, Codes)
-    ;
-        stream_write(Stream, -1, Codes)
-    ).
+    % fail point
+    var(Codes),
+
+    stream_read(Stream, -1, Codes),
+    !.
+
+stream_codes(Stream, Codes) :-
+
+    % fail point
+    nonvar(Codes),
+
+    stream_write(Stream, -1, Codes),
+    !.
 
 %-------------------------------------------------------------------------------------
 
@@ -61,11 +69,19 @@ stream_codes(Stream, Codes) :-
 
 stream_codes(Stream, Count, Codes) :-
 
-    (var(Codes) ->
-        stream_read(Stream, Count, Codes)
-    ;
-        stream_write(Stream, Count, Codes)
-    ).
+    % fail point
+    var(Codes),
+
+    stream_read(Stream, Count, Codes),
+    !.
+
+stream_codes(Stream, Count, Codes) :-
+
+    % fail point
+    nonvar(Codes),
+
+    stream_write(Stream, Count, Codes),
+    !.
 
 %-------------------------------------------------------------------------------------
 
@@ -79,8 +95,7 @@ stream_codes(Stream, Count, Codes) :-
 %  @param Codes  List of codes read from the stream
 
 % (done)
-stream_read(_Stream, 0, Codes) :-
-    Codes = [], !.
+stream_read(_Stream, 0, []) :- !.
 
 % (start)
 stream_read(Stream, Count, Codes) :-

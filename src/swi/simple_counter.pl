@@ -137,8 +137,17 @@ counter_inc(Key, Value) :-
 
 counter_value(Key, Value) :-
 
-    (var(Value) ->
-        get_flag(Key, Value)
-    ;
-        set_flag(Key, Value)
-    ).
+    % fail point
+    var(Value),
+
+    get_flag(Key, Value),
+    !.
+
+counter_value(Key, Value) :-
+
+    % fail point
+    nonvar(Value),
+
+    get_flag(Key, Value),
+    set_flag(Key, Value),
+    !.

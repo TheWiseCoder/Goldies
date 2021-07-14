@@ -120,8 +120,16 @@ counter_inc(Key, Value) :-
 % Value     the counter's value
 counter_value(Key, Value) :-
 
-    (var(Value) ->
-        bb_get(Key, Value)
-    ;
-        bb_put(Key, Value)
-    ).
+    % fail point
+    var(Value),
+
+    bb_get(Key, Value),
+    !.
+
+counter_value(Key, Value) :-
+
+    % fail point
+    nonvar(Value),
+
+    bb_put(Key, Value),
+    !.

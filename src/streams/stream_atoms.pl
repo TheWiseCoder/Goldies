@@ -89,12 +89,20 @@ stream_atoms(Stream, Atoms) :-
 
 stream_atoms(Stream, EOS, Atoms) :-
 
-    (var(Atoms) ->
-        read_line_to_codes(Stream, LineCodes),
-        stream_read(Stream, EOS, LineCodes, [], Atoms)
-    ;
-        stream_write(Stream, EOS, Atoms)
-    ).
+    % fail point
+    var(Atoms),
+
+    read_line_to_codes(Stream, LineCodes),
+    stream_read(Stream, EOS, LineCodes, [], Atoms),
+    !.
+
+stream_atoms(Stream, EOS, Atoms) :-
+
+    % fail point
+    nonvar(Atoms),
+
+    stream_write(Stream, EOS, Atoms),
+    !.
 
 %-------------------------------------------------------------------------------------
 

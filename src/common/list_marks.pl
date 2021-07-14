@@ -211,7 +211,8 @@ sublist_between(List, ListFrom, ListTo, Sublist, ListAdjusted) :-
     sublist(List2, List3, ToAfter, _, 0),
 
     % obtain ListAdjusted
-    append(List1, List3, ListAdjusted).
+    append(List1, List3, ListAdjusted),
+    !.
 
 %-------------------------------------------------------------------------------------
 
@@ -496,22 +497,24 @@ list_common_([Elem|List1], List2, CommonsProgress, CommonsFinal) :-
 %  @param ListsCompact The resulting compactified list
 
 % (done)
-list_compacts([], ListsCompact) :-
-    ListsCompact = [], !.
+list_compacts([], []) :- !.
 
-% (done)
-list_compacts(List, []) :-
-    List = [], !.
-
-% (start)
 list_compacts(List, ListsCompact) :-
 
-    (var(List) ->
-        compacts_list_(ListsCompact, [], List)
-    ;
-        [Prev|Tail] = List,
-        list_compacts_(Tail, [[Prev,Prev]], ListsCompact)
-    ).
+    % fail point
+    var(List),
+
+    compacts_list_(ListsCompact, [], List),
+    !.
+
+list_compacts(List, ListsCompact) :-
+
+    % fail point
+    var(ListsCompact),
+
+    [Prev|Tail] = List,
+    list_compacts_(Tail, [[Prev,Prev]], ListsCompact),
+    !.
 
 % (done)
 list_compacts_([], [[First,Last]|ListsProgress], ListsFinal) :-
@@ -569,11 +572,19 @@ compacts_list_([[First,Last]|ListsCompact], ListProgress, ListFinal) :-
 
 list_pairs(Pairs, Elements1st, Elements2nd) :-
 
-    (var(Pairs) ->
-        lists_to_pairs(Elements1st, Elements2nd, [], Pairs)
-    ;
-        pairs_to_lists(Pairs, [], Elements1st, [], Elements2nd)
-    ).
+    % fail point
+    var(Pairs),
+
+    lists_to_pairs(Elements1st, Elements2nd, [], Pairs),
+    !.
+
+list_pairs(Pairs, Elements1st, Elements2nd) :-
+
+    % fail point
+    nonvar(Pairs),
+
+    pairs_to_lists(Pairs, [], Elements1st, [], Elements2nd),
+    !.
 
 %(done)
 lists_to_pairs([], _Elements2nd, PairsFinal, PairsFinal) :- !.
@@ -588,7 +599,7 @@ lists_to_pairs([Element1st|Elements1st],
                    [[Element1st,Element2nd]|PairsProgress], PairsFinal).
 
 % (done)
-pairs_to_lists([], Final1st, Final1st, Final2nd, Final2nd).
+pairs_to_lists([], Final1st, Final1st, Final2nd, Final2nd) :- !.
 
 % (iterate)
 pairs_to_lists([[Element1st,Element2nd]|Pairs],
@@ -635,7 +646,7 @@ list_split_(List, Sep, ListsProgress, ListsFinal) :-
 list_count_same(List, Pos, Count) :-
 
     length(List, Len),
-    !,
+
     % fail points
     Pos>= 0,
     Pos < Len,
@@ -669,7 +680,7 @@ list_count_same_(Pos, Len, Elem, List, CountProgress, CountFinal) :-
 list_same(List) :-
 
     length(List, Len),
-    !,
+ 
     % fail point
     (Len = 1 ; list_same_(List)),
     !.
@@ -681,7 +692,7 @@ list_same_([_|[]]) :- !.
 list_same_(List) :-
 
     [H,H|ListNew] = List,
-    !,
+ 
     % fail point
     list_same_([H|ListNew]).
 
@@ -698,7 +709,7 @@ list_same_(List) :-
 list_same(List, Before, Length, After) :-
 
     sublist(List, Sublist, Before, Length, After),
-    !,
+ 
     % fail point
     list_same(Sublist).
 
@@ -714,7 +725,7 @@ list_same(List, Before, Length, After) :-
 list_same0(List, Pos0, Count) :-
 
     sublist(List, Sublist, Pos0, Count),
-    !,
+ 
     % fail point
     list_same(Sublist).
 
@@ -732,7 +743,7 @@ list_same1(List, Pos1, Count) :-
 
     Pos is Pos1 - 1,
     sublist(List, Sublist, Pos, Count),
-    !,
+ 
     % fail point
     list_same(Sublist).
 
@@ -751,15 +762,10 @@ lists_common(_List1, []) :- !, fail.
 lists_common([Elem|List1], List2) :-
 
     % is element from ListA also in ListB
-    (memberchk(Elem, List2) ->
-        % yes, so success
-        true
-    ;
-        % no, so try again with the next element
-        !,
-        % fail point
-        lists_common(List1, List2)
-    ).
+    ( memberchk(Elem, List2)
+    ; lists_common(List1, List2)
+    ),
+    !.
 
 %-------------------------------------------------------------------------------------
 
@@ -774,13 +780,12 @@ lists_common([Elem|List1], List2) :-
 lists_find(Lists, Element, Pos1) :-
 
     length(Lists, Count),
-    !,
+
     % fail point
     lists_find_(Count, Lists, Element, Pos1).
 
 % (failure)
-lists_find_(0, _Lists, _Element, _Pos1) :-
-    !, fail.
+lists_find_(0, _Lists, _Element, _Pos1) :- !, fail.
 
 % (iterate)
 lists_find_(Count, Lists, Element, Pos1) :-
@@ -790,7 +795,7 @@ lists_find_(Count, Lists, Element, Pos1) :-
         Pos1 = Count
     ;
         CountNext is Count - 1,
-        !,
+
         % fail point
         lists_find_(CountNext, Lists, Element, Pos1)
     ).
@@ -807,8 +812,7 @@ lists_find_(Count, Lists, Element, Pos1) :-
 %  @param List    The list starting with the given elements
 
 % (failure)
-lists_start_with([], _Sublist, _List) :-
-    !, fail.
+lists_start_with([], _Sublist, _List) :- !, fail.
 
 % (iterate)
 lists_start_with([Head|Lists], Sublist, List) :-
@@ -816,7 +820,6 @@ lists_start_with([Head|Lists], Sublist, List) :-
     (sublist(Head, Sublist, 0) ->
         List = Head
     ;
-        !,
         % fail point
         lists_start_with(Lists, Sublist, List)
     ).
@@ -889,8 +892,7 @@ lists_consolidate(ListsRefs, ListElems, ListsResult) :-
 %  @param Lists List of lists to flatten
 %  @param List  Flattened list
 
-lists_flatten([], List) :-
-    List = [], !.
+lists_flatten([], []) :- !.
 
 lists_flatten(Lists, List) :-
     lists_flatten_(Lists, [], List).

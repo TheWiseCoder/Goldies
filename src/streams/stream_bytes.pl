@@ -40,11 +40,19 @@ options list.
 
 stream_bytes(Stream, Bytes) :-
 
-    (var(Bytes) ->
-        stream_read(Stream, -1, Bytes)
-    ;
-        stream_write(Stream, -1, Bytes)
-    ).
+    % fail point
+    var(Bytes),
+
+    stream_read(Stream, -1, Bytes),
+    !.
+
+stream_bytes(Stream, Bytes) :-
+
+    % fail point
+    nonvar(Bytes),
+
+    stream_write(Stream, -1, Bytes),
+    !.
 
 %-------------------------------------------------------------------------------------
 
@@ -63,11 +71,19 @@ stream_bytes(Stream, Bytes) :-
 
 stream_bytes(Stream, Count, Bytes) :-
 
-    (var(Bytes) ->
-        stream_read(Stream, Count, Bytes)
-    ;
-        stream_write(Stream, Count, Bytes)
-    ).
+    % fail point
+    var(Bytes),
+
+    stream_read(Stream, Count, Bytes),
+    !.
+
+stream_bytes(Stream, Count, Bytes) :-
+
+    % fail point
+    nonvar(Bytes),
+
+    stream_write(Stream, Count, Bytes),
+    !.
 
 %-------------------------------------------------------------------------------------
 

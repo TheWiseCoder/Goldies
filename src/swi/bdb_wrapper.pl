@@ -110,11 +110,9 @@ bdb_store(TagSet, DataSet, Data) :-
     % fail point (create the database)
     catch(bdb_open(DsPath, update, DbRef, []), _, fail),
 
-    !,
     % fail point (store the data)
     catch(bdb_put(DbRef, data, Data), _, fail),
 
-    !,
     % fail point (close the database)
     catch(bdb_close(DbRef), _, fail).
 
@@ -131,15 +129,12 @@ bdb_retrieve(TagSet, DataSet, Data) :-
     % obtain the storage filepath for this dataset 
     storage_path(TagSet, DataSet, DsPath),
 
-    !,
     % fail point (open the database)
     catch(bdb_open(DsPath, read, DbRef, []), _, fail),
 
-    !,
     % fail point (retrieve the data)
     catch(bdb_get(DbRef, data, Data), _, fail),
 
-    !,
     % fail point (close the database)
     catch(bdb_close(DbRef), _, fail).
 
@@ -156,7 +151,8 @@ bdb_erase(DataSet) :-
     file_directory_name(DsPath, BaseDir),
 
     % delete storage directory, if necessary
-    (\+ exists_directory(BaseDir) ; (delete_directory_and_contents(BaseDir))).
+    (\+ exists_directory(BaseDir) ; (delete_directory_and_contents(BaseDir))),
+    !.
 
 %! bdb_erase(+TagSet:atom, +DataSet:atom) is det.
 %

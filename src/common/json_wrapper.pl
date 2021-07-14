@@ -249,7 +249,6 @@ json_members_(JsonTerm, [Name|Names], JsonProgress, JsonValues) :-
 
     % fail points
     json_member(JsonTerm, Name, Value),
-    !,
     json_members_(JsonTerm, Names, [Value|JsonProgress], JsonValues).
 
 %-------------------------------------------------------------------------------------
@@ -265,13 +264,21 @@ json_members_(JsonTerm, [Name|Names], JsonProgress, JsonValues) :-
 
 json_atom(JsonTerm, JsonAtom) :-
 
-    (var(JsonAtom) ->
-        json_codes(JsonTerm, JsonCodes),
-        atom_codes(JsonAtom, JsonCodes)
-    ;
-        atom_codes(JsonAtom, JsonCodes),
-        json_codes(JsonTerm, JsonCodes)
-    ).
+    % fail point
+    var(JsonAtom),
+
+    json_codes(JsonTerm, JsonCodes),
+    atom_codes(JsonAtom, JsonCodes),
+    !.
+
+json_atom(JsonTerm, JsonAtom) :-
+
+    % fail point
+    var(JsonTerm),
+
+    atom_codes(JsonAtom, JsonCodes),
+    json_codes(JsonTerm, JsonCodes),
+    !.
 
 %! json_atom(+JsonTerm:json, -JsonAtom:atom, +Options:list) is det.
 %! json_atom(-JsonTerm:json, +JsonAtom:atom, +Options:list) is det.
@@ -286,13 +293,21 @@ json_atom(JsonTerm, JsonAtom) :-
 
 json_atom(JsonTerm, JsonAtom, Options) :-
 
-    (var(JsonAtom) ->
-        json_codes(JsonTerm, JsonCodes, Options),
-        atom_codes(JsonAtom, JsonCodes)
-    ;
-        atom_codes(JsonAtom, JsonCodes),
-        json_codes(JsonTerm, JsonCodes, Options)
-    ).
+    % fail point
+    var(JsonAtom),
+
+    json_codes(JsonTerm, JsonCodes, Options),
+    atom_codes(JsonAtom, JsonCodes),
+    !.
+
+json_atom(JsonTerm, JsonAtom, Options) :-
+
+    % fail point
+    var(JsonTerm),
+
+     atom_codes(JsonAtom, JsonCodes),
+    json_codes(JsonTerm, JsonCodes, Options),
+    !.
 
 %-------------------------------------------------------------------------------------
 
@@ -307,13 +322,21 @@ json_atom(JsonTerm, JsonAtom, Options) :-
 
 json_chars(JsonTerm, JsonChars) :-
 
-    (var(JsonChars) ->
-        json_codes(JsonTerm, JsonCodes),
-        atoms_codes(JsonChars, JsonCodes)
-    ;
-        atoms_codes(JsonChars, JsonCodes),
-        json_codes(JsonTerm, JsonCodes)
-    ).
+    % fail point
+    var(JsonChars),
+
+    json_codes(JsonTerm, JsonCodes),
+    toms_codes(JsonChars, JsonCodes),
+    !.
+
+json_chars(JsonTerm, JsonChars) :-
+
+    % fail point
+    var(JsonTerm),
+
+    atoms_codes(JsonChars, JsonCodes),
+    json_codes(JsonTerm, JsonCodes),
+    !.
 
 %! json_chars(+JsonTerm:json, -JsonChars:list, +Options:list) is det.
 %! json_chars(-JsonTerm:json, +JsonChars:list, +Options:list) is det.
@@ -328,13 +351,21 @@ json_chars(JsonTerm, JsonChars) :-
 
 json_chars(JsonTerm, JsonChars, Options) :-
 
-    (var(JsonChars) ->
-        json_codes(JsonTerm, JsonCodes, Options),
-        atoms_codes(JsonChars, JsonCodes)
-    ;
-        atoms_codes(JsonChars, JsonCodes),
-        json_codes(JsonTerm, JsonCodes, Options)
-    ).
+    % fail point
+    var(JsonChars),
+
+    json_codes(JsonTerm, JsonCodes, Options),
+    atoms_codes(JsonChars, JsonCodes),
+    !.
+
+json_chars(JsonTerm, JsonChars, Options) :-
+
+    % fail point
+    var(JsonTerm),
+
+    atoms_codes(JsonChars, JsonCodes),
+    json_codes(JsonTerm, JsonCodes, Options),
+    !.
 
 %-------------------------------------------------------------------------------------
 
@@ -390,13 +421,20 @@ json_chars(JsonTerm, JsonChars, Options) :-
 
 json_codes(JsonTerm, JsonCodes) :-
 
-    (var(JsonCodes) ->
-        with_output_to_codes(json_write(Stream, JsonTerm),
-                             Stream, JsonCodes, [])
-    ;
-        open_codes_stream(JsonCodes, Stream),
-        call_cleanup(json_read(Stream, JsonTerm), close(Stream, [force(true)]))
-    ).
+    % fail point
+    var(JsonCodes),
+
+    with_output_to_codes(json_write(Stream, JsonTerm), Stream, JsonCodes, []),
+    !.
+
+json_codes(JsonTerm, JsonCodes) :-
+
+    % fail point
+    var(JsonTerm),
+
+    open_codes_stream(JsonCodes, Stream),
+    call_cleanup(json_read(Stream, JsonTerm), close(Stream, [force(true)])),
+    !.
 
 %! json_codes(+JsonTerm:json, -JsonCodes:list, +Options:list) is det.
 %! json_codes(-JsonTerm:json, +JsonCodes:list, +Options:list) is det.
@@ -408,13 +446,20 @@ json_codes(JsonTerm, JsonCodes) :-
 %  @param JsonCodes List of char codes holding the JSON string representation
 %  @param Options   List of options for json_read/json_write
 
+json_codes(JsonTerm, JsonCodes, Options) :-
+
+    % fail point
+    var(JsonCodes),
+
+    with_output_to_codes(json_write(Stream, JsonTerm, Options),
+                         Stream, JsonCodes, []),
+    !.
+
 json_codes(Term, JsonCodes, Options) :-
 
-    (var(JsonCodes) ->
-        with_output_to_codes(json_write(Stream, Term, Options),
-                             Stream, JsonCodes, [])
-    ;
-        open_codes_stream(JsonCodes, Stream),
-        call_cleanup(json_read(Stream, Term, Options),
-                     close(Stream, [force(true)]))
-    ).
+    % fail point
+    var(Term),
+
+    open_codes_stream(JsonCodes, Stream),
+    call_cleanup(json_read(Stream, Term, Options), close(Stream, [force(true)])),
+    !.

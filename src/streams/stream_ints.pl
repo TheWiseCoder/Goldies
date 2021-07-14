@@ -57,11 +57,19 @@ or written to the stream, one per line, to the end of the list.
 
 stream_ints(Stream, Ints) :-
 
-    (var(Ints) ->
-        stream_read_1(Stream, [], Ints)
-    ;
-        stream_write(Stream, Ints)
-    ).
+    % fail point
+    var(Ints),
+
+    stream_read_1(Stream, [], Ints),
+    !.
+
+stream_ints(Stream, Ints) :-
+
+    % fail point
+    nonvar(Ints),
+
+    stream_write(Stream, Ints),
+    !.
 
 %-------------------------------------------------------------------------------------
 
