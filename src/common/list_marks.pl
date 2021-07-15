@@ -199,8 +199,8 @@ sublist_between(List, ListFrom, ListTo, Sublist, ListAdjusted) :-
     length(ListFrom, FromLength),
     FromAfter is FromBefore + FromLength,
     sublist(List, List2, FromAfter, _, 0),
-
     !,
+
     % fail point (locate ListTo within List2)
     sublist(List2, ListTo, ToBefore),
 
@@ -627,6 +627,7 @@ list_split_(List, Sep, ListsProgress, ListsFinal) :-
         sublist(List, ListPrev, 0, Pos),
         PosSeq is Pos + 1,
         sublist(List, ListPost, PosSeq, _, 0),
+        !,
         list_split_(ListPost, Sep, [ListPrev|ListsProgress], ListsFinal)
     ;
         reverse([List|ListsProgress], ListsFinal)
