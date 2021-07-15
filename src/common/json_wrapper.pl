@@ -326,7 +326,7 @@ json_chars(JsonTerm, JsonChars) :-
     var(JsonChars),
 
     json_codes(JsonTerm, JsonCodes),
-    toms_codes(JsonChars, JsonCodes),
+    atoms_codes(JsonChars, JsonCodes),
     !.
 
 json_chars(JsonTerm, JsonChars) :-
