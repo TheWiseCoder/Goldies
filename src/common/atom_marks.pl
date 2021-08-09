@@ -146,7 +146,7 @@ atom_number(Atom, Number) :-
 atom_number(Atom, Number) :-
 
     % fail point
-    var(Atom),
+    nonvar(Atom),
 
     atom_chars(Atom, Chars),
     number_chars(Number, Chars),
