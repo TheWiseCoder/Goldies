@@ -489,7 +489,7 @@ atoms_codes(Atoms, Codes) :-
 atoms_codes(Atoms, Codes) :-
 
     % fail point
-    var(Atoms),
+    nonvar(Atoms),
 
     atoms_codes_(Atoms, [], Codes),
     !.

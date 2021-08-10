@@ -274,7 +274,7 @@ json_atom(JsonTerm, JsonAtom) :-
 json_atom(JsonTerm, JsonAtom) :-
 
     % fail point
-    var(JsonTerm),
+    nonvar(JsonAtom),
 
     atom_codes(JsonAtom, JsonCodes),
     json_codes(JsonTerm, JsonCodes),
@@ -303,7 +303,7 @@ json_atom(JsonTerm, JsonAtom, Options) :-
 json_atom(JsonTerm, JsonAtom, Options) :-
 
     % fail point
-    var(JsonTerm),
+    nonvar(JsonAtom),
 
      atom_codes(JsonAtom, JsonCodes),
     json_codes(JsonTerm, JsonCodes, Options),
@@ -332,7 +332,7 @@ json_chars(JsonTerm, JsonChars) :-
 json_chars(JsonTerm, JsonChars) :-
 
     % fail point
-    var(JsonTerm),
+    nonvar(JsonChars),
 
     atoms_codes(JsonChars, JsonCodes),
     json_codes(JsonTerm, JsonCodes),
@@ -361,7 +361,7 @@ json_chars(JsonTerm, JsonChars, Options) :-
 json_chars(JsonTerm, JsonChars, Options) :-
 
     % fail point
-    var(JsonTerm),
+    nonvar(JsonChars),
 
     atoms_codes(JsonChars, JsonCodes),
     json_codes(JsonTerm, JsonCodes, Options),
@@ -430,7 +430,7 @@ json_codes(JsonTerm, JsonCodes) :-
 json_codes(JsonTerm, JsonCodes) :-
 
     % fail point
-    var(JsonTerm),
+    nonvar(JsonCodes),
 
     open_codes_stream(JsonCodes, Stream),
     call_cleanup(json_read(Stream, JsonTerm), close(Stream, [force(true)])),
@@ -458,7 +458,7 @@ json_codes(JsonTerm, JsonCodes, Options) :-
 json_codes(Term, JsonCodes, Options) :-
 
     % fail point
-    var(Term),
+    nonvar(JsonCodes),
 
     open_codes_stream(JsonCodes, Stream),
     call_cleanup(json_read(Stream, Term, Options), close(Stream, [force(true)])),
